@@ -23,7 +23,7 @@ const { toggleTodo, deleteTodo } = store
 </script>
 
 <template lang="pug">
-ul
+ul.mb-4
   li.space-x-4(v-for="todo in list" :key="todo.text")
     button(@click="toggleTodo(todo.text)")
       fa(v-if="todo.done" icon="fa-solid fa-square-check")
@@ -31,7 +31,7 @@ ul
     span {{ todo.text }}
     button.text-red-600(@click="deleteTodo(todo.text)") Delete
 
-  form(@submit.prevent="addTodoAndClear(todo)")
-    input(v-model="todo" type="text")
-    button Add
+form.space-x-4(@submit.prevent="addTodoAndClear(todo)")
+  input(v-model="todo" type="text" class="border rounded py-2 px-3 text-gray-700")
+  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
 </template>
