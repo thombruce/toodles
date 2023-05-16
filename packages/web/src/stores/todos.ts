@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useTodosStore = defineStore('todos', () => {
   // State
-  const list = ref([] as { text: string, done: boolean, createdAt: EpochTimeStamp, updatedAt: EpochTimeStamp }[])
+  const list = ref([] as { text: string, done: EpochTimeStamp | null, createdAt: EpochTimeStamp, updatedAt: EpochTimeStamp }[])
 
   // Getters
   // const first = computed(() => list.value[0])
@@ -11,14 +11,14 @@ export const useTodosStore = defineStore('todos', () => {
   // Actions
   function addTodo(text: string) {
     var currentTime = Date.now()
-    list.value.push({ text, done: false, createdAt: currentTime, updatedAt: currentTime })
+    list.value.push({ text, done: null, createdAt: currentTime, updatedAt: currentTime })
     console.log(list.value)
   }
 
   function toggleTodo(text: string) {
     var currentTime = Date.now()
     var i = list.value.findIndex(item => item.text === text)
-    list.value[i] = { ...list.value[i], ...{ done: !list.value[i].done, updatedAt: currentTime } }
+    list.value[i] = { ...list.value[i], ...{ done: list.value[i].done ? null : currentTime, updatedAt: currentTime } }
     console.log(list.value[i])
   }
 
