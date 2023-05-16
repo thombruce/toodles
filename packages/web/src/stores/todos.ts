@@ -16,6 +16,12 @@ export const useTodosStore = defineStore('todos', () => {
     list.value.push({ id: uuidv4() as UUID, text, done: null, createdAt: currentTime, updatedAt: currentTime })
   }
 
+  function updateTodo(id: UUID, text: string) {
+    var currentTime = Date.now()
+    var i = list.value.findIndex(item => item.id === id)
+    list.value[i] = { ...list.value[i], ...{ text: text, updatedAt: currentTime } }
+  }
+
   function toggleTodo(id: UUID) {
     var currentTime = Date.now()
     var i = list.value.findIndex(item => item.id === id)
@@ -27,5 +33,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, addTodo, toggleTodo, deleteTodo }
+  return { list, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
