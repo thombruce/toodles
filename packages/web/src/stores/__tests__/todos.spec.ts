@@ -15,6 +15,17 @@ describe('Todos Store', () => {
     expect(todos.list.length).toBe(1)
   })
 
+  it('toggles todos', () => {
+    const todos = useTodosStore()
+    todos.addTodo('Get milk')
+    var id = todos.list[0].id
+    expect(todos.list[0].done).toBeFalsy
+    todos.toggleTodo(id)
+    expect(todos.list[0].done).toBeTruthy
+    todos.toggleTodo(id)
+    expect(todos.list[0].done).toBeFalsy
+  })
+
   it('removes todos', () => {
     const todos = useTodosStore()
     todos.addTodo('Get milk')
