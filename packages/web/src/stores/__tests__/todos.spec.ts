@@ -19,7 +19,8 @@ describe('Todos Store', () => {
     const todos = useTodosStore()
     todos.addTodo('Get milk')
     expect(todos.list.length).toBe(1)
-    todos.deleteTodo('Get milk')
+    var id = todos.list[0].id
+    todos.deleteTodo(id)
     expect(todos.list.length).toBe(0)
   })
 })

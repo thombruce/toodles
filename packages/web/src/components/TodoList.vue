@@ -25,11 +25,11 @@ const { toggleTodo, deleteTodo } = store
 <template lang="pug">
 ul.mb-4
   li.space-x-4(v-for="todo in list" :key="todo.text")
-    button(@click="toggleTodo(todo.text)")
+    button(@click="toggleTodo(todo.id)")
       fa(v-if="todo.done" icon="fa-solid fa-square-check")
       fa(v-else icon="fa-regular fa-square")
     span {{ todo.text }}
-    button.text-red-600(@click="deleteTodo(todo.text)") Delete
+    button.text-red-600(@click="deleteTodo(todo.id)") Delete
 
 form.space-x-4(@submit.prevent="addTodoAndClear(todo)")
   input(v-model="todo" type="text" class="border rounded py-2 px-3 text-gray-700")
