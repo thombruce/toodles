@@ -2,36 +2,60 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import type { UUID } from 'crypto'
+import { Collection } from 'lokijs'
+
+import db from '../plugins/loki'
+
+interface Todo {
+  id: UUID,
+  text: string,
+  done: EpochTimeStamp | null,
+  createdAt: EpochTimeStamp,
+  updatedAt: EpochTimeStamp
+}
+
+interface List extends Collection {
+  insert(todo: Todo | Todo[]): Todo[] | undefined,
+  update(todo: Todo | Todo[]): undefined
+}
 
 export const useTodosStore = defineStore('todos', () => {
   // State
-  const list = ref([] as { id: UUID, text: string, done: EpochTimeStamp | null, createdAt: EpochTimeStamp, updatedAt: EpochTimeStamp }[])
+  const list = ref({} as List)
 
   // Getters
   // const first = computed(() => list.value[0])
 
   // Actions
+  function initStore() {
+    list.value = db.getCollection('todos')
+
+    if(!list.value){
+        list.value = db.addCollection('todos', { unique: ['id'], indices: ['id'], autoupdate: true })
+    }
+  }
+
   function addTodo(text: string) {
     var currentTime = Date.now()
-    list.value.push({ id: uuidv4() as UUID, text, done: null, createdAt: currentTime, updatedAt: currentTime })
+    list.value.insert({ id: uuidv4() as UUID, text, done: null, createdAt: currentTime, updatedAt: currentTime })
   }
 
   function updateTodo(id: UUID, text: string) {
     var currentTime = Date.now()
-    var i = list.value.findIndex(item => item.id === id)
-    list.value[i] = { ...list.value[i], ...{ text: text, updatedAt: currentTime } }
+    var todo = list.value.find({ id })[0] as Todo
+    list.value.update({ ...todo, ...{ text, updatedAt: currentTime } })
   }
 
   function toggleTodo(id: UUID) {
     var currentTime = Date.now()
-    var i = list.value.findIndex(item => item.id === id)
-    list.value[i] = { ...list.value[i], ...{ done: list.value[i].done ? null : currentTime, updatedAt: currentTime } }
+    var todo = list.value.find({ id })[0] as Todo
+    list.value.update({ ...todo, ...{ done: todo.done ? null : currentTime, updatedAt: currentTime } })
   }
 
   function deleteTodo(id: UUID) {
-    list.value = list.value.filter(item => item.id !== id)
+    list.value.chain().find({ id }).remove()
   }
 
   // Export
-  return { list, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, initStore, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
