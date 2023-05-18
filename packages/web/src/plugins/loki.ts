@@ -2,10 +2,18 @@ import pinia from './pinia'
 import { useTodosStore } from '../stores/todos'
 
 import loki from 'lokijs'
+import LokiIndexedAdapter from 'lokijs/src/loki-indexed-adapter'
 
 let dbName = 'toodles.db', db: any
 
-db = new loki(dbName, { autosave: true, autoload: true, autoloadCallback: initStore })
+var idbAdapter = new LokiIndexedAdapter('toodles')
+
+db = new loki(dbName, {
+  adapter: idbAdapter,
+  autosave: true,
+  autoload: true,
+  autoloadCallback: initStore
+})
 
 function initStore() {
   const store = useTodosStore(pinia)
