@@ -30,6 +30,7 @@
     "@types/node": "^18.16.8",
     "@types/uuid": "^9.0.1",
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vitest/coverage-c8": "^0.31.1",
     "@volar/vue-language-plugin-pug": "^1.6.5",
     "@vue/test-utils": "^2.3.2",
     "@vue/tsconfig": "^0.4.0",
