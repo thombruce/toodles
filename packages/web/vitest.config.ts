@@ -17,6 +17,10 @@ export default mergeConfig(
         'fake-indexeddb/auto'
       ],
       coverage: {
+        statements: 60,
+        functions: 60,
+        branches: 60,
+        lines: 60,
         reporter: [
           'text', 'html', 'clover', 'json', 'json-summary'
         ]
