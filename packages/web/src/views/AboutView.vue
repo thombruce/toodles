@@ -14,6 +14,7 @@ main
     li Lerna
     li Tailwind CSS
     li Font Awesome
+    li LokiJS
 
 //- TODO: Import and show version string from package.json
 //- TODO: Import Markdown document if possible (e.g. BACKERS.md)
