@@ -32,3 +32,5 @@ jobs:
     - name: Coverage
       if: always() # Also generate the report if tests are failing
       uses:  davelosert/vitest-coverage-report-action@v1
+      with:
+        working-directory: ./packages/web
