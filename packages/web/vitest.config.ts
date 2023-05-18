@@ -15,7 +15,12 @@ export default mergeConfig(
       },
       setupFiles: [
         'fake-indexeddb/auto'
-      ]
+      ],
+      coverage: {
+        reporter: [
+          'text', 'html', 'clover', 'json', 'json-summary'
+        ]
+      }
     }
   })
 )
