@@ -24,7 +24,7 @@ const { updateTodo, toggleTodo, deleteTodo } = store
 
 <template lang="pug">
 ul.mb-4
-  li.space-x-4(v-for="todo in list" :key="todo.id")
+  li.space-x-4(v-for="todo in list?.data" :key="todo.id")
     button(@click="toggleTodo(todo.id)")
       fa(v-if="todo.done" icon="fa-solid fa-square-check")
       fa(v-else icon="fa-regular fa-square")
