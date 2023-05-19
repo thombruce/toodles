@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue"
 import { useIntervalsStore } from "../stores/intervals"
+import { timepiece } from "@/plugins/timepiece"
 
 const props = defineProps({
   todoId: String,
@@ -21,9 +22,7 @@ setInterval(() => {
 }, 1000)
 
 const formatted = computed(() => {
-  var minutes = Math.floor(timer.value / 60000)
-  var seconds = ((timer.value % 60000) / 1000).toFixed(0)
-  return minutes + ":" + (Number(seconds) < 10 ? '0' : '') + seconds
+  return timepiece(timer.value)
 })
 </script>
 
