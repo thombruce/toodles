@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
+import { sumBy as _sumBy } from 'lodash'
 
 import db from '../plugins/loki'
 
@@ -25,7 +26,16 @@ export const useIntervalsStore = defineStore('intervals', () => {
   const list = ref({} as List)
 
   // Getters
-  // const first = computed(() => list.value[0])
+  const totalForTodo = computed(() => (todoId: UUID) => {
+    const intervals = list.value.find({ todoId }) as Interval[]
+    
+    return _sumBy(intervals, 'duration')
+  })
+
+  const activeForTodo = computed(() => (todoId: UUID) => {
+    const interval = list.value.find({ $and: [{ todoId }, { startedAt: { $exists: true } }, { duration: { $exists: false } }] })[0] as Interval
+    return interval
+  })
 
   // Actions
   function initStore() {
@@ -54,5 +64,5 @@ export const useIntervalsStore = defineStore('intervals', () => {
   }
 
   // Export
-  return { list, initStore, startInterval, stopInterval, deleteInterval }
+  return { list, totalForTodo, activeForTodo, initStore, startInterval, stopInterval, deleteInterval }
 })

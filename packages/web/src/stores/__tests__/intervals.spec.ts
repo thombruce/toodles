@@ -5,10 +5,21 @@ import { v4 as uuidv4 } from 'uuid'
 import { useIntervalsStore } from '../intervals'
 import type { UUID } from 'crypto'
 
+// TODO: Replace 'todos' with 'store'; do same in todos spec for reusability.
+
 describe('Intervals Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     useIntervalsStore().initStore()
+  })
+
+  it.todo('returns total for todo', () => {})
+
+  it('returns active intervals', () => {
+    const todos = useIntervalsStore()
+    const todoId = uuidv4() as UUID
+    todos.startInterval(todoId as UUID)
+    expect(todos.activeForTodo(todoId).startedAt).toBeLessThanOrEqual(Date.now())
   })
 
   it('starts intervals', () => {
