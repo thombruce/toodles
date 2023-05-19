@@ -6,6 +6,8 @@ import { Collection } from 'lokijs'
 
 import db from '../plugins/loki'
 
+import { useIntervalsStore } from './intervals'
+
 interface Todo {
   id: UUID,
   text: string,
@@ -24,7 +26,10 @@ export const useTodosStore = defineStore('todos', () => {
   const list = ref({} as List)
 
   // Getters
-  // const first = computed(() => list.value[0])
+  const find = computed(() => (id: UUID) => {
+    const todo = list.value.find({ id })[0] as Todo
+    return todo
+  })
 
   // Actions
   function initStore() {
@@ -49,7 +54,14 @@ export const useTodosStore = defineStore('todos', () => {
   function toggleTodo(id: UUID) {
     var currentTime = Date.now()
     var todo = list.value.find({ id })[0] as Todo
-    list.value.update({ ...todo, ...{ done: todo.done ? null : currentTime, updatedAt: currentTime } })
+    if (todo.done) {
+      list.value.update({ ...todo, ...{ done: null, updatedAt: currentTime } })
+    } else {
+      const intervals = useIntervalsStore()
+      let activeInterval
+      if (activeInterval = intervals.activeForTodo(todo.id)) intervals.stopInterval(activeInterval.id)
+      list.value.update({ ...todo, ...{ done: currentTime, updatedAt: currentTime } })
+    }
   }
 
   function deleteTodo(id: UUID) {
@@ -57,5 +69,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, initStore, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, find, initStore, addTodo, updateTodo, toggleTodo, deleteTodo }
 })

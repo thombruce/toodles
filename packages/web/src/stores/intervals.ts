@@ -7,6 +7,8 @@ import { sumBy as _sumBy } from 'lodash'
 
 import db from '../plugins/loki'
 
+import { useTodosStore } from './todos'
+
 interface Interval {
   id: UUID,
   todoId: UUID,
@@ -48,6 +50,9 @@ export const useIntervalsStore = defineStore('intervals', () => {
 
   function startInterval(todoId: UUID) {
     var currentTime = Date.now()
+    const todos = useTodosStore()
+    let todo = todos.find(todoId)
+    if (todo.done) todos.toggleTodo(todoId)
     list.value.insert({ id: uuidv4() as UUID, todoId, startedAt: currentTime, createdAt: currentTime, updatedAt: currentTime })
   }
 
