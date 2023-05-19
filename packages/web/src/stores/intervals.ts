@@ -29,7 +29,7 @@ export const useIntervalsStore = defineStore('intervals', () => {
   const totalForTodo = computed(() => (todoId: UUID) => {
     const intervals = list.value.find({ todoId }) as Interval[]
     
-    return _sumBy(intervals, 'duration')
+    return _sumBy(intervals, 'duration') || 0
   })
 
   const activeForTodo = computed(() => (todoId: UUID) => {
