@@ -23,8 +23,8 @@ const { activeForTodo } = store
 
 <template lang="pug">
 button.space-x-2(@click="toggleTimer()" :class="activeForTodo(todoId) ? 'bg-green-500 hover:bg-green-700 text-white px-2 rounded' : 'bg-gray-500 hover:bg-gray-700 text-white px-2 rounded'")
-  fa(v-if="!activeForTodo(todoId)" icon="fa-solid fa-clock")
-  fa(v-else icon="fa-solid fa-pause")
+  fa(v-if="!activeForTodo(todoId)" icon="fa-solid fa-clock" fixed-width)
+  fa(v-else icon="fa-solid fa-pause" fixed-width)
   ActiveInterval(v-if="activeForTodo(todoId)" :todoId="todoId" :startedAt="activeForTodo(todoId).startedAt")
   StaticInterval(v-else :todoId="todoId")
 </template>
