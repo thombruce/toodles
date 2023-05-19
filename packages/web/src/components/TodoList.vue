@@ -4,6 +4,8 @@ import { storeToRefs } from "pinia"
 
 import { useTodosStore } from "../stores/todos"
 
+import IntervalTimer from "./IntervalTimer.vue";
+
 const todo = ref("")
 
 const store = useTodosStore()
@@ -24,11 +26,12 @@ const { updateTodo, toggleTodo, deleteTodo } = store
 
 <template lang="pug">
 ul.mb-4
-  li.space-x-4(v-for="todo in list?.data" :key="todo.id")
+  li.space-x-4.mb-1(v-for="todo in list?.data" :key="todo.id")
     button(@click="toggleTodo(todo.id)")
       fa(v-if="todo.done" icon="fa-solid fa-square-check")
       fa(v-else icon="fa-regular fa-square")
     input(@input="updateTodo(todo.id, $event.target.value)" @keyup.enter="$refs.newTodo.focus()" :value="todo.text")
+    IntervalTimer(:todoId="todo.id")
     button.text-red-600(@click="deleteTodo(todo.id)") Delete
 
 form.space-x-4(@submit.prevent="addTodoAndClear(todo)")
