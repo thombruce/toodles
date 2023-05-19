@@ -2,11 +2,13 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 
 import { useTodosStore } from '../todos'
+import { useIntervalsStore } from '../intervals'
 
 describe('Todos Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     useTodosStore().initStore()
+    useIntervalsStore().initStore()
   })
 
   it('adds todos', () => {

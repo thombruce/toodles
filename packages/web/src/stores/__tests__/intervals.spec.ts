@@ -3,6 +3,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
 import { useIntervalsStore } from '../intervals'
+import { useTodosStore } from '../todos'
 import type { UUID } from 'crypto'
 
 // TODO: Replace 'todos' with 'store'; do same in todos spec for reusability.
@@ -11,6 +12,7 @@ describe('Intervals Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     useIntervalsStore().initStore()
+    useTodosStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})
