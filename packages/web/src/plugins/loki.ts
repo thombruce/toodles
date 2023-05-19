@@ -1,5 +1,6 @@
 import pinia from './pinia'
 import { useTodosStore } from '../stores/todos'
+import { useIntervalsStore } from '../stores/intervals'
 
 import loki from 'lokijs'
 import LokiIndexedAdapter from 'lokijs/src/loki-indexed-adapter'
@@ -24,9 +25,12 @@ db = new loki(dbName, {
   autoloadCallback: initStore
 })
 
+// TODO: There really has to be a better way than initialising all of the stores here
 function initStore() {
-  const store = useTodosStore(pinia)
-  store.initStore()
+  const todos = useTodosStore(pinia)
+  todos.initStore()
+  const intervals = useIntervalsStore(pinia)
+  intervals.initStore()
 }
 
 export default db
