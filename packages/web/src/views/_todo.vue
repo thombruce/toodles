@@ -1,8 +1,19 @@
 <script setup lang="ts">
-// import IntervalList from '../components/IntervalList.vue'
+import { useRoute } from "vue-router"
+
+import { useTodosStore } from "../stores/todos"
+
+import TodoItem from "../components/TodoItem.vue"
+
+const route = useRoute()
+const { todoId } = route.params
+
+const store = useTodosStore()
+
+const { find } = store
 </script>
 
 <template lang="pug">
 main
-  //- IntervalList
+  TodoItem(:todo="find(todoId)")
 </template>
