@@ -25,6 +25,6 @@ function toggleTimer() {
 button.space-x-2.flex.items-center(@click="toggleTimer()" :class="activeForTodo(todoId) ? 'bg-green-500 hover:bg-green-700 text-white px-2 rounded' : 'bg-gray-500 hover:bg-gray-700 text-white px-2 rounded'")
   fa(v-if="!activeForTodo(todoId)" icon="fa-solid fa-clock" fixed-width)
   fa(v-else icon="fa-solid fa-pause" fixed-width)
-  ActiveInterval.grow(v-if="activeForTodo(todoId)" :todoId="todoId" :startedAt="activeForTodo(todoId).startedAt")
+  ActiveInterval.grow(v-if="activeForTodo(todoId)" :todoId="todoId" :startedAt="activeForTodo(todoId).createdAt")
   StaticInterval.grow(v-else :todoId="todoId")
 </template>
