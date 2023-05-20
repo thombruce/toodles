@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router"
+import { storeToRefs } from "pinia"
 
 import { useTodosStore } from "../stores/todos"
 
@@ -10,8 +11,7 @@ const route = useRoute()
 const { todoId } = route.params
 
 const store = useTodosStore()
-
-const { find } = store
+const { find } = storeToRefs(store)
 </script>
 
 <template lang="pug">

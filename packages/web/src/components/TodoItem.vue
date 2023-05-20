@@ -12,8 +12,7 @@ const props = defineProps({
 })
 
 const store = useTodosStore()
-
-const { find, updateTodo, toggleTodo, deleteTodo } = store
+const { updateTodo, toggleTodo, deleteTodo } = store
 </script>
 
 <template lang="pug">

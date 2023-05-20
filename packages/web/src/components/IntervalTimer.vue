@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia"
 import { useIntervalsStore } from "../stores/intervals"
 
 import ActiveInterval from "./ActiveInterval.vue"
@@ -9,16 +10,15 @@ const props = defineProps({
 })
 
 const store = useIntervalsStore()
+const { activeForTodo } = storeToRefs(store)
 
 function toggleTimer() {
-  if (!store.activeForTodo(props.todoId)) {
+  if (!activeForTodo.value(props.todoId)) {
     store.startInterval(props.todoId)
   } else {
-    store.stopInterval(store.activeForTodo(props.todoId).id)
+    store.stopInterval(activeForTodo.value(props.todoId).id)
   }
 }
-
-const { activeForTodo } = store
 </script>
 
 <template lang="pug">
