@@ -15,19 +15,13 @@ const props = defineProps({
 const store = useIntervalsStore()
 const { totalForTodo } = storeToRefs(store)
 
-const total = totalForTodo.value(props.todoId)
-
-let timer = ref(total)
+let timer = ref(totalForTodo.value(props.todoId))
 
 setInterval(() => {
-  timer.value = Date.now() - props.startedAt + total
+  timer.value = Date.now() - props.startedAt + totalForTodo.value(props.todoId)
 }, 1000)
-
-const formatted = computed(() => {
-  return timepiece(timer.value)
-})
 </script>
 
 <template lang="pug">
-span {{ formatted }}
+span {{ timepiece(timer) }}
 </template>
