@@ -28,6 +28,11 @@ export const useIntervalsStore = defineStore('intervals', () => {
   const list = ref({} as List)
 
   // Getters
+  const forTodo = computed(() => (todoId: UUID) => {
+    const intervals = list.value.find({ todoId }) as Interval[]
+    return intervals
+  })
+
   const totalForTodo = computed(() => (todoId: UUID) => {
     const intervals = list.value.find({ todoId }) as Interval[]
     
@@ -69,5 +74,5 @@ export const useIntervalsStore = defineStore('intervals', () => {
   }
 
   // Export
-  return { list, totalForTodo, activeForTodo, initStore, startInterval, stopInterval, deleteInterval }
+  return { list, forTodo, totalForTodo, activeForTodo, initStore, startInterval, stopInterval, deleteInterval }
 })
