@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { useIntervalsStore } from "../stores/intervals"
-import { computed } from "vue"
 import { timepiece } from "@/plugins/timepiece"
+import { storeToRefs } from "pinia"
 
 const props = defineProps({
   todoId: String
 })
 
 const store = useIntervalsStore()
-
-const total = store.totalForTodo(props.todoId)
-
-let timer = ref(total)
-
-const formatted = computed(() => {
-  return timepiece(timer.value)
-})
+const { totalForTodo } = storeToRefs(store)
 </script>
 
 <template lang="pug">
-span {{ formatted }}
+span {{ timepiece(totalForTodo(todoId)) }}
 </template>

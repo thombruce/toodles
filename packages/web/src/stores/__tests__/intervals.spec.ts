@@ -23,7 +23,7 @@ describe('Intervals Store', () => {
     let todoId = todos.list.data[0].id
 
     intervals.startInterval(todoId as UUID)
-    expect(intervals.activeForTodo(todoId).startedAt).toBeLessThanOrEqual(Date.now())
+    expect(intervals.activeForTodo(todoId).createdAt).toBeLessThanOrEqual(Date.now())
   })
 
   it('starts intervals', () => {
@@ -45,7 +45,7 @@ describe('Intervals Store', () => {
 
     intervals.startInterval(todoId)
     var id = intervals.list.data[0].id
-    expect(intervals.list.data[0].startedAt).toBeLessThanOrEqual(Date.now())
+    expect(intervals.list.data[0].createdAt).toBeLessThanOrEqual(Date.now())
     intervals.stopInterval(id)
     expect(intervals.list.data[0].duration).toBeGreaterThan(0)
   })
