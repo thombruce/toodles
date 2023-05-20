@@ -8,7 +8,6 @@ import { useIntervalsStore } from '@/stores/intervals'
 import ActiveInterval from '../ActiveInterval.vue'
 
 vi.mock('vue-router', () => ({
-  resolve: vi.fn(),
   RouterLink: vi.fn()
 }))
 
