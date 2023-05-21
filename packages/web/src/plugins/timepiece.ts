@@ -1,8 +1,13 @@
 const formatted = (milliseconds: number) => {
-  if (!milliseconds) return "0:00"
-  var minutes = Math.floor(milliseconds / 60000)
+  if (!milliseconds) return "0:00:00"
+  var hours = Math.floor(milliseconds / 3600000)
+  var minutes = Math.floor((milliseconds % 3600000) / 60000)
   var seconds = ((milliseconds % 60000) / 1000).toFixed(0)
-  return Number(seconds) == 60 ? (minutes+1) + ":00" : minutes + ":" + (Number(seconds) < 10 ? "0" : "") + seconds
+
+  if (Number(seconds) == 60) minutes += 1
+  if (minutes == 60) hours += 1
+
+  return hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (Number(seconds) < 10 ? "0" : "") + seconds
 }
 
 const unformatted = (time: string) => {
