@@ -13,7 +13,7 @@ const props = defineProps({
   }
 })
 
-const interval = ref({ dateOf: '', duration: '' })
+const interval = ref({ dateOf: { date: '', time: '' }, duration: '' })
 
 const store = useIntervalsStore()
 
@@ -21,12 +21,25 @@ const { forTodo } = storeToRefs(store)
 
 const { deleteInterval } = store
 
-function addIntervalAndClear(item: { dateOf: string, duration: string}) {
+function addIntervalAndClear(item: { dateOf: { date: string, time: string }, duration: string}) {
   if (!/^\d+(?:(?::[0-5]\d){0,2}|\.\d{1,2})?$/.test(item.duration)) {
     return
   }
 
-  let duration
+  let dateOf, duration
+
+  if (item.dateOf.date.length && item.dateOf.time.length) {
+    dateOf = new Date(item.dateOf.date + "T" + item.dateOf.time).toISOString()
+  } else if (/^\d{4}-\d{2}-\d{2}$/.test(item.dateOf.date)) {
+    dateOf = item.dateOf.date
+  } else if (/\d{2}:\d{2}/.test(item.dateOf.time)) {
+    const [hours, minutes] = item.dateOf.time.split(':').map(n => Number(n))
+    const date = new Date()
+    date.setHours(hours, minutes, 0, 0)
+    dateOf = date.toISOString()
+  } else {
+    dateOf = new Date().toISOString()
+  }
 
   if (duration = Number(item.duration)) {
     duration = Number((duration * 3600000).toFixed())
@@ -34,8 +47,8 @@ function addIntervalAndClear(item: { dateOf: string, duration: string}) {
     duration = untimepiece(item.duration)
   }
 
-  store.addInterval(props.todoId, item.dateOf, duration)
-  interval.value = { dateOf: '', duration: '' }
+  store.addInterval(props.todoId, dateOf, duration)
+  interval.value = { dateOf: { date: '', time: '' }, duration: '' }
 }
 </script>
 
@@ -49,8 +62,8 @@ ul.mb-4
 
 //- TODO: Add labels
 form.space-x-4(@submit.prevent="addIntervalAndClear(interval)")
-  //- TODO: Allow time value
-  input(v-model="interval.dateOf" type="date" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDateOf")
+  input(v-model="interval.dateOf.date" type="date" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDateOf")
+  input(v-model="interval.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDateOfTime")
   input(v-model="interval.duration" type="text" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDuration")
   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
 </template>
