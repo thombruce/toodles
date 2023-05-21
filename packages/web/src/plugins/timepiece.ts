@@ -11,11 +11,11 @@ const formatted = (milliseconds: number) => {
 }
 
 const unformatted = (time: string) => {
-  if (!/^\d+:\d{2}$/.test(time)) return 0
+  if (!/^\d+(?::[0-5]\d){0,2}$/.test(time)) return 0
 
-  var [minutes, seconds] = time.split(':').map(n => Number(n))
+  var [hours, minutes, seconds] = time.split(':').map(n => Number(n))
 
-  return (minutes * 60000) + (seconds * 1000)
+  return (hours * 3600000) + (minutes ? minutes * 60000 : 0) + (seconds ? seconds * 1000 : 0)
 }
 
 export { formatted as timepiece, unformatted as untimepiece }
