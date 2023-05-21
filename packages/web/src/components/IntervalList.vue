@@ -22,11 +22,19 @@ const { forTodo } = storeToRefs(store)
 const { deleteInterval } = store
 
 function addIntervalAndClear(item: { dateOf: string, duration: string}) {
-  if (!/^\d+(?::[0-5]\d){0,2}$/.test(item.duration)) {
+  if (!/^\d+(?:(?::[0-5]\d){0,2}|\.\d{1,2})?$/.test(item.duration)) {
     return
   }
 
-  store.addInterval(props.todoId, item.dateOf, untimepiece(item.duration))
+  let duration
+
+  if (duration = Number(item.duration)) {
+    duration = Number((duration * 3600000).toFixed())
+  } else {
+    duration = untimepiece(item.duration)
+  }
+
+  store.addInterval(props.todoId, item.dateOf, duration)
   interval.value = { dateOf: '', duration: '' }
 }
 </script>
