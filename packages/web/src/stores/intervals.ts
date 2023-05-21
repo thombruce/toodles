@@ -78,6 +78,10 @@ export const useIntervalsStore = defineStore('intervals', () => {
     list.value.chain().find({ id }).remove()
   }
 
+  function deleteForTodo(todoId: UUID) {
+    list.value.findAndRemove({ todoId })
+  }
+
   // Export
-  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval }
+  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval, deleteForTodo }
 })
