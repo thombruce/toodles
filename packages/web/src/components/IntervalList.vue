@@ -60,10 +60,15 @@ ul.mb-4
       span {{ new Date(interval.dateOf) }}
       button.text-red-600(@click="deleteInterval(interval.id)") Delete
 
-//- TODO: Add labels
 form.space-x-4(@submit.prevent="addIntervalAndClear(interval)")
-  input(v-model="interval.dateOf.date" type="date" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDateOf")
-  input(v-model="interval.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDateOfTime")
-  input(v-model="interval.duration" type="text" class="border rounded py-2 px-3 text-gray-700" ref="newIntervalDuration")
+  label
+    span.text-gray-700.text-sm.font-bold.mr-2 Date
+    input(v-model="interval.dateOf.date" type="date" class="border rounded py-2 px-3 text-gray-700")
+  label
+    span.text-gray-700.text-sm.font-bold.mr-2 Time
+    input(v-model="interval.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700")
+  label
+    span.text-gray-700.text-sm.font-bold.mr-2 Duration
+    input(v-model="interval.duration" type="text" class="border rounded py-2 px-3 text-gray-700" required)
   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
 </template>
