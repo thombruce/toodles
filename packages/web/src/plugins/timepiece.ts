@@ -5,4 +5,12 @@ const formatted = (milliseconds: number) => {
   return Number(seconds) == 60 ? (minutes+1) + ":00" : minutes + ":" + (Number(seconds) < 10 ? "0" : "") + seconds
 }
 
-export { formatted as timepiece }
+const unformatted = (time: string) => {
+  if (!/^\d+:\d{2}$/.test(time)) return 0
+
+  var [minutes, seconds] = time.split(':').map(n => Number(n))
+
+  return (minutes * 60000) + (seconds * 1000)
+}
+
+export { formatted as timepiece, unformatted as untimepiece }
