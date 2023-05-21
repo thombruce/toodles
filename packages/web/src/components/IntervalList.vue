@@ -26,7 +26,13 @@ function addIntervalAndClear(item: { dateOf: { date: string, time: string }, dur
     return
   }
 
-  let dateOf, duration
+  let duration, dateOf
+
+  if (duration = Number(item.duration)) {
+    duration = Number((duration * 3600000).toFixed())
+  } else {
+    duration = untimepiece(item.duration)
+  }
 
   if (item.dateOf.date.length && item.dateOf.time.length) {
     dateOf = new Date(item.dateOf.date + "T" + item.dateOf.time).toISOString()
@@ -39,12 +45,6 @@ function addIntervalAndClear(item: { dateOf: { date: string, time: string }, dur
     dateOf = date.toISOString()
   } else {
     dateOf = new Date().toISOString()
-  }
-
-  if (duration = Number(item.duration)) {
-    duration = Number((duration * 3600000).toFixed())
-  } else {
-    duration = untimepiece(item.duration)
   }
 
   store.addInterval(props.todoId, dateOf, duration)
