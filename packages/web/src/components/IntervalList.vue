@@ -34,6 +34,8 @@ function addIntervalAndClear(item: { dateOf: { date: string, time: string }, dur
     duration = untimepiece(item.duration)
   }
 
+  if (duration === 0) return
+
   if (item.dateOf.date.length && item.dateOf.time.length) {
     dateOf = new Date(item.dateOf.date + "T" + item.dateOf.time).toISOString()
   } else if (/^\d{4}-[0-1]\d-[0-3]\d$/.test(item.dateOf.date)) {
