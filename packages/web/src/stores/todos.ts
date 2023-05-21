@@ -65,6 +65,8 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   function deleteTodo(id: UUID) {
+    const intervals = useIntervalsStore()
+    intervals.deleteForTodo(id)
     list.value.chain().find({ id }).remove()
   }
 
