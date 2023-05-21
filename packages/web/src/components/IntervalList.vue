@@ -30,12 +30,12 @@ function addIntervalAndClear(item: { dateOf: { date: string, time: string }, dur
 
   if (item.dateOf.date.length && item.dateOf.time.length) {
     dateOf = new Date(item.dateOf.date + "T" + item.dateOf.time).toISOString()
-  } else if (/^\d{4}-\d{2}-\d{2}$/.test(item.dateOf.date)) {
+  } else if (/^\d{4}-[0-1]\d-[0-3]\d$/.test(item.dateOf.date)) {
     dateOf = item.dateOf.date
-  } else if (/\d{2}:\d{2}/.test(item.dateOf.time)) {
-    const [hours, minutes] = item.dateOf.time.split(':').map(n => Number(n))
+  } else if (/^[0-2]\d:[0-5]\d(?::[0-5]\d)?$/.test(item.dateOf.time)) {
+    const [hours, minutes, seconds] = item.dateOf.time.split(':').map(n => Number(n))
     const date = new Date()
-    date.setHours(hours, minutes, 0, 0)
+    date.setHours(hours, minutes, seconds || 0, 0)
     dateOf = date.toISOString()
   } else {
     dateOf = new Date().toISOString()
