@@ -53,6 +53,11 @@ export const useIntervalsStore = defineStore('intervals', () => {
     }
   }
 
+  function addInterval(todoId: UUID, dateOf: string, duration: number) {
+    var currentTime = Date.now()
+    list.value.insert({ id: uuidv4() as UUID, todoId, dateOf, duration, createdAt: currentTime, updatedAt: currentTime })
+  }
+
   function startInterval(todoId: UUID) {
     var currentTime = Date.now()
     const todos = useTodosStore()
@@ -74,5 +79,5 @@ export const useIntervalsStore = defineStore('intervals', () => {
   }
 
   // Export
-  return { list, forTodo, totalForTodo, activeForTodo, initStore, startInterval, stopInterval, deleteInterval }
+  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval }
 })

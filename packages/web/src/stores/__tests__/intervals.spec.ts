@@ -26,6 +26,17 @@ describe('Intervals Store', () => {
     expect(intervals.activeForTodo(todoId).createdAt).toBeLessThanOrEqual(Date.now())
   })
 
+  it('adds intervals', () => {
+    const todos = useTodosStore()
+    const intervals = useIntervalsStore()
+    todos.addTodo('Get milk')
+    let todoId = todos.list.data[0].id
+
+    let count = intervals.list.data.length
+    intervals.addInterval(todoId, '2016-11-1', 300000)
+    expect(intervals.list.data.length).toBe(count + 1)
+  })
+
   it('starts intervals', () => {
     const todos = useTodosStore()
     const intervals = useIntervalsStore()
