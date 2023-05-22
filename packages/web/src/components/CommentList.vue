@@ -50,14 +50,15 @@ function addCommentAndClear(item: { dateOf: { date: string, time: string }, text
 <template lang="pug">
 h2.text-lg.font-bold Comments
 
-form.space-x-4(@submit.prevent="addCommentAndClear(comment)")
-  label
-    span.text-gray-700.text-sm.font-bold.mr-2 Date
-    input(v-model="comment.dateOf.date" type="date" class="border rounded py-2 px-3 text-gray-700")
-  label
-    span.text-gray-700.text-sm.font-bold.mr-2 Time
-    input(v-model="comment.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700")
-  label
+form(@submit.prevent="addCommentAndClear(comment)")
+  .space-x-4.mb-2
+    label
+      span.text-gray-700.text-sm.font-bold.mr-2 Date
+      input(v-model="comment.dateOf.date" type="date" class="border rounded py-2 px-3 text-gray-700")
+    label
+      span.text-gray-700.text-sm.font-bold.mr-2 Time
+      input(v-model="comment.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700")
+  label.block.mb-2
     span.block.text-gray-700.text-sm.font-bold.mb-2 Text
     CommentEditor(v-model="comment.text" class="border rounded py-2 px-3 text-gray-700")
   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
