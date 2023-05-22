@@ -1,6 +1,7 @@
 import pinia from './pinia'
 import { useTodosStore } from '../stores/todos'
 import { useIntervalsStore } from '../stores/intervals'
+import { useTalliesStore } from '../stores/tallies'
 
 import loki from 'lokijs'
 import LokiIndexedAdapter from 'lokijs/src/loki-indexed-adapter'
@@ -31,6 +32,8 @@ function initStore() {
   todos.initStore()
   const intervals = useIntervalsStore(pinia)
   intervals.initStore()
+  const tallies = useTalliesStore(pinia)
+  tallies.initStore()
 }
 
 export default db
