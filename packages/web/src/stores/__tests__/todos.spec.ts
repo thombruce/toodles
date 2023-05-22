@@ -4,6 +4,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useTodosStore } from '../todos'
 import { useIntervalsStore } from '../intervals'
 import { useTalliesStore } from '../tallies'
+import { useCommentsStore } from '../comments'
 
 describe('Todos Store', () => {
   beforeEach(() => {
@@ -11,6 +12,7 @@ describe('Todos Store', () => {
     useTodosStore().initStore()
     useIntervalsStore().initStore()
     useTalliesStore().initStore()
+    useCommentsStore().initStore()
   })
 
   it('adds todos', () => {

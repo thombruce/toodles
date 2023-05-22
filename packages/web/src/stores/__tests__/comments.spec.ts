@@ -1,15 +1,15 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 
-import { useTalliesStore } from '../tallies'
+import { useCommentsStore } from '../comments'
 import { useTodosStore } from '../todos'
 import { useIntervalsStore } from '../intervals'
-import { useCommentsStore } from '../comments'
+import { useTalliesStore } from '../tallies'
 
-describe('Tallies Store', () => {
+describe('Comments Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useTalliesStore().initStore()
+    useCommentsStore().initStore()
     useTodosStore().initStore()
     // TODO: This... shouldn't be necessary:
     //       It is, however, because the todo
@@ -17,64 +17,64 @@ describe('Tallies Store', () => {
     //       also invokes the deleteInterval
     //       action.
     useIntervalsStore().initStore()
-    useCommentsStore().initStore()
+    useTalliesStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})
 
-  it('adds tallies', () => {
+  it('adds comments', () => {
     const todos = useTodosStore()
-    const tallies = useTalliesStore()
+    const comments = useCommentsStore()
     todos.addTodo('Get milk')
     let todoId = todos.list.data[0].id
 
-    let count = tallies.list.data.length
-    tallies.addTally(todoId, new Date().toISOString(), 1)
-    expect(tallies.list.data.length).toBe(count + 1)
+    let count = comments.list.data.length
+    comments.addComment(todoId, new Date().toISOString(), "Looks good to me!")
+    expect(comments.list.data.length).toBe(count + 1)
   })
 
-  it('removes tallies', () => {
+  it('removes comments', () => {
     const todos = useTodosStore()
-    const tallies = useTalliesStore()
+    const comments = useCommentsStore()
     todos.addTodo('Get milk')
     let todoId = todos.list.data[0].id
 
-    tallies.addTally(todoId, new Date().toISOString())
-    let count = tallies.list.data.length
-    var id = tallies.list.data[0].id
-    tallies.deleteTally(id)
-    expect(tallies.list.data.length).toBe(count - 1)
+    comments.addComment(todoId, new Date().toISOString(), "Looks good to me!")
+    let count = comments.list.data.length
+    var id = comments.list.data[0].id
+    comments.deleteComment(id)
+    expect(comments.list.data.length).toBe(count - 1)
   })
 
-  it('removes all tallies for a todo', () => {
+  it('removes all comments for a todo', () => {
     const name = String(expect.getState().currentTestName)
     const todos = useTodosStore()
-    const tallies = useTalliesStore()
+    const comments = useCommentsStore()
     todos.addTodo(name)
     let todoId = todos.list.data.find(todo => todo.text === name).id
 
     for(var i = 0; i < 10; i++){
-      tallies.addTally(todoId, new Date().toISOString(), 1)
+      comments.addComment(todoId, new Date().toISOString(), "Looks good to me!")
     }
 
-    let count = tallies.list.data.length
-    tallies.deleteForTodo(todoId)
-    expect(tallies.list.data.length).toBe(count - 10)
+    let count = comments.list.data.length
+    comments.deleteForTodo(todoId)
+    expect(comments.list.data.length).toBe(count - 10)
   })
 
   it('is deleted automatically when the todo is deleted', () => {
     const name = String(expect.getState().currentTestName)
     const todos = useTodosStore()
-    const tallies = useTalliesStore()
+    const comments = useCommentsStore()
     todos.addTodo(name)
     let todoId = todos.list.data.find(todo => todo.text === name).id
 
     for(var i = 0; i < 10; i++){
-      tallies.addTally(todoId, new Date().toISOString(), 300000)
+      comments.addComment(todoId, new Date().toISOString(), "Looks good to me!")
     }
 
-    let count = tallies.list.data.length
+    let count = comments.list.data.length
     todos.deleteTodo(todoId)
-    expect(tallies.list.data.length).toBe(count - 10)
+    expect(comments.list.data.length).toBe(count - 10)
   })
 })
