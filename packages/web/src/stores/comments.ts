@@ -31,6 +31,10 @@ export const useCommentsStore = defineStore('comments', () => {
     return comments
   })
 
+  const countForTodo = computed(() => (todoId: UUID) => {
+    return forTodo.value(todoId).length
+  })
+
   // Actions
   function initStore() {
     list.value = db.getCollection('comments')
@@ -54,5 +58,5 @@ export const useCommentsStore = defineStore('comments', () => {
   }
 
   // Export
-  return { list, forTodo, initStore, addComment, deleteComment, deleteForTodo }
+  return { list, forTodo, countForTodo, initStore, addComment, deleteComment, deleteForTodo }
 })
