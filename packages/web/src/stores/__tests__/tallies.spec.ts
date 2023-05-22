@@ -3,12 +3,15 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { useTalliesStore } from '../tallies'
 import { useTodosStore } from '../todos'
+import { useIntervalsStore } from '../intervals'
 
 describe('Tallies Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     useTalliesStore().initStore()
     useTodosStore().initStore()
+    // TODO: This... shouldn't be necessary:
+    useIntervalsStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})
@@ -50,6 +53,22 @@ describe('Tallies Store', () => {
 
     let count = tallies.list.data.length
     tallies.deleteForTodo(todoId)
+    expect(tallies.list.data.length).toBe(count - 10)
+  })
+
+  it('is deleted automatically when the todo is deleted', () => {
+    const name = String(expect.getState().currentTestName)
+    const todos = useTodosStore()
+    const tallies = useTalliesStore()
+    todos.addTodo(name)
+    let todoId = todos.list.data.find(todo => todo.text === name).id
+
+    for(var i = 0; i < 10; i++){
+      tallies.addTally(todoId, new Date().toISOString(), 300000)
+    }
+
+    let count = tallies.list.data.length
+    todos.deleteTodo(todoId)
     expect(tallies.list.data.length).toBe(count - 10)
   })
 })
