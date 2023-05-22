@@ -7,6 +7,7 @@ import { Collection } from 'lokijs'
 import db from '../plugins/loki'
 
 import { useIntervalsStore } from './intervals'
+import { useTalliesStore } from './tallies'
 
 interface Todo {
   id: UUID,
@@ -67,6 +68,8 @@ export const useTodosStore = defineStore('todos', () => {
   function deleteTodo(id: UUID) {
     const intervals = useIntervalsStore()
     intervals.deleteForTodo(id)
+    const tallies = useTalliesStore()
+    tallies.deleteForTodo(id)
     list.value.chain().find({ id }).remove()
   }
 
