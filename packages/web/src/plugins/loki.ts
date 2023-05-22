@@ -5,6 +5,7 @@ import { useTalliesStore } from '../stores/tallies'
 
 import loki from 'lokijs'
 import LokiIndexedAdapter from 'lokijs/src/loki-indexed-adapter'
+import { useCommentsStore } from '@/stores/comments'
 // import { LokiPartitioningAdapter } from 'lokijs'
 // import LokiFsStructuredAdapter from 'lokijs/src/loki-fs-structured-adapter'
 // import LokiNativeScriptAdapter from 'lokijs/src/loki-nativescript-adapter'
@@ -34,6 +35,8 @@ function initStore() {
   intervals.initStore()
   const tallies = useTalliesStore(pinia)
   tallies.initStore()
+  const comments = useCommentsStore(pinia)
+  comments.initStore()
 }
 
 export default db

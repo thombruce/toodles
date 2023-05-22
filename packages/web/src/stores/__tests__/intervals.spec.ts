@@ -5,6 +5,7 @@ import { useIntervalsStore } from '../intervals'
 import { useTodosStore } from '../todos'
 import { useTalliesStore } from '../tallies'
 import type { UUID } from 'crypto'
+import { useCommentsStore } from '../comments'
 
 // TODO: Replace 'todos' with 'store'; do same in todos spec for reusability.
 
@@ -15,6 +16,7 @@ describe('Intervals Store', () => {
     useTodosStore().initStore()
     // TODO: This... shouldn't be necessary:
     useTalliesStore().initStore()
+    useCommentsStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})
