@@ -55,12 +55,7 @@ function addIntervalAndClear(item: { dateOf: { date: string, time: string }, dur
 </script>
 
 <template lang="pug">
-ul.mb-4
-  li(v-for="interval in forTodo(todoId)" :key="interval.id")
-    .space-x-4.mb-1.flex.items-center
-      span {{ timepiece(interval.duration) }}
-      span {{ new Date(interval.dateOf) }}
-      button.text-red-600(@click="deleteInterval(interval.id)") Delete
+h2.text-lg.font-bold Intervals
 
 form.space-x-4(@submit.prevent="addIntervalAndClear(interval)")
   label
@@ -73,4 +68,11 @@ form.space-x-4(@submit.prevent="addIntervalAndClear(interval)")
     span.text-gray-700.text-sm.font-bold.mr-2 Duration
     input(v-model="interval.duration" type="text" class="border rounded py-2 px-3 text-gray-700" required)
   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
+
+ul.mb-4
+  li(v-for="interval in forTodo(todoId)" :key="interval.id")
+    .space-x-4.mb-1.flex.items-center
+      span {{ timepiece(interval.duration) }}
+      span {{ new Date(interval.dateOf) }}
+      button.text-red-600(@click="deleteInterval(interval.id)") Delete
 </template>

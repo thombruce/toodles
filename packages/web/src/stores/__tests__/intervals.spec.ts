@@ -3,6 +3,7 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { useIntervalsStore } from '../intervals'
 import { useTodosStore } from '../todos'
+import { useTalliesStore } from '../tallies'
 import type { UUID } from 'crypto'
 
 // TODO: Replace 'todos' with 'store'; do same in todos spec for reusability.
@@ -12,6 +13,8 @@ describe('Intervals Store', () => {
     setActivePinia(createPinia())
     useIntervalsStore().initStore()
     useTodosStore().initStore()
+    // TODO: This... shouldn't be necessary:
+    useTalliesStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})
@@ -87,6 +90,22 @@ describe('Intervals Store', () => {
 
     let count = intervals.list.data.length
     intervals.deleteForTodo(todoId)
+    expect(intervals.list.data.length).toBe(count - 10)
+  })
+
+  it('is deleted automatically when the todo is deleted', () => {
+    const name = String(expect.getState().currentTestName)
+    const todos = useTodosStore()
+    const intervals = useIntervalsStore()
+    todos.addTodo(name)
+    let todoId = todos.list.data.find(todo => todo.text === name).id
+
+    for(var i = 0; i < 10; i++){
+      intervals.addInterval(todoId, new Date().toISOString(), 300000)
+    }
+
+    let count = intervals.list.data.length
+    todos.deleteTodo(todoId)
     expect(intervals.list.data.length).toBe(count - 10)
   })
 })

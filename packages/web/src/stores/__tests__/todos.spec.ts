@@ -3,12 +3,14 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { useTodosStore } from '../todos'
 import { useIntervalsStore } from '../intervals'
+import { useTalliesStore } from '../tallies'
 
 describe('Todos Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
     useTodosStore().initStore()
     useIntervalsStore().initStore()
+    useTalliesStore().initStore()
   })
 
   it('adds todos', () => {

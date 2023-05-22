@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router"
 import { useTodosStore } from "../stores/todos"
 
 import IntervalTimer from "../components/IntervalTimer.vue"
+import TallyCounter from "../components/TallyCounter.vue"
 
 const props = defineProps({
   todo: {
@@ -23,5 +24,6 @@ const { updateTodo, toggleTodo, deleteTodo } = store
   input(@input="updateTodo(todo.id, $event.target.value)" @keyup.enter="$refs.newTodo.focus()" :value="todo.text")
   RouterLink(:to="{ name: 'todo', params: { todoId: todo.id }}") Link
   IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
+  TallyCounter(:todoId="todo.id" class="w-20 min-w-fit")
   button.text-red-600(@click="deleteTodo(todo.id)") Delete
 </template>
