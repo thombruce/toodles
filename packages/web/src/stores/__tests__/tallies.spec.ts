@@ -11,6 +11,10 @@ describe('Tallies Store', () => {
     useTalliesStore().initStore()
     useTodosStore().initStore()
     // TODO: This... shouldn't be necessary:
+    //       It is, however, because the todo
+    //       store being invoked for deleteTodo
+    //       also invokes the deleteInterval
+    //       action.
     useIntervalsStore().initStore()
   })
 
