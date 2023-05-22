@@ -4,6 +4,8 @@ import { storeToRefs } from "pinia"
 
 import { useCommentsStore } from "../stores/comments"
 
+import CommentEditor from "./CommentEditor.vue"
+
 const props = defineProps({
   todoId: {
     type: String,
@@ -57,7 +59,7 @@ form.space-x-4(@submit.prevent="addCommentAndClear(comment)")
     input(v-model="comment.dateOf.time" type="time" class="border rounded py-2 px-3 text-gray-700")
   label
     span.block.text-gray-700.text-sm.font-bold.mb-2 Text
-    textarea(v-model="comment.text" class="border rounded py-2 px-3 text-gray-700" required)
+    CommentEditor(v-model="comment.text" class="border rounded py-2 px-3 text-gray-700")
   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") Add
 
 ul.mb-4
