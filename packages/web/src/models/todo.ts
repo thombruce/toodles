@@ -6,6 +6,11 @@ import { Interval } from './interval'
 import { Tally } from './tally'
 import { Comment } from './comment'
 
+// TODO: Prefer not to do this; what alternatives exist?
+import { useIntervalsStore } from '@/stores/intervals'
+import { useTalliesStore } from '@/stores/tallies'
+import { useCommentsStore } from '@/stores/comments'
+
 interface TodoInterface {
   id?: UUID
   text: string
@@ -53,15 +58,15 @@ class Todo implements TodoInterface {
 
   // Instance methods: Getters
   get intervals() {
-    return Interval.where({ todoId: this.id })
+    return Interval.where({ todoId: this.id }, useIntervalsStore().list)
   }
 
   get tallies() {
-    return Tally.where({ todoId: this.id })
+    return Tally.where({ todoId: this.id }, useTalliesStore().list)
   }
 
   get comments() {
-    return Comment.where({ todoId: this.id })
+    return Comment.where({ todoId: this.id }, useCommentsStore().list)
   }
 
   get createdAt() {
@@ -99,9 +104,9 @@ class Todo implements TodoInterface {
   }
 
   destroy() {
-    Interval.destroyWhere({ todoId: this.id })
-    Tally.destroyWhere({ todoId: this.id })
-    Comment.destroyWhere({ todoId: this.id })
+    Interval.destroyWhere({ todoId: this.id }, useIntervalsStore().list)
+    Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
+    Comment.destroyWhere({ todoId: this.id }, useCommentsStore().list)
     this.collection.chain().find({ id: this.id }).remove()
   }
 }

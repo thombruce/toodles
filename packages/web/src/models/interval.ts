@@ -5,6 +5,9 @@ import { Collection } from 'lokijs'
 import db from '../plugins/loki'
 import { Todo } from './todo'
 
+// TODO: Prefer not to do this; what alternatives exist?
+import { useTodosStore } from '@/stores/todos'
+
 interface IntervalInterface {
   id?: UUID,
   todoId: UUID,
@@ -38,7 +41,7 @@ class Interval implements IntervalInterface {
 
   // Class methods
   static all(collection: Collection) {
-    collection.data.map((t: IntervalInterface) => new Interval(t))
+    collection.data.map((t: IntervalInterface) => new Interval(t, collection))
   }
 
   static where(query: object, collection: Collection) {
@@ -46,14 +49,13 @@ class Interval implements IntervalInterface {
   }
 
   static find(id: UUID, collection: Collection) {
-    return new Interval(Interval.init().find({ id })[0], collection)
+    return new Interval(collection.find({ id })[0], collection)
   }
 
   // Instance methods: Getters
-  // get todo() {
-  //   // Oh, how would we invoke the todo collection?
-  //   return Todo.find(this.todoId)
-  // }
+  get todo() {
+    return Todo.find(this.todoId, useTodosStore().list)
+  }
 
   get createdAt() {
     return this.meta?.created
