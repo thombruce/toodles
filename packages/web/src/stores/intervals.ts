@@ -1,87 +1,54 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { v4 as uuidv4 } from 'uuid'
 import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
-import db from '../plugins/loki'
-
+import { Interval } from '@/models/Interval'
+import { IntervalCollection } from '@/models/IntervalCollection'
+import { Todo } from '@/models/Todo'
 import { useTodosStore } from './todos'
-
-interface Interval {
-  id: UUID,
-  todoId: UUID,
-  dateOf: string,
-  duration?: number,
-  createdAt: EpochTimeStamp,
-  updatedAt: EpochTimeStamp
-}
-
-interface List extends Collection {
-  insert(todo: Interval | Interval[]): Interval[] | undefined,
-  update(todo: Interval | Interval[]): undefined
-}
 
 export const useIntervalsStore = defineStore('intervals', () => {
   // State
-  const list = ref({} as List)
+  const list = ref({} as Collection)
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
-    const intervals = list.value.find({ todoId }) as Interval[]
-    return intervals
+    return Interval.where({ todoId }, list.value)
   })
 
   const totalForTodo = computed(() => (todoId: UUID) => {
-    const intervals = list.value.find({ todoId }) as Interval[]
+    const intervals = Interval.where({ todoId }, list.value)
     
     return _sumBy(intervals, 'duration') || 0
   })
 
   const activeForTodo = computed(() => (todoId: UUID) => {
-    const interval = list.value.find({ $and: [{ todoId }, { createdAt: { $exists: true } }, { duration: { $exists: false } }] })[0] as Interval
-    return interval
+    return Todo.find(todoId, useTodosStore().list).activeInterval
   })
 
   // Actions
   function initStore() {
-    list.value = db.getCollection('intervals')
-
-    if(!list.value){
-        list.value = db.addCollection('intervals', { unique: ['id'], indices: ['id', 'todoId'], autoupdate: true })
-    }
+    list.value = new IntervalCollection() as Collection
   }
 
   function addInterval(todoId: UUID, dateOf: string, duration: number) {
-    var currentTime = Date.now()
-    list.value.insert({ id: uuidv4() as UUID, todoId, dateOf, duration, createdAt: currentTime, updatedAt: currentTime })
+    new Interval({ todoId, dateOf, duration }, list.value).save()
   }
 
   function startInterval(todoId: UUID) {
-    var currentTime = Date.now()
-    const todos = useTodosStore()
-    let todo = todos.find(todoId)
-    if (todo.done) todos.toggleTodo(todoId)
-    list.value.insert({ id: uuidv4() as UUID, todoId, dateOf: new Date(currentTime).toISOString(), createdAt: currentTime, updatedAt: currentTime })
+    new Interval({ todoId }, list.value).start()
   }
 
   function stopInterval(id: UUID) {
-    var interval = list.value.find({ id })[0] as Interval
-    if (!interval.createdAt || interval.duration) return
-    var currentTime = Date.now()
-    var duration = currentTime - interval.createdAt
-    list.value.update({ ...interval, ...{ duration, updatedAt: currentTime } })
+    Interval.find(id, list.value).stop()
   }
 
   function deleteInterval(id: UUID) {
-    list.value.chain().find({ id }).remove()
-  }
-
-  function deleteForTodo(todoId: UUID) {
-    list.value.findAndRemove({ todoId })
+    Interval.find(id, list.value).destroy()
   }
 
   // Export
-  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval, deleteForTodo }
+  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval }
 })

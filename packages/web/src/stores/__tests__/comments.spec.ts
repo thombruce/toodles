@@ -46,22 +46,6 @@ describe('Comments Store', () => {
     expect(comments.list.data.length).toBe(count - 1)
   })
 
-  it('removes all comments for a todo', () => {
-    const name = String(expect.getState().currentTestName)
-    const todos = useTodosStore()
-    const comments = useCommentsStore()
-    todos.addTodo(name)
-    let todoId = todos.list.data.find(todo => todo.text === name).id
-
-    for(var i = 0; i < 10; i++){
-      comments.addComment(todoId, new Date().toISOString(), "Looks good to me!")
-    }
-
-    let count = comments.list.data.length
-    comments.deleteForTodo(todoId)
-    expect(comments.list.data.length).toBe(count - 10)
-  })
-
   it('is deleted automatically when the todo is deleted', () => {
     const name = String(expect.getState().currentTestName)
     const todos = useTodosStore()
