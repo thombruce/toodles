@@ -5,6 +5,7 @@ import { Collection } from 'lokijs'
 import db from '../plugins/loki'
 import { Interval } from './interval'
 import { Tally } from './tally'
+import { Comment } from './comment'
 
 interface TodoInterface {
   id?: UUID
@@ -70,8 +71,8 @@ class Todo implements TodoInterface {
     return Tally.where({ todoId: this.id })
   }
 
-  get todos() {
-    return [] // TODO
+  get comments() {
+    return Comment.where({ todoId: this.id })
   }
 
   get createdAt() {
