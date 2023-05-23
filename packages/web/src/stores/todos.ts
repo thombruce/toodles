@@ -8,6 +8,7 @@ import { Collection } from 'lokijs'
 // import { useCommentsStore } from './comments'
 
 import { Todo } from '../models/todo'
+import { TodoCollection } from '@/models/TodoCollection'
 
 export const useTodosStore = defineStore('todos', () => {
   // State
@@ -15,28 +16,28 @@ export const useTodosStore = defineStore('todos', () => {
 
   // Getters
   const find = computed(() => (id: UUID) => {
-    return Todo.find(id)
+    return Todo.find(id, list.value)
   })
 
   // Actions
   function initStore() {
-    list.value = Todo.init()
+    list.value = new TodoCollection() as Collection
   }
 
   function addTodo(text: string) {
-    new Todo(text).save()
+    new Todo(text, list.value).save()
   }
 
   function updateTodo(id: UUID, text: string) {
-    Todo.find(id).update(text)
+    Todo.find(id, list.value).update(text)
   }
 
   function toggleTodo(id: UUID) {
-    Todo.find(id).toggle()
+    Todo.find(id, list.value).toggle()
   }
 
   function deleteTodo(id: UUID) {
-    Todo.find(id).destroy()
+    Todo.find(id, list.value).destroy()
   }
 
   // Export

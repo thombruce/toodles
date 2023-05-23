@@ -2,7 +2,6 @@ import type { UUID } from 'crypto'
 import { v4 as uuidv4 } from 'uuid'
 import { Collection } from 'lokijs'
 
-import db from '../plugins/loki'
 import { Interval } from './interval'
 import { Tally } from './tally'
 import { Comment } from './comment'
@@ -25,8 +24,8 @@ class Todo implements TodoInterface {
   $loki?: number
 
   // Constructor
-  constructor(todo: string | TodoInterface) {
-    this.collection = Todo.init()
+  constructor(todo: string | TodoInterface, collection: Collection) {
+    this.collection = collection
 
     if (typeof todo === 'string') {
       this.id = uuidv4() as UUID
@@ -42,24 +41,14 @@ class Todo implements TodoInterface {
   }
 
   // Class methods
-  static init() {
-    var collection = db.getCollection('todos')
-
-    if(!collection){
-      collection = db.addCollection('todos', { unique: ['id'], indices: ['id'], autoupdate: true })
-    }
-
-    return collection
-  }
-
-  static all() {
-    this.init().data.map((t: TodoInterface) => new Todo(t))
+  static all(collection: Collection) {
+    collection.data.map((t: TodoInterface) => new Todo(t, collection))
   }
 
   static where() {}
 
-  static find(id: UUID) {
-    return new Todo(Todo.init().find({ id })[0])
+  static find(id: UUID, collection: Collection) {
+    return new Todo(collection.find({ id })[0], collection)
   }
 
   // Instance methods: Getters
@@ -90,13 +79,13 @@ class Todo implements TodoInterface {
   }
 
   update(text: string) {
-    var todo = Todo.find(this.id)
+    var todo = Todo.find(this.id, this.collection)
     this.collection.update({ ...todo, ...{ text } })
   }
 
   toggle() {
     var currentTime = Date.now()
-    var todo = Todo.find(this.id)
+    var todo = Todo.find(this.id, this.collection)
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null } })
     } else {
