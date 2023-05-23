@@ -3,50 +3,50 @@ import { v4 as uuidv4 } from 'uuid'
 import { Collection } from 'lokijs'
 
 import db from '../plugins/loki'
-import { Todo } from './todo'
+import { Todo } from './Todo'
 
-interface CommentInterface {
+interface TallyInterface {
   id?: UUID,
   todoId: UUID,
   dateOf?: string,
-  text: string,
+  count?: number,
   meta?: any
   $loki?: number
 }
 
-class Comment implements CommentInterface {
+class Tally implements TallyInterface {
   collection: Collection
 
   id: UUID
   todoId: UUID
   dateOf: string
-  text: string
+  count: number
   meta?: any
   $loki?: number
 
   // Constructor
-  constructor(comment: CommentInterface, collection: Collection) {
+  constructor(tally: TallyInterface, collection: Collection) {
     this.collection = collection
 
-    this.id = (comment.id || uuidv4()) as UUID
-    this.todoId = comment.todoId
-    this.dateOf = comment.dateOf || new Date().toISOString()
-    this.text = comment.text
-    this.meta = comment.meta
-    this.$loki = comment.$loki
+    this.id = (tally.id || uuidv4()) as UUID
+    this.todoId = tally.todoId
+    this.dateOf = tally.dateOf || new Date().toISOString()
+    this.count = tally.count || 1
+    this.meta = tally.meta
+    this.$loki = tally.$loki
   }
 
   // Class methods
   static all(collection: Collection) {
-    collection.data.map((t: CommentInterface) => new Comment(t, collection))
+    collection.data.map((t: TallyInterface) => new Tally(t, collection))
   }
 
   static where(query: object, collection: Collection) {
-    return collection.find(query).map((t: CommentInterface) => new Comment(t, collection))
+    return collection.find(query).map((t: TallyInterface) => new Tally(t, collection))
   }
 
   static find(id: UUID, collection: Collection) {
-    return new Comment(collection.find({ id })[0], collection)
+    return new Tally(collection.find({ id })[0], collection)
   }
 
   // Instance methods: Getters
@@ -64,7 +64,7 @@ class Comment implements CommentInterface {
 
   // Instance methods: Actions
   save() {
-    this.collection.insert({ id: this.id, todoId: this.todoId, dateOf: this.dateOf, text: this.text })
+    this.collection.insert({ id: this.id, todoId: this.todoId, dateOf: this.dateOf, count: this.count })
   }
 
   destroy() {
@@ -76,4 +76,4 @@ class Comment implements CommentInterface {
   }
 }
 
-export { Comment }
+export { Tally }

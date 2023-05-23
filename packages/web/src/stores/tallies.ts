@@ -4,7 +4,7 @@ import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
-import { Tally } from '@/models/tally'
+import { Tally } from '@/models/Tally'
 import { TallyCollection } from '@/models/TallyCollection'
 
 export const useTalliesStore = defineStore('tallies', () => {

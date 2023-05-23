@@ -6,7 +6,7 @@ import { mount } from '@vue/test-utils'
 import { useTodosStore } from '@/stores/todos'
 import { useIntervalsStore } from '@/stores/intervals'
 import TodoItem from '../TodoItem.vue'
-import { Todo } from '@/models/todo'
+import { Todo } from '@/models/Todo'
 
 vi.mock('vue-router', () => ({
   RouterLink: vi.fn()

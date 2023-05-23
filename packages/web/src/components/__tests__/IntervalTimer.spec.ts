@@ -6,7 +6,7 @@ import { mount } from '@vue/test-utils'
 import { useTodosStore } from '@/stores/todos'
 import { useIntervalsStore } from '@/stores/intervals'
 import IntervalTimer from '../IntervalTimer.vue'
-import { Todo } from '@/models/todo'
+import { Todo } from '@/models/Todo'
 
 const todo = new Todo("Get milk!", useTodosStore().list)
 todo.save()

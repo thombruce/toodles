@@ -7,7 +7,7 @@ import { Collection } from 'lokijs'
 // import { useTalliesStore } from './tallies'
 // import { useCommentsStore } from './comments'
 
-import { Todo } from '../models/todo'
+import { Todo } from '../models/Todo'
 import { TodoCollection } from '@/models/TodoCollection'
 
 export const useTodosStore = defineStore('todos', () => {

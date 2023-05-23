@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
-import { Comment } from '@/models/comment'
+import { Comment } from '@/models/Comment'
 import { CommentCollection } from '@/models/CommentCollection'
 
 export const useCommentsStore = defineStore('comments', () => {

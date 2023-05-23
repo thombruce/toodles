@@ -4,9 +4,9 @@ import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
-import { Interval } from '@/models/interval'
+import { Interval } from '@/models/Interval'
 import { IntervalCollection } from '@/models/IntervalCollection'
-import { Todo } from '@/models/todo'
+import { Todo } from '@/models/Todo'
 import { useTodosStore } from './todos'
 
 export const useIntervalsStore = defineStore('intervals', () => {

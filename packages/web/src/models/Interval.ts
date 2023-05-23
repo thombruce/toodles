@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { Collection } from 'lokijs'
 
 import db from '../plugins/loki'
-import { Todo } from './todo'
+import { Todo } from './Todo'
 
 // TODO: Prefer not to do this; what alternatives exist?
 import { useTodosStore } from '@/stores/todos'
