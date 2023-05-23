@@ -25,8 +25,8 @@ class Tally implements TallyInterface {
   $loki?: number
 
   // Constructor
-  constructor(tally: TallyInterface) {
-    this.collection = Tally.init()
+  constructor(tally: TallyInterface, collection: Collection) {
+    this.collection = collection
 
     this.id = (tally.id || uuidv4()) as UUID
     this.todoId = tally.todoId
@@ -37,32 +37,22 @@ class Tally implements TallyInterface {
   }
 
   // Class methods
-  static init() {
-    var collection = db.getCollection('tallies')
-
-    if(!collection){
-      collection = db.addCollection('tallies', { unique: ['id'], indices: ['id', 'todoId'], autoupdate: true })
-    }
-
-    return collection
+  static all(collection: Collection) {
+    collection.data.map((t: TallyInterface) => new Tally(t, collection))
   }
 
-  static all() {
-    this.init().data.map((t: TallyInterface) => new Tally(t))
+  static where(query: object, collection: Collection) {
+    return collection.find(query).map((t: TallyInterface) => new Tally(t, collection))
   }
 
-  static where(query: object) {
-    return this.init().find(query).map((t: TallyInterface) => new Tally(t))
-  }
-
-  static find(id: UUID) {
-    return new Tally(Tally.init().find({ id })[0])
+  static find(id: UUID, collection: Collection) {
+    return new Tally(collection.find({ id })[0], collection)
   }
 
   // Instance methods: Getters
-  get todo() {
-    return Todo.find(this.todoId)
-  }
+  // get todo() {
+  //   return Todo.find(this.todoId)
+  // }
 
   get createdAt() {
     return this.meta?.created
@@ -81,8 +71,8 @@ class Tally implements TallyInterface {
     this.collection.chain().find({ id: this.id }).remove()
   }
 
-  static destroyWhere(query: object) {
-    this.init().findAndRemove(query)
+  static destroyWhere(query: object, collection: Collection) {
+    collection.findAndRemove(query)
   }
 }
 

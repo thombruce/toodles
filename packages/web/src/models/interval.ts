@@ -25,8 +25,8 @@ class Interval implements IntervalInterface {
   $loki?: number
 
   // Constructor
-  constructor(interval: IntervalInterface) {
-    this.collection = Interval.init()
+  constructor(interval: IntervalInterface, collection: Collection) {
+    this.collection = collection
 
     this.id = (interval.id || uuidv4()) as UUID
     this.todoId = interval.todoId
@@ -37,32 +37,23 @@ class Interval implements IntervalInterface {
   }
 
   // Class methods
-  static init() {
-    var collection = db.getCollection('intervals')
-
-    if(!collection){
-      collection = db.addCollection('intervals', { unique: ['id'], indices: ['id', 'todoId'], autoupdate: true })
-    }
-
-    return collection
+  static all(collection: Collection) {
+    collection.data.map((t: IntervalInterface) => new Interval(t))
   }
 
-  static all() {
-    this.init().data.map((t: IntervalInterface) => new Interval(t))
+  static where(query: object, collection: Collection) {
+    return collection.find(query).map((t: IntervalInterface) => new Interval(t, collection))
   }
 
-  static where(query: object) {
-    return this.init().find(query).map((t: IntervalInterface) => new Interval(t))
-  }
-
-  static find(id: UUID) {
-    return new Interval(Interval.init().find({ id })[0])
+  static find(id: UUID, collection: Collection) {
+    return new Interval(Interval.init().find({ id })[0], collection)
   }
 
   // Instance methods: Getters
-  get todo() {
-    return Todo.find(this.todoId)
-  }
+  // get todo() {
+  //   // Oh, how would we invoke the todo collection?
+  //   return Todo.find(this.todoId)
+  // }
 
   get createdAt() {
     return this.meta?.created
@@ -78,13 +69,14 @@ class Interval implements IntervalInterface {
   }
   
   start() {
+    // Ah, whoops. We do need the todo collection initialised then.
     if (this.todo.done) this.todo.toggle()
     this.collection.insert({ id: this.id, todoId: this.todo.id, dateOf: this.dateOf })
   }
 
   stop() {
     if (!this.createdAt || this.duration) return
-    var interval = Interval.find(this.id)
+    var interval = Interval.find(this.id, this.collection)
     var duration = Date.now() - this.createdAt    
     this.collection.update({ ...interval, ...{ duration } })
   }
@@ -93,8 +85,8 @@ class Interval implements IntervalInterface {
     this.collection.chain().find({ id: this.id }).remove()
   }
 
-  static destroyWhere(query: object) {
-    this.init().findAndRemove(query)
+  static destroyWhere(query: object, collection: Collection) {
+    collection.findAndRemove(query)
   }
 }
 

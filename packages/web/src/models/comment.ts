@@ -25,8 +25,8 @@ class Comment implements CommentInterface {
   $loki?: number
 
   // Constructor
-  constructor(comment: CommentInterface) {
-    this.collection = Comment.init()
+  constructor(comment: CommentInterface, collection: Collection) {
+    this.collection = collection
 
     this.id = (comment.id || uuidv4()) as UUID
     this.todoId = comment.todoId
@@ -37,32 +37,22 @@ class Comment implements CommentInterface {
   }
 
   // Class methods
-  static init() {
-    var collection = db.getCollection('comments')
-
-    if(!collection){
-      collection = db.addCollection('comments', { unique: ['id'], indices: ['id', 'todoId'], autoupdate: true })
-    }
-
-    return collection
+  static all(collection: Collection) {
+    collection.data.map((t: CommentInterface) => new Comment(t, collection))
   }
 
-  static all() {
-    this.init().data.map((t: CommentInterface) => new Comment(t))
+  static where(query: object, collection: Collection) {
+    return collection.find(query).map((t: CommentInterface) => new Comment(t, collection))
   }
 
-  static where(query: object) {
-    return this.init().find(query).map((t: CommentInterface) => new Comment(t))
-  }
-
-  static find(id: UUID) {
-    return new Comment(Comment.init().find({ id })[0])
+  static find(id: UUID, collection: Collection) {
+    return new Comment(collection.find({ id })[0], collection)
   }
 
   // Instance methods: Getters
-  get todo() {
-    return Todo.find(this.todoId)
-  }
+  // get todo() {
+  //   return Todo.find(this.todoId)
+  // }
 
   get createdAt() {
     return this.meta?.created
@@ -81,8 +71,8 @@ class Comment implements CommentInterface {
     this.collection.chain().find({ id: this.id }).remove()
   }
 
-  static destroyWhere(query: object) {
-    this.init().findAndRemove(query)
+  static destroyWhere(query: object, collection: Collection) {
+    collection.findAndRemove(query)
   }
 }
 

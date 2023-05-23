@@ -4,6 +4,7 @@ import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 import { Comment } from '@/models/comment'
+import { CommentCollection } from '@/models/CommentCollection'
 
 export const useCommentsStore = defineStore('comments', () => {
   // State
@@ -11,24 +12,24 @@ export const useCommentsStore = defineStore('comments', () => {
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
-    return Comment.where({ todoId })
+    return Comment.where({ todoId }, list.value)
   })
 
   const countForTodo = computed(() => (todoId: UUID) => {
-    return Comment.where({ todoId }).length
+    return Comment.where({ todoId }, list.value).length
   })
 
   // Actions
   function initStore() {
-    Comment.init()
+    list.value = new CommentCollection() as Collection
   }
 
   function addComment(todoId: UUID, dateOf: string, text: string) {
-    new Comment({ todoId, dateOf, text }).save()
+    new Comment({ todoId, dateOf, text }, list.value).save()
   }
 
   function deleteComment(id: UUID) {
-    Comment.find(id).destroy()
+    Comment.find(id, list.value).destroy()
   }
 
   // Export

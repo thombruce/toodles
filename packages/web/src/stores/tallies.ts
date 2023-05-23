@@ -5,6 +5,7 @@ import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
 import { Tally } from '@/models/tally'
+import { TallyCollection } from '@/models/TallyCollection'
 
 export const useTalliesStore = defineStore('tallies', () => {
   // State
@@ -12,26 +13,26 @@ export const useTalliesStore = defineStore('tallies', () => {
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
-    return Tally.where({ todoId })
+    return Tally.where({ todoId }, list.value)
   })
 
   const totalForTodo = computed(() => (todoId: UUID) => {
-    const tallies = Tally.where({ todoId })
+    const tallies = Tally.where({ todoId }, list.value)
     
     return _sumBy(tallies, 'count') || 0
   })
 
   // Actions
   function initStore() {
-    Tally.init()
+    list.value = new TallyCollection() as Collection
   }
 
   function addTally(todoId: UUID, dateOf: string, count = 1 as number) {
-    new Tally({ todoId, dateOf, count }).save()
+    new Tally({ todoId, dateOf, count }, list.value).save()
   }
 
   function deleteTally(id: UUID) {
-    Tally.find(id).destroy()
+    Tally.find(id, list.value).destroy()
   }
 
   // Export
