@@ -4,6 +4,7 @@ import { Collection } from 'lokijs'
 
 import db from '../plugins/loki'
 import { Todo } from './Todo'
+import { useTodosStore } from '@/stores/todos'
 
 interface CommentInterface {
   id?: UUID,
@@ -50,9 +51,9 @@ class Comment implements CommentInterface {
   }
 
   // Instance methods: Getters
-  // get todo() {
-  //   return Todo.find(this.todoId)
-  // }
+  get todo() {
+    return Todo.find(this.todoId, useTodosStore().list)
+  }
 
   get createdAt() {
     return this.meta?.created
