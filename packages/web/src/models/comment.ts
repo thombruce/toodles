@@ -9,7 +9,7 @@ interface CommentInterface {
   id?: UUID,
   todoId: UUID,
   dateOf?: string,
-  message: string,
+  text: string,
   meta?: any
   $loki?: number
 }
@@ -20,7 +20,7 @@ class Comment implements CommentInterface {
   id: UUID
   todoId: UUID
   dateOf: string
-  message: string
+  text: string
   meta?: any
   $loki?: number
 
@@ -31,7 +31,7 @@ class Comment implements CommentInterface {
     this.id = (comment.id || uuidv4()) as UUID
     this.todoId = comment.todoId
     this.dateOf = comment.dateOf || new Date().toISOString()
-    this.message = comment.message
+    this.text = comment.text
     this.meta = comment.meta
     this.$loki = comment.$loki
   }
@@ -74,7 +74,7 @@ class Comment implements CommentInterface {
 
   // Instance methods: Actions
   save() {
-    this.collection.insert({ id: this.id, todoId: this.todoId, dateOf: this.dateOf, message: this.message })
+    this.collection.insert({ id: this.id, todoId: this.todoId, dateOf: this.dateOf, text: this.text })
   }
 
   destroy() {
