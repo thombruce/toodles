@@ -78,7 +78,7 @@ class Interval implements IntervalInterface {
   stop() {
     if (!this.createdAt || this.duration) return
     var interval = Interval.find(this.id, this.collection)
-    var duration = Date.now() - this.createdAt    
+    var duration = Date.now() - this.createdAt
     this.collection.update({ ...interval, ...{ duration, collection: undefined } })
   }
 

@@ -6,6 +6,8 @@ import { sumBy as _sumBy } from 'lodash'
 
 import { Interval } from '@/models/interval'
 import { IntervalCollection } from '@/models/IntervalCollection'
+import { Todo } from '@/models/todo'
+import { useTodosStore } from './todos'
 
 export const useIntervalsStore = defineStore('intervals', () => {
   // State
@@ -23,7 +25,7 @@ export const useIntervalsStore = defineStore('intervals', () => {
   })
 
   const activeForTodo = computed(() => (todoId: UUID) => {
-    return Interval.where({ $and: [{ todoId }, { createdAt: { $exists: true } }, { duration: { $exists: false } }] }, list.value)[0]
+    return Todo.find(todoId, useTodosStore().list).activeInterval
   })
 
   // Actions

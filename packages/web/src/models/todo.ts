@@ -69,6 +69,10 @@ class Todo implements TodoInterface {
     return Comment.where({ todoId: this.id }, useCommentsStore().list)
   }
 
+  get activeInterval() {
+    return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0]
+  }
+
   get createdAt() {
     return this.meta?.created
   }
@@ -94,11 +98,7 @@ class Todo implements TodoInterface {
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
     } else {
-      // TODO: Handle active interval
-
-      // const intervals = useIntervalsStore()
-      // let activeInterval
-      // if (activeInterval = intervals.activeForTodo(todo.id)) intervals.stopInterval(activeInterval.id)
+      this.activeInterval?.stop()
       this.collection.update({ ...todo, ...{ done: currentTime, collection: undefined } })
     }
   }
