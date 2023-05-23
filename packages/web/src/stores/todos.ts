@@ -3,10 +3,6 @@ import { defineStore } from 'pinia'
 import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 
-// import { useIntervalsStore } from './intervals'
-// import { useTalliesStore } from './tallies'
-// import { useCommentsStore } from './comments'
-
 import { Todo } from '../models/Todo'
 import { TodoCollection } from '@/models/TodoCollection'
 
