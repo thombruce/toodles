@@ -1,5 +1,15 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { Todo } from '../Todo'
+import { useTodosStore } from '@/stores/todos'
+import { createPinia, setActivePinia } from 'pinia'
 
-describe.todo('Todo', () => {
+describe('Todo', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    useTodosStore().initStore()
+  })
+
+  it('constructs a new todo', () => {
+    expect(new Todo('Get milk!', useTodosStore().list)).toBeInstanceOf(Todo)
+  })
 })
