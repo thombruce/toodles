@@ -1,3 +1,3 @@
 # Toodles
 
-![test](https://github.com/thombruce/toodles/actions/workflows/ci.yml/badge.svg)
+![test](https://github.com/thombruce/toodles/actions/workflows/ci.yml/badge.svg?branch=main)
