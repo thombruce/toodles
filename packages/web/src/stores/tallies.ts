@@ -1,62 +1,42 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { v4 as uuidv4 } from 'uuid'
 import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
-import db from '../plugins/loki'
-
-interface Tally {
-  id: UUID,
-  todoId: UUID,
-  dateOf: string,
-  count: number,
-  createdAt: EpochTimeStamp,
-  updatedAt: EpochTimeStamp
-}
-
-interface List extends Collection {
-  insert(todo: Tally | Tally[]): Tally[] | undefined,
-  update(todo: Tally | Tally[]): undefined
-}
+import { Tally } from '@/models/tally'
 
 export const useTalliesStore = defineStore('tallies', () => {
   // State
-  const list = ref({} as List)
+  const list = ref({} as Collection)
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
-    const tallies = list.value.find({ todoId }) as Tally[]
-    return tallies
+    return Tally.where({ todoId })
   })
 
   const totalForTodo = computed(() => (todoId: UUID) => {
-    const tallies = list.value.find({ todoId }) as Tally[]
+    const tallies = Tally.where({ todoId })
     
     return _sumBy(tallies, 'count') || 0
   })
 
   // Actions
   function initStore() {
-    list.value = db.getCollection('tallies')
-
-    if(!list.value){
-        list.value = db.addCollection('tallies', { unique: ['id'], indices: ['id', 'todoId'], autoupdate: true })
-    }
+    Tally.init()
   }
 
   function addTally(todoId: UUID, dateOf: string, count = 1 as number) {
-    var currentTime = Date.now()
-    list.value.insert({ id: uuidv4() as UUID, todoId, dateOf, count, createdAt: currentTime, updatedAt: currentTime })
+    new Tally({ todoId, dateOf, count }).save()
   }
 
   function deleteTally(id: UUID) {
-    list.value.chain().find({ id }).remove()
+    Tally.find(id).destroy()
   }
 
   function deleteForTodo(todoId: UUID) {
-    list.value.findAndRemove({ todoId })
+    // TODO: This should be a static method
+    new Tally({ todoId }).destroyWhere({ todoId })
   }
 
   // Export
