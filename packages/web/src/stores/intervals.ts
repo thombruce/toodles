@@ -46,11 +46,6 @@ export const useIntervalsStore = defineStore('intervals', () => {
     Interval.find(id).destroy()
   }
 
-  function deleteForTodo(todoId: UUID) {
-    // TODO: This should be a static method
-    new Interval({ todoId }).destroyWhere({ todoId })
-  }
-
   // Export
-  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval, deleteForTodo }
+  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval }
 })

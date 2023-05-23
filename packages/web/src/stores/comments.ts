@@ -32,11 +32,6 @@ export const useCommentsStore = defineStore('comments', () => {
     Comment.find(id).destroy()
   }
 
-  function deleteForTodo(todoId: UUID) {
-    // TODO: This should be a static method
-    new Comment({ todoId, text: 'Foo' }).destroyWhere({ todoId })
-  }
-
   // Export
-  return { list, forTodo, countForTodo, initStore, addComment, deleteComment, deleteForTodo }
+  return { list, forTodo, countForTodo, initStore, addComment, deleteComment }
 })

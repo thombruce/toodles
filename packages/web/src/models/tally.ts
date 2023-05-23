@@ -81,9 +81,8 @@ class Tally implements TallyInterface {
     this.collection.chain().find({ id: this.id }).remove()
   }
 
-  // TODO: This should be a static method.
-  destroyWhere(query: object) {
-    this.collection.findAndRemove(query)
+  static destroyWhere(query: object) {
+    this.init().findAndRemove(query)
   }
 }
 

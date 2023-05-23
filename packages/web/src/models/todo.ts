@@ -100,6 +100,8 @@ class Todo implements TodoInterface {
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null } })
     } else {
+      // TODO: Handle active interval
+
       // const intervals = useIntervalsStore()
       // let activeInterval
       // if (activeInterval = intervals.activeForTodo(todo.id)) intervals.stopInterval(activeInterval.id)
@@ -108,6 +110,9 @@ class Todo implements TodoInterface {
   }
 
   destroy() {
+    Interval.destroyWhere({ todoId: this.id })
+    Tally.destroyWhere({ todoId: this.id })
+    Comment.destroyWhere({ todoId: this.id })
     this.collection.chain().find({ id: this.id }).remove()
   }
 }

@@ -46,22 +46,6 @@ describe('Tallies Store', () => {
     expect(tallies.list.data.length).toBe(count - 1)
   })
 
-  it('removes all tallies for a todo', () => {
-    const name = String(expect.getState().currentTestName)
-    const todos = useTodosStore()
-    const tallies = useTalliesStore()
-    todos.addTodo(name)
-    let todoId = todos.list.data.find(todo => todo.text === name).id
-
-    for(var i = 0; i < 10; i++){
-      tallies.addTally(todoId, new Date().toISOString(), 1)
-    }
-
-    let count = tallies.list.data.length
-    tallies.deleteForTodo(todoId)
-    expect(tallies.list.data.length).toBe(count - 10)
-  })
-
   it('is deleted automatically when the todo is deleted', () => {
     const name = String(expect.getState().currentTestName)
     const todos = useTodosStore()

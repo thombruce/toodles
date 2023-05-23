@@ -34,11 +34,6 @@ export const useTalliesStore = defineStore('tallies', () => {
     Tally.find(id).destroy()
   }
 
-  function deleteForTodo(todoId: UUID) {
-    // TODO: This should be a static method
-    new Tally({ todoId }).destroyWhere({ todoId })
-  }
-
   // Export
-  return { list, forTodo, totalForTodo, initStore, addTally, deleteTally, deleteForTodo }
+  return { list, forTodo, totalForTodo, initStore, addTally, deleteTally }
 })
