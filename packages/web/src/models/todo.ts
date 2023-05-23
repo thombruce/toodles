@@ -85,21 +85,21 @@ class Todo implements TodoInterface {
 
   update(text: string) {
     var todo = Todo.find(this.id, this.collection)
-    this.collection.update({ ...todo, ...{ text } })
+    this.collection.update({ ...todo, ...{ text, collection: undefined } })
   }
 
   toggle() {
     var currentTime = Date.now()
     var todo = Todo.find(this.id, this.collection)
     if (todo.done) {
-      this.collection.update({ ...todo, ...{ done: null } })
+      this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
     } else {
       // TODO: Handle active interval
 
       // const intervals = useIntervalsStore()
       // let activeInterval
       // if (activeInterval = intervals.activeForTodo(todo.id)) intervals.stopInterval(activeInterval.id)
-      this.collection.update({ ...todo, ...{ done: currentTime } })
+      this.collection.update({ ...todo, ...{ done: currentTime, collection: undefined } })
     }
   }
 

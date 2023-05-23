@@ -71,7 +71,6 @@ class Interval implements IntervalInterface {
   }
   
   start() {
-    // Ah, whoops. We do need the todo collection initialised then.
     if (this.todo.done) this.todo.toggle()
     this.collection.insert({ id: this.id, todoId: this.todo.id, dateOf: this.dateOf })
   }
@@ -80,7 +79,7 @@ class Interval implements IntervalInterface {
     if (!this.createdAt || this.duration) return
     var interval = Interval.find(this.id, this.collection)
     var duration = Date.now() - this.createdAt    
-    this.collection.update({ ...interval, ...{ duration } })
+    this.collection.update({ ...interval, ...{ duration, collection: undefined } })
   }
 
   destroy() {
