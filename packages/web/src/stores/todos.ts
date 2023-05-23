@@ -15,8 +15,7 @@ export const useTodosStore = defineStore('todos', () => {
 
   // Getters
   const find = computed(() => (id: UUID) => {
-    const todo = list.value.find({ id })[0] as Todo
-    return todo
+    return Todo.find(id)
   })
 
   // Actions
