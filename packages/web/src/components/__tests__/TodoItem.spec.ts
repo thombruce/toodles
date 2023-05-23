@@ -6,17 +6,18 @@ import { mount } from '@vue/test-utils'
 import { useTodosStore } from '@/stores/todos'
 import { useIntervalsStore } from '@/stores/intervals'
 import TodoItem from '../TodoItem.vue'
+import { Todo } from '@/models/todo'
 
 vi.mock('vue-router', () => ({
   RouterLink: vi.fn()
 }))
 
+const todo = new Todo("Get milk!", useTodosStore().list)
+todo.save()
+
 const wrapper = mount(TodoItem, {
   props: {
-    todo: {
-      id: "someId",
-      text: "Get milk!"
-    }
+    todo: todo
   }
 })
 

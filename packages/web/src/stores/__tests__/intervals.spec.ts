@@ -61,7 +61,7 @@ describe('Intervals Store', () => {
 
     intervals.startInterval(todoId)
     var id = intervals.list.data[0].id
-    expect(intervals.list.data[0].createdAt).toBeLessThanOrEqual(Date.now())
+    expect(intervals.list.data[0].meta.created).toBeLessThanOrEqual(Date.now())
     intervals.stopInterval(id)
     expect(intervals.list.data[0].duration).toBeGreaterThan(0)
   })

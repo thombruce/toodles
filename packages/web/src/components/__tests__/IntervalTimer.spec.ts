@@ -6,10 +6,14 @@ import { mount } from '@vue/test-utils'
 import { useTodosStore } from '@/stores/todos'
 import { useIntervalsStore } from '@/stores/intervals'
 import IntervalTimer from '../IntervalTimer.vue'
+import { Todo } from '@/models/todo'
+
+const todo = new Todo("Get milk!", useTodosStore().list)
+todo.save()
 
 const wrapper = mount(IntervalTimer, {
   props: {
-    todoId: "someId"
+    todoId: todo.id
   }
 })
 
