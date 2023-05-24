@@ -1,5 +1,3 @@
-import type { UUID } from 'crypto'
-import { v4 as uuidv4 } from 'uuid'
 import { Collection } from 'lokijs'
 
 import { Interval } from './Interval'
@@ -10,51 +8,31 @@ import { Comment } from './Comment'
 import { useIntervalsStore } from '@/stores/intervals'
 import { useTalliesStore } from '@/stores/tallies'
 import { useCommentsStore } from '@/stores/comments'
+import { Base, type BaseInterface } from './Base'
 
-interface TodoInterface {
-  id?: UUID
+interface TodoInterface extends BaseInterface {
   text: string
   done?: EpochTimeStamp | null
-  meta?: any
-  $loki?: number
 }
 
-class Todo implements TodoInterface {
-  collection: Collection
-
-  id: UUID
+class Todo extends Base implements TodoInterface {
   text: string
   done: EpochTimeStamp | null
-  meta?: any
-  $loki?: number
 
   // Constructor
   constructor(todo: string | TodoInterface, collection: Collection) {
-    this.collection = collection
-
     if (typeof todo === 'string') {
-      this.id = uuidv4() as UUID
+      super({}, collection)
       this.text = todo
       this.done = null
     } else {
-      this.id = (todo.id || uuidv4()) as UUID
+      super(todo, collection)
       this.text = todo.text
       this.done = todo.done || null
-      this.meta = todo.meta
-      this.$loki = todo.$loki
     }
   }
 
   // Class methods
-  static all(collection: Collection) {
-    collection.data.map((t: TodoInterface) => new Todo(t, collection))
-  }
-
-  static where() {}
-
-  static find(id: UUID, collection: Collection) {
-    return new Todo(collection.find({ id })[0], collection)
-  }
 
   // Instance methods: Getters
   get intervals() {
@@ -73,28 +51,14 @@ class Todo implements TodoInterface {
     return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0]
   }
 
-  get createdAt() {
-    return this.meta?.created
-  }
-
-  get updatedAt() {
-    return this.meta?.updated
-  }
-
   // Instance methods: Actions
-  save() {
-    // TODO: Handle save of existing Todo
-    this.collection.insert({ id: this.id, text: this.text, done: this.done })
-  }
-
   update(text: string) {
-    var todo = Todo.find(this.id, this.collection)
-    this.collection.update({ ...todo, ...{ text, collection: undefined } })
+    super.update({ text })
   }
 
   toggle() {
     var currentTime = Date.now()
-    var todo = Todo.find(this.id, this.collection)
+    var todo = Todo.find(this.id, this.collection) as Todo
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
     } else {
@@ -107,7 +71,7 @@ class Todo implements TodoInterface {
     Interval.destroyWhere({ todoId: this.id }, useIntervalsStore().list)
     Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
     Comment.destroyWhere({ todoId: this.id }, useCommentsStore().list)
-    this.collection.chain().find({ id: this.id }).remove()
+    super.destroy()
   }
 }
 
