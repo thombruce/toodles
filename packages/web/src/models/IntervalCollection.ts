@@ -1,15 +1,9 @@
-import db from '../plugins/loki'
+import { BaseCollection } from "./BaseCollection"
 
-class IntervalCollection {
+class IntervalCollection extends BaseCollection {
   // Constructor
   constructor() {
-    var collection = db.getCollection('intervals')
-
-    if(!collection){
-      collection = db.addCollection('intervals', { unique: ['id'], indices: ['id'], autoupdate: true })
-    }
-
-    return collection
+    super('intervals')
   }
 }
 

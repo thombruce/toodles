@@ -1,15 +1,9 @@
-import db from '../plugins/loki'
+import { BaseCollection } from './BaseCollection'
 
-class TallyCollection {
+class TallyCollection extends BaseCollection {
   // Constructor
   constructor() {
-    var collection = db.getCollection('tallies')
-
-    if(!collection){
-      collection = db.addCollection('tallies', { unique: ['id'], indices: ['id'], autoupdate: true })
-    }
-
-    return collection
+    super('tallies')
   }
 }
 

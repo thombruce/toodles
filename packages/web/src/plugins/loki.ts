@@ -1,11 +1,8 @@
 import pinia from './pinia'
-import { useTodosStore } from '../stores/todos'
-import { useIntervalsStore } from '../stores/intervals'
-import { useTalliesStore } from '../stores/tallies'
 
 import loki from 'lokijs'
 import LokiIndexedAdapter from 'lokijs/src/loki-indexed-adapter'
-import { useCommentsStore } from '@/stores/comments'
+import { useGlobalsStore } from '@/stores/globals'
 // import { LokiPartitioningAdapter } from 'lokijs'
 // import LokiFsStructuredAdapter from 'lokijs/src/loki-fs-structured-adapter'
 // import LokiNativeScriptAdapter from 'lokijs/src/loki-nativescript-adapter'
@@ -29,14 +26,8 @@ db = new loki(dbName, {
 
 // TODO: There really has to be a better way than initialising all of the stores here
 function initStore() {
-  const todos = useTodosStore(pinia)
-  todos.initStore()
-  const intervals = useIntervalsStore(pinia)
-  intervals.initStore()
-  const tallies = useTalliesStore(pinia)
-  tallies.initStore()
-  const comments = useCommentsStore(pinia)
-  comments.initStore()
+  const globals = useGlobalsStore(pinia)
+  globals.initStores()
 }
 
 export default db

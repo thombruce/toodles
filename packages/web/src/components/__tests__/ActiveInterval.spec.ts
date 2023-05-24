@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 
-import { mount } from '@vue/test-utils'
+import { VueWrapper, mount } from '@vue/test-utils'
 
 import { useTodosStore } from '@/stores/todos'
 import { useIntervalsStore } from '@/stores/intervals'
@@ -11,19 +11,21 @@ vi.mock('vue-router', () => ({
   RouterLink: vi.fn()
 }))
 
-const wrapper = mount(ActiveInterval, {
-  props: {
-    todoId: 'someId',
-    startedAt: Date.now() - 300000
-  }
-})
-
 describe('ActiveInterval', () => {
+  let wrapper: VueWrapper
+
   beforeEach(() => {
     // TODO: We should probably createTestingPinia and setup mocks of internal actions
     setActivePinia(createPinia())
     useIntervalsStore().initStore()
     useTodosStore().initStore()
+
+    wrapper = mount(ActiveInterval, {
+      props: {
+        todoId: 'someId',
+        startedAt: Date.now() - 300000
+      }
+    })
   })
 
   it('renders properly', () => {
