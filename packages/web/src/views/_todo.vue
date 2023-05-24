@@ -9,6 +9,20 @@ import IntervalList from "../components/IntervalList.vue"
 import TallyList from "../components/TallyList.vue"
 import CommentList from "@/components/CommentList.vue"
 
+// import { useTodosStore } from '@/stores/todos'
+import { useIntervalsStore } from '@/stores/intervals'
+import { useTalliesStore } from '@/stores/tallies'
+import { useCommentsStore } from '@/stores/comments'
+
+const todos = useTodosStore()
+todos.initStore()
+const intervals = useIntervalsStore()
+intervals.initStore()
+const tallies = useTalliesStore()
+tallies.initStore()
+const comments = useCommentsStore()
+comments.initStore()
+
 const route = useRoute()
 const { todoId } = route.params
 
