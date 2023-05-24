@@ -15,6 +15,7 @@ class Base implements BaseInterface {
   id: UUID
   meta?: any
   $loki?: number
+  [key: string]: any
 
   // Constructor
   constructor(base: BaseInterface, collection: Collection) {
