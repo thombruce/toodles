@@ -40,7 +40,8 @@ class Base implements BaseInterface {
   }
 
   static find(id: UUID, collection: Collection) {
-    return new this(collection.find({ id })[0], collection)
+    const entity = collection.find({ id })[0]
+    if (entity) return new this(entity, collection)
   }
 
   static destroyWhere(query: object, collection: Collection) {

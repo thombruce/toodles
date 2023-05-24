@@ -9,6 +9,6 @@ describe('Project', () => {
   })
 
   it('constructs a new project', () => {
-    expect(new Project({ name: 'My Project' }, useProjectsStore().list)).toBeInstanceOf(Project)
+    expect(new Project({ shortName: 'myProject' }, useProjectsStore().list)).toBeInstanceOf(Project)
   })
 })
