@@ -21,13 +21,13 @@ db = new loki(dbName, {
   // adapter: nativeScriptAdapter,
   autosave: true,
   autoload: true,
-  autoloadCallback: initStore
+  autoloadCallback: ready
 })
 
 // TODO: There really has to be a better way than initialising all of the stores here
-function initStore() {
+function ready() {
   const globals = useGlobalsStore(pinia)
-  globals.initStores()
+  globals.toggleReady()
 }
 
 export default db
