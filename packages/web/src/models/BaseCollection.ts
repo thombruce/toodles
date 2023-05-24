@@ -8,6 +8,10 @@ interface Options {
 class BaseCollection {
   // Constructor
   constructor(name: string, options = { unique: ['id'], indices: ['id'] } as Options) {
+    if (new.target === BaseCollection) {
+      throw Error('Not allowed to instantiate BaseCollection')
+    }
+
     var collection = db.getCollection(name)
 
     if(!collection){

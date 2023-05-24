@@ -18,6 +18,10 @@ class Base implements BaseInterface {
 
   // Constructor
   constructor(base: BaseInterface, collection: Collection) {
+    if (new.target === Base) {
+      throw Error('Not allowed to instantiate Base')
+    }
+
     this.collection = collection
 
     this.id = (base.id || uuidv4()) as UUID
