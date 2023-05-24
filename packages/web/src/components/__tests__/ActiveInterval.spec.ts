@@ -3,8 +3,6 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { VueWrapper, mount } from '@vue/test-utils'
 
-import { useTodosStore } from '@/stores/todos'
-import { useIntervalsStore } from '@/stores/intervals'
 import ActiveInterval from '../ActiveInterval.vue'
 
 vi.mock('vue-router', () => ({
@@ -17,8 +15,6 @@ describe('ActiveInterval', () => {
   beforeEach(() => {
     // TODO: We should probably createTestingPinia and setup mocks of internal actions
     setActivePinia(createPinia())
-    useIntervalsStore().initStore()
-    useTodosStore().initStore()
 
     wrapper = mount(ActiveInterval, {
       props: {

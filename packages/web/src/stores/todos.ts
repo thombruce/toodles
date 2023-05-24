@@ -16,10 +16,6 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   // Actions
-  function initStore() {
-    // list.value = new TodoCollection() as Collection
-  }
-
   function addTodo(text: string) {
     new Todo(text, list.value).save()
   }
@@ -37,5 +33,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, find, initStore, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, find, addTodo, updateTodo, toggleTodo, deleteTodo }
 })

@@ -3,21 +3,10 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { useTalliesStore } from '../tallies'
 import { useTodosStore } from '../todos'
-import { useIntervalsStore } from '../intervals'
-import { useCommentsStore } from '../comments'
 
 describe('Tallies Store', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useTalliesStore().initStore()
-    useTodosStore().initStore()
-    // TODO: This... shouldn't be necessary:
-    //       It is, however, because the todo
-    //       store being invoked for deleteTodo
-    //       also invokes the deleteInterval
-    //       action.
-    useIntervalsStore().initStore()
-    useCommentsStore().initStore()
   })
 
   it.todo('returns total for todo', () => {})

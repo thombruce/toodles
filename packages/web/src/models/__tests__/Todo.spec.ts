@@ -6,7 +6,6 @@ import { createPinia, setActivePinia } from 'pinia'
 describe('Todo', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useTodosStore().initStore()
   })
 
   it('constructs a new todo', () => {
