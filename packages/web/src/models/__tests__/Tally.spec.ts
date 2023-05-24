@@ -7,7 +7,6 @@ import type { UUID } from 'crypto'
 describe('Tally', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useTalliesStore().initStore()
   })
 
   it('constructs a new todo', () => {

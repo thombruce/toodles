@@ -7,7 +7,6 @@ import type { UUID } from 'crypto'
 describe('Comment', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useCommentsStore().initStore()
   })
 
   it('constructs a new todo', () => {

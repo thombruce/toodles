@@ -8,7 +8,7 @@ import { CommentCollection } from '@/models/CommentCollection'
 
 export const useCommentsStore = defineStore('comments', () => {
   // State
-  const list = ref({} as Collection)
+  const list = ref(new CommentCollection() as Collection)
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
@@ -20,10 +20,6 @@ export const useCommentsStore = defineStore('comments', () => {
   })
 
   // Actions
-  function initStore() {
-    list.value = new CommentCollection() as Collection
-  }
-
   function addComment(todoId: UUID, dateOf: string, text: string) {
     new Comment({ todoId, dateOf, text }, list.value).save()
   }
@@ -33,5 +29,5 @@ export const useCommentsStore = defineStore('comments', () => {
   }
 
   // Export
-  return { list, forTodo, countForTodo, initStore, addComment, deleteComment }
+  return { list, forTodo, countForTodo, addComment, deleteComment }
 })

@@ -7,7 +7,6 @@ import type { UUID } from 'crypto'
 describe('Interval', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    useIntervalsStore().initStore()
   })
 
   it('constructs a new todo', () => {

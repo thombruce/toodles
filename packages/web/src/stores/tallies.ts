@@ -9,7 +9,7 @@ import { TallyCollection } from '@/models/TallyCollection'
 
 export const useTalliesStore = defineStore('tallies', () => {
   // State
-  const list = ref({} as Collection)
+  const list = ref(new TallyCollection() as Collection)
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
@@ -23,10 +23,6 @@ export const useTalliesStore = defineStore('tallies', () => {
   })
 
   // Actions
-  function initStore() {
-    list.value = new TallyCollection() as Collection
-  }
-
   function addTally(todoId: UUID, dateOf: string, count = 1 as number) {
     new Tally({ todoId, dateOf, count }, list.value).save()
   }
@@ -36,5 +32,5 @@ export const useTalliesStore = defineStore('tallies', () => {
   }
 
   // Export
-  return { list, forTodo, totalForTodo, initStore, addTally, deleteTally }
+  return { list, forTodo, totalForTodo, addTally, deleteTally }
 })

@@ -8,10 +8,10 @@ export const useGlobalsStore = defineStore('globals', () => {
   // Getters
 
   // Actions
-  function initStores() {
+  function toggleReady() {
     ready.value = true
   }
 
   // Export
-  return { ready, initStores }
+  return { ready, toggleReady }
 })

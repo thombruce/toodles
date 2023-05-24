@@ -11,7 +11,7 @@ import { useTodosStore } from './todos'
 
 export const useIntervalsStore = defineStore('intervals', () => {
   // State
-  const list = ref({} as Collection)
+  const list = ref(new IntervalCollection() as Collection)
 
   // Getters
   const forTodo = computed(() => (todoId: UUID) => {
@@ -29,10 +29,6 @@ export const useIntervalsStore = defineStore('intervals', () => {
   })
 
   // Actions
-  function initStore() {
-    list.value = new IntervalCollection() as Collection
-  }
-
   function addInterval(todoId: UUID, dateOf: string, duration: number) {
     new Interval({ todoId, dateOf, duration }, list.value).save()
   }
@@ -50,5 +46,5 @@ export const useIntervalsStore = defineStore('intervals', () => {
   }
 
   // Export
-  return { list, forTodo, totalForTodo, activeForTodo, initStore, addInterval, startInterval, stopInterval, deleteInterval }
+  return { list, forTodo, totalForTodo, activeForTodo, addInterval, startInterval, stopInterval, deleteInterval }
 })
