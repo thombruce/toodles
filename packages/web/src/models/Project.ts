@@ -4,28 +4,28 @@ import { Base, type BaseInterface } from './Base'
 import { Todo } from './Todo'
 import { useTodosStore } from '@/stores/todos'
 
-interface ListInterface extends BaseInterface {
+interface ProjectInterface extends BaseInterface {
   name: string
 }
 
-class List extends Base implements ListInterface {
+class Project extends Base implements ProjectInterface {
   name: string
 
   // Constructor
-  constructor(list: ListInterface, collection: Collection) {
-    super(list, collection)
+  constructor(project: ProjectInterface, collection: Collection) {
+    super(project, collection)
 
-    this.name = list.name
+    this.name = project.name
   }
 
   // Class methods
 
   // Instance methods: Getters
   get todos() {
-    return Todo.where({ listId: this.id }, useTodosStore().list)
+    return Todo.where({ projectId: this.id }, useTodosStore().list)
   }
 
   // Instance methods: Actions
 }
 
-export { List }
+export { Project }
