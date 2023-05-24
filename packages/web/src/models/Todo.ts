@@ -23,10 +23,12 @@ class Todo extends Base implements TodoInterface {
   constructor(todo: string | TodoInterface, collection: Collection) {
     if (typeof todo === 'string') {
       super({}, collection)
+
       this.text = todo
       this.done = null
     } else {
       super(todo, collection)
+
       this.text = todo.text
       this.done = todo.done || null
     }
@@ -48,7 +50,7 @@ class Todo extends Base implements TodoInterface {
   }
 
   get activeInterval() {
-    return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0]
+    return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0] as Interval
   }
 
   // Instance methods: Actions

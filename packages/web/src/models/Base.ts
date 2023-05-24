@@ -30,10 +30,16 @@ class Base implements BaseInterface {
     collection.data.map((t: BaseInterface) => new this(t, collection))
   }
 
-  static where() {}
+  static where(query: object, collection: Collection) {
+    return collection.find(query).map((t: BaseInterface) => new this(t, collection))
+  }
 
   static find(id: UUID, collection: Collection) {
     return new this(collection.find({ id })[0], collection)
+  }
+
+  static destroyWhere(query: object, collection: Collection) {
+    collection.findAndRemove(query)
   }
 
   // Instance methods: Getters
@@ -56,9 +62,6 @@ class Base implements BaseInterface {
   }
 
   destroy() {
-    // Interval.destroyWhere({ baseId: this.id }, useIntervalsStore().list)
-    // Tally.destroyWhere({ baseId: this.id }, useTalliesStore().list)
-    // Comment.destroyWhere({ baseId: this.id }, useCommentsStore().list)
     this.collection.chain().find({ id: this.id }).remove()
   }
 }
