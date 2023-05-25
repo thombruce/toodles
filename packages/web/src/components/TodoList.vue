@@ -5,6 +5,15 @@ import { storeToRefs } from "pinia"
 import { useTodosStore } from "../stores/todos"
 
 import TodoItem from "./TodoItem.vue"
+import { computed } from "vue"
+import { Project } from "@/models/Project"
+
+const props = defineProps({
+  project: {
+    type: Project,
+    required: false
+  }
+})
 
 const todo = ref("")
 
@@ -20,11 +29,13 @@ function addTodoAndClear(item: string) {
   store.addTodo(item)
   todo.value = ""
 }
+
+const todoList = computed(() => props.project ? props.project.todos : list.value.data)
 </script>
 
 <template lang="pug">
 ul.mb-4
-  li(v-for="todo in list?.data" :key="todo.id")
+  li(v-for="todo in todoList" :key="todo.id")
     TodoItem(:todo="todo")
 
 form.space-x-4(@submit.prevent="addTodoAndClear(todo)")

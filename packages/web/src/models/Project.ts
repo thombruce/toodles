@@ -38,7 +38,7 @@ class Project extends Base implements ProjectInterface {
   // Instance methods: Getters
   get todos() {
     // TODO: We should probably be using eqJoin for this.
-    return Projectable.where({ projectId: this.id }, useProjectsStore().projectables).map((p) => {
+    return Projectable.where({ projectId: this.shortName }, useProjectsStore().projectables).map((p) => {
       // TODO: Since where will yield an array, and find should accept an array of IDs...
       //       Try to make this more efficient by performing a single query.
       return Todo.find(p.todoId, useTodosStore().list)
