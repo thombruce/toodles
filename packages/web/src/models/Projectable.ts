@@ -1,4 +1,3 @@
-import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 
 import { Todo } from './Todo'
@@ -7,14 +6,14 @@ import { Project } from './Project'
 import { useProjectsStore } from '@/stores/projects'
 
 interface ProjectableInterface {
-  todoId: UUID
+  todoId: string
   projectId: string
 }
 
 class Projectable implements ProjectableInterface {
   collection: Collection
 
-  todoId: UUID
+  todoId: string
   projectId: string
 
   // Constructor

@@ -2,7 +2,6 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import { Interval } from '../Interval'
 import { createPinia, setActivePinia } from 'pinia'
 import { useIntervalsStore } from '@/stores/intervals'
-import type { UUID } from 'crypto'
 
 describe('Interval', () => {
   beforeEach(() => {
@@ -10,6 +9,6 @@ describe('Interval', () => {
   })
 
   it('constructs a new todo', () => {
-    expect(new Interval({ todoId: 'foo' as UUID }, useIntervalsStore().list)).toBeInstanceOf(Interval)
+    expect(new Interval({ todoId: 'foo' }, useIntervalsStore().list)).toBeInstanceOf(Interval)
   })
 })

@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 import { sumBy as _sumBy } from 'lodash'
 
@@ -14,35 +13,35 @@ export const useIntervalsStore = defineStore('intervals', () => {
   const list = ref(new IntervalCollection() as Collection)
 
   // Getters
-  const forTodo = computed(() => (todoId: UUID) => {
+  const forTodo = computed(() => (todoId: string) => {
     return Interval.where({ todoId }, list.value)
   })
 
-  const totalForTodo = computed(() => (todoId: UUID) => {
+  const totalForTodo = computed(() => (todoId: string) => {
     const intervals = Interval.where({ todoId }, list.value)
     
     return _sumBy(intervals, 'duration') || 0
   })
 
-  const activeForTodo = computed(() => (todoId: UUID) => {
-    return Todo.find(todoId, useTodosStore().list).activeInterval
+  const activeForTodo = computed(() => (todoId: string) => {
+    return Todo.find(todoId, useTodosStore().list)?.activeInterval
   })
 
   // Actions
-  function addInterval(todoId: UUID, dateOf: string, duration: number) {
+  function addInterval(todoId: string, dateOf: string, duration: number) {
     new Interval({ todoId, dateOf, duration }, list.value).save()
   }
 
-  function startInterval(todoId: UUID) {
+  function startInterval(todoId: string) {
     new Interval({ todoId }, list.value).start()
   }
 
-  function stopInterval(id: UUID) {
-    Interval.find(id, list.value).stop()
+  function stopInterval(id: string) {
+    Interval.find(id, list.value)?.stop()
   }
 
-  function deleteInterval(id: UUID) {
-    Interval.find(id, list.value).destroy()
+  function deleteInterval(id: string) {
+    Interval.find(id, list.value)?.destroy()
   }
 
   // Export

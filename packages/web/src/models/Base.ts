@@ -1,9 +1,8 @@
-import type { UUID } from 'crypto'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from 'nanoid'
 import { Collection } from 'lokijs'
 
 interface BaseInterface {
-  id?: UUID
+  id?: string
   meta?: any
   $loki?: number
   [key: string]: any
@@ -12,7 +11,7 @@ interface BaseInterface {
 class Base implements BaseInterface {
   collection: Collection
 
-  id: UUID
+  id: string
   meta?: any
   $loki?: number
   [key: string]: any
@@ -25,7 +24,7 @@ class Base implements BaseInterface {
 
     this.collection = collection
 
-    this.id = (base.id || uuidv4()) as UUID
+    this.id = (base.id || nanoid())
     this.meta = base.meta
     this.$loki = base.$loki
   }
@@ -39,7 +38,7 @@ class Base implements BaseInterface {
     return collection.find(query).map((t: BaseInterface) => new this(t, collection))
   }
 
-  static find(id: UUID, collection: Collection) {
+  static find(id: string, collection: Collection) {
     const entity = collection.find({ id })[0]
     if (entity) return new this(entity, collection)
   }

@@ -3,7 +3,6 @@ import { setActivePinia, createPinia } from 'pinia'
 
 import { useIntervalsStore } from '../intervals'
 import { useTodosStore } from '../todos'
-import type { UUID } from 'crypto'
 
 // TODO: Replace 'todos' with 'store'; do same in todos spec for reusability.
 
@@ -20,7 +19,7 @@ describe('Intervals Store', () => {
     todos.addTodo('Get milk')
     let todoId = todos.list.data[0].id
 
-    intervals.startInterval(todoId as UUID)
+    intervals.startInterval(todoId)
     expect(intervals.activeForTodo(todoId).createdAt).toBeLessThanOrEqual(Date.now())
   })
 
