@@ -73,6 +73,7 @@ class Todo extends Base implements TodoInterface {
 
   update(text: string) {
     super.update({ text })
+    this.parseProjects()
   }
 
   toggle() {

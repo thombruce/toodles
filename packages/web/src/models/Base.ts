@@ -64,6 +64,7 @@ class Base implements BaseInterface {
   }
 
   update(properties: {}) {
+    Object.assign(this, properties)
     this.collection.update({ ...this, ...{ ...properties, collection: undefined } })
   }
 
