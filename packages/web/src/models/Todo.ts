@@ -9,6 +9,9 @@ import { useIntervalsStore } from '@/stores/intervals'
 import { useTalliesStore } from '@/stores/tallies'
 import { useCommentsStore } from '@/stores/comments'
 import { Base, type BaseInterface } from './Base'
+import { Projectable } from './Projectable'
+import { useProjectsStore } from '@/stores/projects'
+import { Project } from './Project'
 
 interface TodoInterface extends BaseInterface {
   text: string
@@ -37,6 +40,15 @@ class Todo extends Base implements TodoInterface {
   // Class methods
 
   // Instance methods: Getters
+  get projects() {
+    // TODO: We should probably be using eqJoin for this.
+    return Projectable.where({ todoId: this.id }, useProjectsStore().projectables).map((p) => {
+      // TODO: Since where will yield an array, and find should accept an array of IDs...
+      //       Try to make this more efficient by performing a single query.
+      return Project.find(p.projectId, useProjectsStore().list)
+    })
+  }
+
   get intervals() {
     return Interval.where({ todoId: this.id }, useIntervalsStore().list)
   }
@@ -54,8 +66,14 @@ class Todo extends Base implements TodoInterface {
   }
 
   // Instance methods: Actions
+  save() {
+    this.parseProjects()
+    super.save()
+  }
+
   update(text: string) {
     super.update({ text })
+    this.parseProjects()
   }
 
   toggle() {
@@ -74,6 +92,14 @@ class Todo extends Base implements TodoInterface {
     Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
     Comment.destroyWhere({ todoId: this.id }, useCommentsStore().list)
     super.destroy()
+  }
+
+  parseProjects() {
+    const shortNames = this.text.match(/(?<=(?:^|\s)\+)\S+/g)
+    shortNames?.forEach(shortName => {
+      const project = Project.findOrCreate(shortName, useProjectsStore().list)
+      new Projectable({ todoId: this.id, projectId: project.shortName }, useProjectsStore().projectables).save()
+    })
   }
 }
 
