@@ -19,8 +19,8 @@
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "mavon-editor": "^3.0.0-beta",
+    "nanoid": "^4.0.2",
     "pinia": "^2.0.36",
-    "uuid": "^9.0.0",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"
   },
@@ -31,7 +31,6 @@
     "@types/lodash": "^4.14.194",
     "@types/lokijs": "^1.5.8",
     "@types/node": "^18.16.8",
-    "@types/uuid": "^9.0.1",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitest/coverage-c8": "^0.31.1",
     "@volar/vue-language-plugin-pug": "^1.6.5",

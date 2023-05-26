@@ -1,4 +1,3 @@
-import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 
 import { Todo } from './Todo'
@@ -8,13 +7,13 @@ import { useTodosStore } from '@/stores/todos'
 import { Base, type BaseInterface } from './Base'
 
 interface IntervalInterface extends BaseInterface {
-  todoId: UUID,
+  todoId: string,
   dateOf?: string,
   duration?: number,
 }
 
 class Interval extends Base implements IntervalInterface {
-  todoId: UUID
+  todoId: string
   dateOf: string
   duration?: number
 

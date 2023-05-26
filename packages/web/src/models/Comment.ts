@@ -1,4 +1,3 @@
-import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 
 import { Todo } from './Todo'
@@ -6,13 +5,13 @@ import { useTodosStore } from '@/stores/todos'
 import { Base, type BaseInterface } from './Base'
 
 interface CommentInterface extends BaseInterface {
-  todoId: UUID,
+  todoId: string,
   dateOf?: string,
   text: string,
 }
 
 class Comment extends Base implements CommentInterface {
-  todoId: UUID
+  todoId: string
   dateOf: string
   text: string
 

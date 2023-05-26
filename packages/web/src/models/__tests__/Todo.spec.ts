@@ -16,8 +16,8 @@ describe('Todo', () => {
 
   it('adds projects from todo text', () => {
     new Todo('Build +birdhouse +diy', useTodosStore().list).save()
-    expect(Project.find('birdhouse', useProjectsStore().list)).toBeInstanceOf(Project)
-    expect(Project.find('diy', useProjectsStore().list)).toBeInstanceOf(Project)
+    expect(Project.find({ shortName: 'birdhouse' }, useProjectsStore().list)).toBeInstanceOf(Project)
+    expect(Project.find({ shortName: 'diy' }, useProjectsStore().list)).toBeInstanceOf(Project)
     expect(useProjectsStore().list.data.length).toBe(2)
   })
 

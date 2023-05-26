@@ -11,5 +11,5 @@ const { list } = storeToRefs(store)
 <template lang="pug">
 ul.mb-4.flex.space-x-4
   li.inline(v-for="project in list?.data" :key="project.id")
-    RouterLink(:to="{ name: 'project', params: { projectId: project.shortName }}") {{ project.shortName }}
+    RouterLink(:to="{ name: 'project', params: { projectId: project.id }}") {{ project.shortName }}
 </template>

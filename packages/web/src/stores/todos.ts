@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { UUID } from 'crypto'
 import { Collection } from 'lokijs'
 
 import { Todo } from '../models/Todo'
@@ -11,7 +10,7 @@ export const useTodosStore = defineStore('todos', () => {
   const list = ref(new TodoCollection() as Collection)
 
   // Getters
-  const find = computed(() => (id: UUID) => {
+  const find = computed(() => (id: string) => {
     return Todo.find(id, list.value)
   })
 
@@ -20,16 +19,16 @@ export const useTodosStore = defineStore('todos', () => {
     new Todo(text, list.value).save()
   }
 
-  function updateTodo(id: UUID, text: string) {
-    Todo.find(id, list.value).update(text)
+  function updateTodo(id: string, text: string) {
+    Todo.find(id, list.value)?.update(text)
   }
 
-  function toggleTodo(id: UUID) {
-    Todo.find(id, list.value).toggle()
+  function toggleTodo(id: string) {
+    Todo.find(id, list.value)?.toggle()
   }
 
-  function deleteTodo(id: UUID) {
-    Todo.find(id, list.value).destroy()
+  function deleteTodo(id: string) {
+    Todo.find(id, list.value)?.destroy()
   }
 
   // Export

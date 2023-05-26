@@ -21,15 +21,16 @@ class Project extends Base implements ProjectInterface {
   }
 
   // Class methods
-  static find(shortName: string, collection: Collection) {
-    const project = collection.find({ shortName })[0]
+  static find(query: string | object, collection: Collection) {
+    if (typeof query === 'string') query = { id: query }
+    const project = collection.find(query)[0]
     if (project) return new this(project, collection)
   }
 
-  static findOrCreate(shortName: string, collection: Collection) {
-    let project = Project.find(shortName, collection)
+  static findOrCreateBy(query: ProjectInterface, collection: Collection) {
+    let project = Project.find(query, collection)
     if (!project) {
-      project = new this({ shortName }, collection)
+      project = new this(query, collection)
       project.save()
     }
     return project
@@ -38,7 +39,7 @@ class Project extends Base implements ProjectInterface {
   // Instance methods: Getters
   get todos() {
     // TODO: We should probably be using eqJoin for this.
-    return Projectable.where({ projectId: this.shortName }, useProjectsStore().projectables).map((p) => {
+    return Projectable.where({ projectId: this.id }, useProjectsStore().projectables).map((p) => {
       // TODO: Since where will yield an array, and find should accept an array of IDs...
       //       Try to make this more efficient by performing a single query.
       return Todo.find(p.todoId, useTodosStore().list)
