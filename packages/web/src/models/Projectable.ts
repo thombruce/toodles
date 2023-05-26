@@ -28,6 +28,15 @@ class Projectable implements ProjectableInterface {
     return collection.find(query).map((t: ProjectableInterface) => new this(t, collection))
   }
 
+  static findOrCreateBy(query: ProjectableInterface, collection: Collection) {
+    let projectable = Projectable.where(query, collection)[0]
+    if (!projectable) {
+      projectable = new this(query, collection)
+      projectable.save()
+    }
+    return projectable
+  }
+
   // Instance methods: Getters
   get todo() {
     return Todo.find(this.todoId, useTodosStore().list)

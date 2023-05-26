@@ -98,7 +98,7 @@ class Todo extends Base implements TodoInterface {
     const shortNames = this.text.match(/(?<=(?:^|\s)\+)\S+/g)
     shortNames?.forEach(shortName => {
       const project = Project.findOrCreateBy({ shortName }, useProjectsStore().list)
-      new Projectable({ todoId: this.id, projectId: project.id }, useProjectsStore().projectables).save()
+      Projectable.findOrCreateBy({ todoId: this.id, projectId: project.id }, useProjectsStore().projectables)
     })
   }
 }
