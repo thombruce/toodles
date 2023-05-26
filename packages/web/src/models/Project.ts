@@ -21,15 +21,16 @@ class Project extends Base implements ProjectInterface {
   }
 
   // Class methods
-  static find(shortName: string, collection: Collection) {
-    const project = collection.find({ shortName })[0]
+  static find(query: string | object, collection: Collection) {
+    if (typeof query === 'string') query = { id: query }
+    const project = collection.find(query)[0]
     if (project) return new this(project, collection)
   }
 
-  static findOrCreate(shortName: string, collection: Collection) {
-    let project = Project.find(shortName, collection)
+  static findOrCreateBy(query: ProjectInterface, collection: Collection) {
+    let project = Project.find(query, collection)
     if (!project) {
-      project = new this({ shortName }, collection)
+      project = new this(query, collection)
       project.save()
     }
     return project
