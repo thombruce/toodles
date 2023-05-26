@@ -14,7 +14,13 @@ const props = defineProps({
 })
 
 const store = useTodosStore()
-const { updateTodo, toggleTodo, deleteTodo } = store
+const { toggleTodo, deleteTodo } = store
+
+const updateTodoAndBlur = (e: Event) => {
+  const input = e.target as HTMLElement
+  store.updateTodo(props.todo.id, input.innerText.trim())
+  input.blur()
+}
 </script>
 
 <template lang="pug">
@@ -22,7 +28,7 @@ const { updateTodo, toggleTodo, deleteTodo } = store
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
-  input(@change="updateTodo(todo.id, $event.target.value)" @keyup.enter="$event.target.blur()" :value="todo.text")
+  span(@keydown.enter="updateTodoAndBlur" contenteditable spellcheck="false") {{ todo.text }}
   RouterLink(:to="{ name: 'todo', params: { todoId: todo.id }}") Link
   IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
   TallyCounter(:todoId="todo.id" class="w-20 min-w-fit")
