@@ -17,7 +17,7 @@ const props = defineProps({
 const store = useTodosStore()
 const { toggleTodo, deleteTodo } = store
 
-const updateTodoAndBlur = (e: Event) => {
+const updateTodo = (e: Event) => {
   const input = e.target as HTMLElement
   store.updateTodo(props.todo.id, input.innerText.trim())
   input.blur()
@@ -29,7 +29,7 @@ const updateTodoAndBlur = (e: Event) => {
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
-  TodoText(v-model="todo.text" @keydown.enter="updateTodoAndBlur")
+  TodoText(v-model="todo.text" @blur="updateTodo" @keydown.enter="$event.target.blur()")
   RouterLink(:to="{ name: 'todo', params: { todoId: todo.id }}") Link
   IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
   TallyCounter(:todoId="todo.id" class="w-20 min-w-fit")
