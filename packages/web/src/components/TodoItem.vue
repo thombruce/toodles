@@ -6,10 +6,6 @@ import IntervalTimer from "../components/IntervalTimer.vue"
 import TallyCounter from "../components/TallyCounter.vue"
 import CommentCount from "./CommentCount.vue"
 import TodoText from "./TodoText.vue"
-import { computed } from "vue"
-import { Project } from "@/models/Project"
-import { useProjectsStore } from "@/stores/projects"
-import { ref } from "vue"
 
 const props = defineProps({
   todo: {
@@ -26,16 +22,6 @@ const updateTodoAndBlur = (e: Event) => {
   store.updateTodo(props.todo.id, input.innerText.trim())
   input.blur()
 }
-
-const todoHTML = computed(() => {
-  const decorated = props.todo.text.replace(/(?<=(?:^|\s)\+)\S+/g, (m: string) => {
-    const project = Project.find({ shortName: m }, useProjectsStore().list)
-    return `<a href="/projects/${project?.id}" class="project-tag">${project?.shortName}</a>`
-  })
-  return decorated
-})
-
-const todoText = ref(props.todo.text)
 </script>
 
 <template lang="pug">
@@ -43,7 +29,7 @@ const todoText = ref(props.todo.text)
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
-  TodoText(v-model="todoText" @keydown.enter="updateTodoAndBlur" contenteditable spellcheck="false")
+  TodoText(v-model="todo.text" @keydown.enter="updateTodoAndBlur")
   RouterLink(:to="{ name: 'todo', params: { todoId: todo.id }}") Link
   IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
   TallyCounter(:todoId="todo.id" class="w-20 min-w-fit")

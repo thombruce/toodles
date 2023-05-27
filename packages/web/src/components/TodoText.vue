@@ -24,7 +24,7 @@ const matcher = (item: string) => /^\+\S+$/.test(item)
 </script>
 
 <template lang="pug">
-span
+span(contenteditable spellcheck="false")
   template(v-for="item in items")
     ProjectTag(v-if="matcher(item)" :tag="item" @input="update")
     span(v-else) {{ item }}
