@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/_project.vue')
     },
     {
+      path: '/contexts/:contextId',
+      name: 'context',
+      component: () => import('../views/_context.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

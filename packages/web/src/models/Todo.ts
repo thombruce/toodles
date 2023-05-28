@@ -12,6 +12,9 @@ import { Base, type BaseInterface } from './Base'
 import { Projectable } from './Projectable'
 import { useProjectsStore } from '@/stores/projects'
 import { Project } from './Project'
+import { Context } from './Context'
+import { useContextsStore } from '@/stores/contexts'
+import { Contextable } from './Contextable'
 
 interface TodoInterface extends BaseInterface {
   text: string
@@ -68,12 +71,14 @@ class Todo extends Base implements TodoInterface {
   // Instance methods: Actions
   save() {
     this.parseProjects()
+    this.parseContexts()
     super.save()
   }
 
   update(text: string) {
     super.update({ text })
     this.parseProjects()
+    this.parseContexts()
   }
 
   toggle() {
@@ -99,6 +104,14 @@ class Todo extends Base implements TodoInterface {
     shortNames?.forEach(shortName => {
       const project = Project.findOrCreateBy({ shortName }, useProjectsStore().list)
       Projectable.findOrCreateBy({ todoId: this.id, projectId: project.id }, useProjectsStore().projectables)
+    })
+  }
+
+  parseContexts() {
+    const shortNames = this.text.match(/(?<=(?:^|\s)@)\S+/g)
+    shortNames?.forEach(shortName => {
+      const context = Context.findOrCreateBy({ shortName }, useContextsStore().list)
+      Contextable.findOrCreateBy({ todoId: this.id, contextId: context.id }, useContextsStore().contextables)
     })
   }
 }
