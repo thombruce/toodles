@@ -7,10 +7,15 @@ import { useTodosStore } from "../stores/todos"
 import TodoItem from "./TodoItem.vue"
 import { computed } from "vue"
 import { Project } from "@/models/Project"
+import { Context } from "@/models/Context"
 
 const props = defineProps({
   project: {
     type: Project,
+    required: false
+  },
+  context: {
+    type: Context,
     required: false
   }
 })
@@ -30,7 +35,11 @@ function addTodoAndClear(item: string) {
   todo.value = ""
 }
 
-const todoList = computed(() => props.project ? props.project.todos : list.value.data)
+const todoList = computed(() => {
+  if (props.project) return props.project.todos
+  if (props.context) return props.context.todos
+  return list.value.data
+})
 </script>
 
 <template lang="pug">
