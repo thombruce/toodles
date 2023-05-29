@@ -2,11 +2,11 @@
 import { useRoute } from "vue-router"
 import { storeToRefs } from "pinia"
 
-import { useTodosStore } from "../stores/todos"
+import { useTodosStore } from "@/stores/todos"
 
-import TodoItem from "../components/TodoItem.vue"
-import IntervalList from "../components/IntervalList.vue"
-import TallyList from "../components/TallyList.vue"
+import TodoItem from "@/components/TodoItem.vue"
+import IntervalList from "@/components/IntervalList.vue"
+import TallyList from "@/components/TallyList.vue"
 import CommentList from "@/components/CommentList.vue"
 
 const route = useRoute()

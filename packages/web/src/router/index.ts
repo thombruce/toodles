@@ -12,22 +12,37 @@ const router = createRouter({
     {
       path: '/todos/:todoId',
       name: 'todo',
-      component: () => import('../views/_todo.vue')
+      component: () => import('../views/todos/_todoId.vue')
     },
     {
       path: '/tags',
       name: 'tags',
-      component: () => import('../views/tags.vue')
+      component: () => import('../views/tags/index.vue')
     },
+    // {
+    //   path: '/tags/:tagId',
+    //   name: 'tag',
+    //   component: () => import('../views/tags/_tagId.vue')
+    // },
+    // {
+    //   path: '/projects',
+    //   name: 'projects',
+    //   component: () => import('../views/projects/index.vue')
+    // },
     {
       path: '/projects/:projectId',
       name: 'project',
-      component: () => import('../views/_project.vue')
+      component: () => import('../views/projects/_projectId.vue')
     },
+    // {
+    //   path: '/contexts',
+    //   name: 'contexts',
+    //   component: () => import('../views/contexts/index.vue')
+    // },
     {
       path: '/contexts/:contextId',
       name: 'context',
-      component: () => import('../views/_context.vue')
+      component: () => import('../views/contexts/_contextId.vue')
     },
     {
       path: '/about',
