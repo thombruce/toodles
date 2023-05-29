@@ -15,9 +15,10 @@ const tagList = computed(() => {
 </script>
 
 <template lang="pug">
-ul.mb-4
+ul.mb-4.flex.space-x-4
   li(v-for="tag in tagList" :key="tag.id")
-    span {{ tag.key }}
-    | :
-    span {{ tag.value }}
+    RouterLink(:to="{ name: 'tag', params: { tagId: tag.id }}")
+      span {{ tag.key }}
+      | :
+      span {{ tag.value }}
 </template>

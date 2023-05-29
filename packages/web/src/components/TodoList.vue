@@ -8,6 +8,7 @@ import TodoItem from "./TodoItem.vue"
 import { computed } from "vue"
 import { Project } from "@/models/Project"
 import { Context } from "@/models/Context"
+import { Tag } from "@/models/Tag"
 
 const props = defineProps({
   project: {
@@ -16,6 +17,10 @@ const props = defineProps({
   },
   context: {
     type: Context,
+    required: false
+  },
+  tag: {
+    type: Tag,
     required: false
   }
 })
@@ -38,6 +43,7 @@ function addTodoAndClear(item: string) {
 const todoList = computed(() => {
   if (props.project) return props.project.todos
   if (props.context) return props.context.todos
+  if (props.tag) return props.tag.todos
   return list.value.data
 })
 </script>

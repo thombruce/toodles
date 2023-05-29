@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/index.vue'
+import Home from '../views/todos/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,26 +19,26 @@ const router = createRouter({
       name: 'tags',
       component: () => import('../views/tags/index.vue')
     },
-    // {
-    //   path: '/tags/:tagId',
-    //   name: 'tag',
-    //   component: () => import('../views/tags/_tagId.vue')
-    // },
-    // {
-    //   path: '/projects',
-    //   name: 'projects',
-    //   component: () => import('../views/projects/index.vue')
-    // },
+    {
+      path: '/tags/:tagId',
+      name: 'tag',
+      component: () => import('../views/tags/_tagId.vue')
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: () => import('../views/projects/index.vue')
+    },
     {
       path: '/projects/:projectId',
       name: 'project',
       component: () => import('../views/projects/_projectId.vue')
     },
-    // {
-    //   path: '/contexts',
-    //   name: 'contexts',
-    //   component: () => import('../views/contexts/index.vue')
-    // },
+    {
+      path: '/contexts',
+      name: 'contexts',
+      component: () => import('../views/contexts/index.vue')
+    },
     {
       path: '/contexts/:contextId',
       name: 'context',

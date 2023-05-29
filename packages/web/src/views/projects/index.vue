@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import TodoList from '../components/TodoList.vue'
+import ProjectList from '@/components/ProjectList.vue'
 </script>
 
 <template lang="pug">
 main
-  TodoList
+  ProjectList
 </template>
