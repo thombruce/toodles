@@ -20,5 +20,5 @@ const context = computed(() => {
 </script>
 
 <template lang="pug">
-RouterLink.text-purple-500.font-bold(:to="{ name: 'context', params: { contextId: context.id }}") {{ tag }}
+RouterLink.text-purple-500.font-bold(:to="{ name: 'context', params: { id: context.id }}") {{ tag }}
 </template>

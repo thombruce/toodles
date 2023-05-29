@@ -37,6 +37,14 @@ class Project extends Base implements ProjectInterface {
   }
 
   // Instance methods: Getters
+  get type() {
+    return 'project'
+  }
+
+  get displayName() {
+    return this.shortName
+  }
+
   get todos() {
     // TODO: We should probably be using eqJoin for this.
     return Projectable.where({ projectId: this.id }, useProjectsStore().projectables).map((p) => {

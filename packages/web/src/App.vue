@@ -4,9 +4,6 @@ import { storeToRefs } from 'pinia'
 
 import { useGlobalsStore } from './stores/globals'
 
-import ProjectList from './components/ProjectList.vue';
-import ContextList from './components/ContextList.vue';
-
 const store = useGlobalsStore()
 const { ready } = storeToRefs(store)
 </script>

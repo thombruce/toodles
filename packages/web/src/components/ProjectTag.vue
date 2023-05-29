@@ -20,5 +20,5 @@ const project = computed(() => {
 </script>
 
 <template lang="pug">
-RouterLink.text-teal-500.font-bold(:to="{ name: 'project', params: { projectId: project.id }}") {{ tag }}
+RouterLink.text-teal-500.font-bold(:to="{ name: 'project', params: { id: project.id }}") {{ tag }}
 </template>

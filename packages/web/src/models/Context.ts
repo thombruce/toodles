@@ -37,6 +37,14 @@ class Context extends Base implements ContextInterface {
   }
 
   // Instance methods: Getters
+  get type() {
+    return 'context'
+  }
+
+  get displayName() {
+    return this.shortName
+  }
+
   get todos() {
     // TODO: We should probably be using eqJoin for this.
     return Contextable.where({ contextId: this.id }, useContextsStore().contextables).map((p) => {

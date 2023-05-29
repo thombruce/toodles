@@ -40,6 +40,14 @@ class Tag extends Base implements TagInterface {
   }
 
   // Instance methods: Getters
+  get type() {
+    return 'tag'
+  }
+
+  get displayName() {
+    return this.key + ':' + this.value
+  }
+
   get todos() {
     // TODO: We should probably be using eqJoin for this.
     return Taggable.where({ tagId: this.id }, useTagsStore().taggables).map((p) => {

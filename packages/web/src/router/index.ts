@@ -10,9 +10,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/todos/:todoId',
+      path: '/todos/:id',
       name: 'todo',
-      component: () => import('../views/todos/_todoId.vue')
+      component: () => import('../views/todos/_id.vue')
     },
     {
       path: '/tags',
@@ -20,9 +20,9 @@ const router = createRouter({
       component: () => import('../views/tags/index.vue')
     },
     {
-      path: '/tags/:tagId',
+      path: '/tags/:id',
       name: 'tag',
-      component: () => import('../views/tags/_tagId.vue')
+      component: () => import('../views/tags/_id.vue')
     },
     {
       path: '/projects',
@@ -30,9 +30,9 @@ const router = createRouter({
       component: () => import('../views/projects/index.vue')
     },
     {
-      path: '/projects/:projectId',
+      path: '/projects/:id',
       name: 'project',
-      component: () => import('../views/projects/_projectId.vue')
+      component: () => import('../views/projects/_id.vue')
     },
     {
       path: '/contexts',
@@ -40,9 +40,9 @@ const router = createRouter({
       component: () => import('../views/contexts/index.vue')
     },
     {
-      path: '/contexts/:contextId',
+      path: '/contexts/:id',
       name: 'context',
-      component: () => import('../views/contexts/_contextId.vue')
+      component: () => import('../views/contexts/_id.vue')
     },
     {
       path: '/about',

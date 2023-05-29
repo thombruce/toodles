@@ -31,7 +31,7 @@ class Base implements BaseInterface {
 
   // Class methods
   static all(collection: Collection) {
-    collection.data.map((t: BaseInterface) => new this(t, collection))
+    return collection.data.map((t: BaseInterface) => new this(t, collection))
   }
 
   static where(query: object, collection: Collection) {

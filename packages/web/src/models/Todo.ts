@@ -117,7 +117,6 @@ class Todo extends Base implements TodoInterface {
 
   parseTags() {
     const tagStrings = this.text.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
-    console.log(tagStrings)
     tagStrings?.forEach(tagString => {
       const [key, value] = tagString.split(':')
       const tag = Tag.findOrCreateBy({ key, value }, useTagsStore().list)

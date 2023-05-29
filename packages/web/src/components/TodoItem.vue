@@ -30,7 +30,7 @@ const updateTodo = (e: Event) => {
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
   TodoText(v-model="todo.text" @blur="updateTodo" @keydown.enter="$event.target.blur()")
-  RouterLink(:to="{ name: 'todo', params: { todoId: todo.id }}") Link
+  RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
   IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
   TallyCounter(:todoId="todo.id" class="w-20 min-w-fit")
   CommentCount(:todoId="todo.id" class="w-16 min-w-fit")
