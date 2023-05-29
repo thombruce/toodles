@@ -15,6 +15,9 @@ import { Project } from './Project'
 import { Context } from './Context'
 import { useContextsStore } from '@/stores/contexts'
 import { Contextable } from './Contextable'
+import { useTagsStore } from '@/stores/tags'
+import { Taggable } from './Taggable'
+import { Tag } from './Tag'
 
 interface TodoInterface extends BaseInterface {
   text: string
@@ -52,6 +55,17 @@ class Todo extends Base implements TodoInterface {
     })
   }
 
+  // TODO: Add contexts
+
+  get tags() {
+    // TODO: We should probably be using eqJoin for this.
+    return Taggable.where({ todoId: this.id }, useTagsStore().taggables).map((p) => {
+      // TODO: Since where will yield an array, and find should accept an array of IDs...
+      //       Try to make this more efficient by performing a single query.
+      return Tag.find(p.tagId, useTagsStore().list)
+    })
+  }
+
   get intervals() {
     return Interval.where({ todoId: this.id }, useIntervalsStore().list)
   }
@@ -70,6 +84,7 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Actions
   save() {
+    this.parseTags()
     this.parseProjects()
     this.parseContexts()
     super.save()
@@ -77,6 +92,7 @@ class Todo extends Base implements TodoInterface {
 
   update(text: string) {
     super.update({ text })
+    this.parseTags()
     this.parseProjects()
     this.parseContexts()
   }
@@ -97,6 +113,16 @@ class Todo extends Base implements TodoInterface {
     Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
     Comment.destroyWhere({ todoId: this.id }, useCommentsStore().list)
     super.destroy()
+  }
+
+  parseTags() {
+    const tagStrings = this.text.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
+    console.log(tagStrings)
+    tagStrings?.forEach(tagString => {
+      const [key, value] = tagString.split(':')
+      const tag = Tag.findOrCreateBy({ key, value }, useTagsStore().list)
+      Taggable.findOrCreateBy({ todoId: this.id, tagId: tag.id }, useTagsStore().taggables)
+    })
   }
 
   parseProjects() {
