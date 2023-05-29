@@ -7,17 +7,20 @@ import { Taggable } from './Taggable'
 import { useTagsStore } from '@/stores/tags'
 
 interface TagInterface extends BaseInterface {
-  shortName: string
+  key: string
+  value: string
 }
 
 class Tag extends Base implements TagInterface {
-  shortName: string
+  key: string
+  value: string
 
   // Constructor
   constructor(tag: TagInterface, collection: Collection) {
     super(tag, collection)
 
-    this.shortName = tag.shortName
+    this.key = tag.key
+    this.value = tag.value
   }
 
   // Class methods
@@ -48,7 +51,7 @@ class Tag extends Base implements TagInterface {
 
   // Instance methods: Actions
   destroy() {
-    this.collection.chain().find({ shortName: this.shortName }).remove()
+    this.collection.chain().find({ id: this.id }).remove()
   }
 }
 
