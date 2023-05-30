@@ -2,12 +2,10 @@ import { Collection } from 'lokijs'
 
 import { Interval } from './Interval'
 import { Tally } from './Tally'
-import { Comment } from './Comment'
 
 // TODO: Prefer not to do this; what alternatives exist?
 import { useIntervalsStore } from '@/stores/intervals'
 import { useTalliesStore } from '@/stores/tallies'
-import { useCommentsStore } from '@/stores/comments'
 import { Base, type BaseInterface } from './Base'
 import { Projectable } from './Projectable'
 import { useProjectsStore } from '@/stores/projects'
@@ -74,10 +72,6 @@ class Todo extends Base implements TodoInterface {
     return Tally.where({ todoId: this.id }, useTalliesStore().list)
   }
 
-  get comments() {
-    return Comment.where({ todoId: this.id }, useCommentsStore().list)
-  }
-
   get activeInterval() {
     return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0] as Interval
   }
@@ -111,7 +105,6 @@ class Todo extends Base implements TodoInterface {
   destroy() {
     Interval.destroyWhere({ todoId: this.id }, useIntervalsStore().list)
     Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
-    Comment.destroyWhere({ todoId: this.id }, useCommentsStore().list)
     super.destroy()
   }
 
