@@ -1,7 +1,6 @@
 import { Collection } from 'lokijs'
 
 import { Interval } from './Interval'
-import { Tally } from './Tally'
 
 // TODO: Prefer not to do this; what alternatives exist?
 import { useIntervalsStore } from '@/stores/intervals'
@@ -68,10 +67,6 @@ class Todo extends Base implements TodoInterface {
     return Interval.where({ todoId: this.id }, useIntervalsStore().list)
   }
 
-  get tallies() {
-    return Tally.where({ todoId: this.id }, useTalliesStore().list)
-  }
-
   get activeInterval() {
     return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0] as Interval
   }
@@ -104,7 +99,6 @@ class Todo extends Base implements TodoInterface {
 
   destroy() {
     Interval.destroyWhere({ todoId: this.id }, useIntervalsStore().list)
-    Tally.destroyWhere({ todoId: this.id }, useTalliesStore().list)
     super.destroy()
   }
 
