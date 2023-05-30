@@ -7,7 +7,7 @@ import { useTodosStore } from "@/stores/todos"
 import TodoItem from "@/components/TodoItem.vue"
 
 const route = useRoute()
-const { todoId } = route.params
+const { id } = route.params
 
 const store = useTodosStore()
 const { find } = storeToRefs(store)
@@ -15,5 +15,5 @@ const { find } = storeToRefs(store)
 
 <template lang="pug">
 main
-  TodoItem(:todo="find(todoId)")
+  TodoItem(:todo="find(id)")
 </template>
