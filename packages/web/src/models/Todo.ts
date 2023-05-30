@@ -1,10 +1,6 @@
 import { Collection } from 'lokijs'
 
-import { Interval } from './Interval'
-
 // TODO: Prefer not to do this; what alternatives exist?
-import { useIntervalsStore } from '@/stores/intervals'
-import { useTalliesStore } from '@/stores/tallies'
 import { Base, type BaseInterface } from './Base'
 import { Projectable } from './Projectable'
 import { useProjectsStore } from '@/stores/projects'
@@ -63,14 +59,6 @@ class Todo extends Base implements TodoInterface {
     })
   }
 
-  get intervals() {
-    return Interval.where({ todoId: this.id }, useIntervalsStore().list)
-  }
-
-  get activeInterval() {
-    return Interval.where({ $and: [{ todoId: this.id }, { duration: { $exists: false } }] }, useIntervalsStore().list)[0] as Interval
-  }
-
   // Instance methods: Actions
   save() {
     this.parseTags()
@@ -92,13 +80,11 @@ class Todo extends Base implements TodoInterface {
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
     } else {
-      this.activeInterval?.stop()
       this.collection.update({ ...todo, ...{ done: currentTime, collection: undefined } })
     }
   }
 
   destroy() {
-    Interval.destroyWhere({ todoId: this.id }, useIntervalsStore().list)
     super.destroy()
   }
 

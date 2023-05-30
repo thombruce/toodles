@@ -2,7 +2,6 @@
 import { RouterLink } from "vue-router"
 import { useTodosStore } from "../stores/todos"
 
-import IntervalTimer from "../components/IntervalTimer.vue"
 import TodoText from "./TodoText.vue"
 
 const props = defineProps({
@@ -29,6 +28,5 @@ const updateTodo = (e: Event) => {
     fa(v-else icon="fa-regular fa-square")
   TodoText(v-model="todo.text" @blur="updateTodo" @keydown.enter="$event.target.blur()")
   RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
-  IntervalTimer(:todoId="todo.id" class="w-1/5 sm:w-1/6 xl:w-1/12")
   button.text-red-600(@click="deleteTodo(todo.id)") Delete
 </template>
