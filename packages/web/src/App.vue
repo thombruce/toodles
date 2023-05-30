@@ -19,6 +19,6 @@ template(v-if="ready")
       RouterLink(to="/tags") Tags
       RouterLink(to="/about") About
 
-  RouterView(v-if="ready" :key="$route.fullPath")
+  RouterView(:key="$route.fullPath")
 template(v-else) Loading
 </template>
