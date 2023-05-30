@@ -40,10 +40,6 @@ class Tag extends Base implements TagInterface {
   }
 
   // Instance methods: Getters
-  get type() {
-    return 'tag'
-  }
-
   get displayName() {
     return this.key + ':' + this.value
   }

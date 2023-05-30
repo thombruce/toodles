@@ -10,5 +10,5 @@ const props = defineProps({
 <template lang="pug">
 ul.mb-4.flex.space-x-4
   li.inline(v-for="entity in list" :key="entity.id")
-    RouterLink(:to="{ name: entity.type, params: { id: entity.id }}") {{ entity.displayName }}
+    RouterLink(:to="{ name: entity.klass.toLowerCase(), params: { id: entity.id }}") {{ entity.displayName }}
 </template>

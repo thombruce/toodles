@@ -37,10 +37,6 @@ class Context extends Base implements ContextInterface {
   }
 
   // Instance methods: Getters
-  get type() {
-    return 'context'
-  }
-
   get displayName() {
     return this.shortName
   }

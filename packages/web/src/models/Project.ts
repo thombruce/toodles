@@ -37,10 +37,6 @@ class Project extends Base implements ProjectInterface {
   }
 
   // Instance methods: Getters
-  get type() {
-    return 'project'
-  }
-
   get displayName() {
     return this.shortName
   }

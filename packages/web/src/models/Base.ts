@@ -48,6 +48,10 @@ class Base implements BaseInterface {
   }
 
   // Instance methods: Getters
+  get klass() {
+    return this.constructor.name
+  }
+
   get createdAt() {
     return this.meta?.created
   }
