@@ -5,13 +5,15 @@ import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
   name: string
+  priority?: string | null
   done?: string | null // ISO-8601 or null
   created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
   name: string
-  done: string | null
+  priority?: string | null
+  done?: string | null
   created: string
 
   // Constructor
@@ -20,13 +22,14 @@ class Todo extends Base implements TodoInterface {
       super({}, collection)
 
       this.name = todo
-      this.done = null
       this.created = new Date().toISOString()
+      // TODO: Parse Done and Priority
     } else {
       super(todo, collection)
 
       this.name = todo.name
-      this.done = todo.done || null
+      this.priority = todo.priority
+      this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
   }
