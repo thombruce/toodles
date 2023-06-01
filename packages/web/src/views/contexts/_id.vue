@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router"
 
 import TodoList from "@/components/TodoList.vue"
+import TodoForm from '@/components/TodoForm.vue'
 
 const route = useRoute()
 const { context } = route.params
@@ -10,4 +11,5 @@ const { context } = route.params
 <template lang="pug">
 main
   TodoList(:context="context")
+  TodoForm
 </template>
