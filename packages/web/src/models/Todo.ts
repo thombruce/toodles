@@ -5,12 +5,14 @@ import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
   name: string
-  done?: EpochTimeStamp | null
+  done?: string | null // ISO-8601 or null
+  created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
   name: string
-  done: EpochTimeStamp | null
+  done: string | null
+  created: string
 
   // Constructor
   constructor(todo: string | TodoInterface, collection: Collection) {
@@ -19,11 +21,13 @@ class Todo extends Base implements TodoInterface {
 
       this.name = todo
       this.done = null
+      this.created = new Date().toISOString()
     } else {
       super(todo, collection)
 
       this.name = todo.name
       this.done = todo.done || null
+      this.created = todo.created || new Date().toISOString()
     }
   }
 
@@ -52,7 +56,7 @@ class Todo extends Base implements TodoInterface {
   }
 
   toggle() {
-    var currentTime = Date.now()
+    var currentTime = new Date().toISOString()
     var todo = Todo.find(this.id, this.collection) as Todo
     if (todo.done) {
       this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
