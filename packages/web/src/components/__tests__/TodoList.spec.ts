@@ -14,6 +14,6 @@ describe('TodoList', () => {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
       },
     })
-    expect(wrapper.html()).toContain('<form')
+    expect(wrapper.html()).toContain('<ul')
   })
 })
