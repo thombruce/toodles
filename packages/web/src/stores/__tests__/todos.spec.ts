@@ -19,9 +19,9 @@ describe('Todos Store', () => {
     const todos = useTodosStore()
     todos.addTodo('Get milk')
     var id = todos.list.data[0].id
-    expect(todos.list.data[0].text).toBe('Get milk')
+    expect(todos.list.data[0].name).toBe('Get milk')
     todos.updateTodo(id, 'Get bread')
-    expect(todos.list.data[0].text).toBe('Get bread')
+    expect(todos.list.data[0].name).toBe('Get bread')
   })
 
   it('toggles todos', () => {

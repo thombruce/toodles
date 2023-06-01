@@ -5,15 +5,15 @@ import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 
 // import { useTodosStore } from '@/stores/todos'
-import TodoList from '../TodoList.vue'
+import TodoForm from '../TodoForm.vue'
 
-describe('TodoList', () => {
+describe('TodoForm', () => {
   it('renders properly', () => {
-    const wrapper = mount(TodoList, {
+    const wrapper = mount(TodoForm, {
       global: {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
       },
     })
-    expect(wrapper.html()).toContain('<ul')
+    expect(wrapper.html()).toContain('<form')
   })
 })

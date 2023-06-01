@@ -4,9 +4,6 @@ import { storeToRefs } from 'pinia'
 
 import { useGlobalsStore } from './stores/globals'
 
-import ProjectList from './components/ProjectList.vue';
-import ContextList from './components/ContextList.vue';
-
 const store = useGlobalsStore()
 const { ready } = storeToRefs(store)
 </script>
@@ -19,8 +16,6 @@ template(v-if="ready")
       RouterLink(to="/") Home
       RouterLink(to="/about") About
 
-  ProjectList
-  ContextList
-  RouterView(v-if="ready" :key="$route.fullPath")
+  RouterView(:key="$route.fullPath")
 template(v-else) Loading
 </template>
