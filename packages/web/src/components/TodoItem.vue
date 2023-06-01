@@ -27,6 +27,6 @@ const updateTodo = (e: Event) => {
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
   TodoText(v-model="todo.text" @blur="updateTodo" @keydown.enter="$event.target.blur()")
-  RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
+  //- RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
   button.text-red-600(@click="deleteTodo(todo.id)") Delete
 </template>

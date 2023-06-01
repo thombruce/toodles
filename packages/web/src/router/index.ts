@@ -10,37 +10,12 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/todos/:id',
-      name: 'todo',
-      component: () => import('../views/todos/_id.vue')
-    },
-    {
-      path: '/tags',
-      name: 'tags',
-      component: () => import('../views/tags/index.vue')
-    },
-    {
-      path: '/tags/:id',
-      name: 'tag',
-      component: () => import('../views/tags/_id.vue')
-    },
-    {
-      path: '/projects',
-      name: 'projects',
-      component: () => import('../views/projects/index.vue')
-    },
-    {
-      path: '/projects/:id',
+      path: '/:project(\\+\\S+)',
       name: 'project',
       component: () => import('../views/projects/_id.vue')
     },
     {
-      path: '/contexts',
-      name: 'contexts',
-      component: () => import('../views/contexts/index.vue')
-    },
-    {
-      path: '/contexts/:id',
+      path: '/:context(@\\S+)',
       name: 'context',
       component: () => import('../views/contexts/_id.vue')
     },

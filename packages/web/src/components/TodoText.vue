@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue"
-import { Project } from "@/models/Project"
-import { useProjectsStore } from "@/stores/projects"
 
 import ProjectTag from "./ProjectTag.vue"
 import ContextTag from "./ContextTag.vue"

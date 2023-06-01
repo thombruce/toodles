@@ -14,9 +14,6 @@ template(v-if="ready")
     strong Toodles
     nav.space-x-4
       RouterLink(to="/") Home
-      RouterLink(to="/projects") Projects
-      RouterLink(to="/contexts") Contexts
-      RouterLink(to="/tags") Tags
       RouterLink(to="/about") About
 
   RouterView(:key="$route.fullPath")

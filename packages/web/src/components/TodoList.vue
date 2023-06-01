@@ -6,21 +6,14 @@ import { useTodosStore } from "../stores/todos"
 
 import TodoItem from "./TodoItem.vue"
 import { computed } from "vue"
-import { Project } from "@/models/Project"
-import { Context } from "@/models/Context"
-import { Tag } from "@/models/Tag"
 
 const props = defineProps({
   project: {
-    type: Project,
+    type: String,
     required: false
   },
   context: {
-    type: Context,
-    required: false
-  },
-  tag: {
-    type: Tag,
+    type: String,
     required: false
   }
 })
@@ -29,7 +22,7 @@ const todo = ref("")
 
 const store = useTodosStore()
 
-const { list } = storeToRefs(store)
+const { list, forProject, forContext } = storeToRefs(store)
 
 function addTodoAndClear(item: string) {
   if (item.length === 0) {
@@ -41,9 +34,8 @@ function addTodoAndClear(item: string) {
 }
 
 const todoList = computed(() => {
-  if (props.project) return props.project.todos
-  if (props.context) return props.context.todos
-  if (props.tag) return props.tag.todos
+  if (props.project) return forProject.value(props.project)
+  if (props.context) return forContext.value(props.context)
   return list.value.data
 })
 </script>
