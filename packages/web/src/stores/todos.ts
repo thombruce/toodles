@@ -15,20 +15,20 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const forProject = computed(() => (project: string) => {
-    return list.value.find({'text': { '$regex' : new RegExp(`\\${project}`, 'g') }})
+    return list.value.find({'name': { '$regex' : new RegExp(`\\${project}`, 'g') }})
   })
 
   const forContext = computed(() => (context: string) => {
-    return list.value.find({'text': { '$regex' : new RegExp(`${context}`, 'g') }})
+    return list.value.find({'name': { '$regex' : new RegExp(`${context}`, 'g') }})
   })
 
   // Actions
-  function addTodo(text: string) {
-    new Todo(text, list.value).save()
+  function addTodo(name: string) {
+    new Todo(name, list.value).save()
   }
 
-  function updateTodo(id: string, text: string) {
-    Todo.find(id, list.value)?.update(text)
+  function updateTodo(id: string, name: string) {
+    Todo.find(id, list.value)?.update(name)
   }
 
   function toggleTodo(id: string) {

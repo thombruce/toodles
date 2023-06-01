@@ -4,12 +4,12 @@ import { Collection } from 'lokijs'
 import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
-  text: string
+  name: string
   done?: EpochTimeStamp | null
 }
 
 class Todo extends Base implements TodoInterface {
-  text: string
+  name: string
   done: EpochTimeStamp | null
 
   // Constructor
@@ -17,12 +17,12 @@ class Todo extends Base implements TodoInterface {
     if (typeof todo === 'string') {
       super({}, collection)
 
-      this.text = todo
+      this.name = todo
       this.done = null
     } else {
       super(todo, collection)
 
-      this.text = todo.text
+      this.name = todo.name
       this.done = todo.done || null
     }
   }
@@ -31,15 +31,15 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Getters
   get projects() {
-    return this.text.match(/(?<=(?:^|\s)\+)\S+/g)
+    return this.name.match(/(?<=(?:^|\s)\+)\S+/g)
   }
 
   get contexts() {
-    return this.text.match(/(?<=(?:^|\s)@)\S+/g)
+    return this.name.match(/(?<=(?:^|\s)@)\S+/g)
   }
 
   get tags() {
-    return this.text.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
+    return this.name.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
   }
 
   // Instance methods: Actions
@@ -47,8 +47,8 @@ class Todo extends Base implements TodoInterface {
     super.save()
   }
 
-  update(text: string) {
-    super.update({ text })
+  update(name: string) {
+    super.update({ name })
   }
 
   toggle() {
