@@ -23,7 +23,6 @@ class Todo extends Base implements TodoInterface {
 
       this.name = todo
       this.created = new Date().toISOString()
-      // TODO: Parse Done and Priority
     } else {
       super(todo, collection)
 
@@ -51,11 +50,14 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Actions
   save() {
+    this.parsePriority()
     super.save()
   }
 
   update(name: string) {
-    super.update({ name })
+    this.name = name
+    this.parsePriority()
+    super.update({ name: this.name, priority: this.priority })
   }
 
   toggle() {
@@ -70,6 +72,17 @@ class Todo extends Base implements TodoInterface {
 
   destroy() {
     super.destroy()
+  }
+
+  parsePriority() {
+    const split = this.name.split(/^\(([A-Z])\)\s/)
+
+    if (split.length > 1) {
+      this.priority = split[1]
+      this.name = split[2]
+    } else {
+      this.name = split[0]
+    }
   }
 }
 
