@@ -4,14 +4,14 @@ import { Collection } from 'lokijs'
 import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
-  name: string
+  raw: string
   priority?: string | null
   done?: string | null // ISO-8601 or null
   created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
-  name: string
+  raw: string
   priority?: string | null
   done?: string | null
   created: string
@@ -21,12 +21,12 @@ class Todo extends Base implements TodoInterface {
     if (typeof todo === 'string') {
       super({}, collection)
 
-      this.name = todo
+      this.raw = todo
       this.created = new Date().toISOString()
     } else {
       super(todo, collection)
 
-      this.name = todo.name
+      this.raw = todo.raw
       this.priority = todo.priority
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
@@ -37,15 +37,15 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Getters
   get projects() {
-    return this.name.match(/(?<=(?:^|\s)\+)\S+/g)
+    return this.raw.match(/(?<=(?:^|\s)\+)\S+/g)
   }
 
   get contexts() {
-    return this.name.match(/(?<=(?:^|\s)@)\S+/g)
+    return this.raw.match(/(?<=(?:^|\s)@)\S+/g)
   }
 
   get tags() {
-    return this.name.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
+    return this.raw.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
   }
 
   // Instance methods: Actions
@@ -54,10 +54,10 @@ class Todo extends Base implements TodoInterface {
     super.save()
   }
 
-  update(name: string) {
-    this.name = name
+  update(raw: string) {
+    this.raw = raw
     this.parsePriority()
-    super.update({ name: this.name, priority: this.priority })
+    super.update({ raw: this.raw, priority: this.priority })
   }
 
   toggle() {
@@ -75,13 +75,13 @@ class Todo extends Base implements TodoInterface {
   }
 
   parsePriority() {
-    const split = this.name.split(/^\(([A-Z])\)\s/)
+    const split = this.raw.split(/^\(([A-Z])\)\s/)
 
     if (split.length > 1) {
       this.priority = split[1]
-      this.name = split[2]
+      this.raw = split[2]
     } else {
-      this.name = split[0]
+      this.raw = split[0]
     }
   }
 }
