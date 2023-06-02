@@ -10,16 +10,26 @@ export const useTodosStore = defineStore('todos', () => {
   const list = ref(new TodoCollection() as Collection)
 
   // Getters
+  const all = computed(() => () => {
+    return list.value.chain().simplesort('raw').data()
+  })
+
   const find = computed(() => (id: string) => {
     return Todo.find(id, list.value)
   })
 
   const forProject = computed(() => (project: string) => {
-    return list.value.find({'raw': { '$regex' : new RegExp(`\\${project}`, 'g') }})
+    return list.value.chain()
+      .find({'raw': { '$regex' : new RegExp(`\\${project}`) }})
+      .simplesort('raw')
+      .data()
   })
 
   const forContext = computed(() => (context: string) => {
-    return list.value.find({'raw': { '$regex' : new RegExp(`${context}`, 'g') }})
+    return list.value.chain()
+      .find({'raw': { '$regex' : new RegExp(`${context}`) }})
+      .simplesort('raw')
+      .data()
   })
 
   // Actions
@@ -40,5 +50,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, find, forProject, forContext, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, all, find, forProject, forContext, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
