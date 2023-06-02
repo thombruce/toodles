@@ -5,14 +5,12 @@ import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
   raw: string
-  priority?: string | null
   done?: string | null // ISO-8601 or null
   created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
   raw: string
-  priority?: string | null
   done?: string | null
   created: string
 
@@ -27,7 +25,6 @@ class Todo extends Base implements TodoInterface {
       super(todo, collection)
 
       this.raw = todo.raw
-      this.priority = todo.priority
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
@@ -36,6 +33,10 @@ class Todo extends Base implements TodoInterface {
   // Class methods
 
   // Instance methods: Getters
+  get priority() {
+    return this.raw.match(/^\([A-Z]\)(?=\s)/)?.[0]
+  }
+
   get projects() {
     return this.raw.match(/(?<=(?:^|\s)\+)\S+/g)
   }
@@ -50,14 +51,12 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Actions
   save() {
-    this.parsePriority()
     super.save()
   }
 
   update(raw: string) {
     this.raw = raw
-    this.parsePriority()
-    super.update({ raw: this.raw, priority: this.priority })
+    super.update({ raw: this.raw })
   }
 
   toggle() {
@@ -72,17 +71,6 @@ class Todo extends Base implements TodoInterface {
 
   destroy() {
     super.destroy()
-  }
-
-  parsePriority() {
-    const split = this.raw.split(/^\(([A-Z])\)\s/)
-
-    if (split.length > 1) {
-      this.priority = split[1]
-      this.raw = split[2]
-    } else {
-      this.raw = split[0]
-    }
   }
 }
 

@@ -4,17 +4,17 @@ import { computed } from 'vue';
 const props = defineProps({
   priority: {
     type: String,
-    required: false
+    required: true
   }
 })
 
 const color = computed(() => {
   switch(props.priority) {
-    case 'A':
+    case '(A)':
       return 'text-red-500'
-    case 'B':
+    case '(B)':
       return 'text-amber-500'
-    case 'C':
+    case '(C)':
       return 'text-yellow-500'
     default:
       return 'text-gray-500'
