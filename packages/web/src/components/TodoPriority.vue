@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   priority: {
@@ -23,5 +24,5 @@ const color = computed(() => {
 </script>
 
 <template lang="pug">
-span.font-mono.font-bold(:class="color") {{ priority }}
+RouterLink.font-bold.cursor-pointer(:class="color" :to="{ name: 'priority', params: { priority: priority }}") {{ priority }}
 </template>

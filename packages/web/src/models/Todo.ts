@@ -4,13 +4,15 @@ import { Collection } from 'lokijs'
 import { Base, type BaseInterface } from './Base'
 
 interface TodoInterface extends BaseInterface {
-  raw: string
+  description: string
+  priority?: string
   done?: string | null // ISO-8601 or null
   created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
-  raw: string
+  description!: string
+  priority?: string
   done?: string | null
   created: string
 
@@ -19,12 +21,13 @@ class Todo extends Base implements TodoInterface {
     if (typeof todo === 'string') {
       super({}, collection)
 
-      this.raw = todo
+      this.editable = todo
       this.created = new Date().toISOString()
     } else {
       super(todo, collection)
 
-      this.raw = todo.raw
+      this.description = todo.description
+      this.priority = todo.priority
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
@@ -33,20 +36,33 @@ class Todo extends Base implements TodoInterface {
   // Class methods
 
   // Instance methods: Getters
-  get priority() {
-    return this.raw.match(/^\([A-Z]\)(?=\s)/)?.[0]
+  get editable() {
+    // return this.description.match(/^\([A-Z]\)(?=\s)/)?.[0]
+    return `${this.priority ? '(' + this.priority + ') ' : ''}${this.description}`
+  }
+
+  set editable(editable) {
+    const split = editable.split(/^\(([A-Z])\)\s/)
+
+    if (split.length > 1) {
+      this.priority = split[1]
+      this.description = split[2]
+    } else {
+      this.priority = undefined
+      this.description = split[0]
+    }
   }
 
   get projects() {
-    return this.raw.match(/(?<=(?:^|\s)\+)\S+/g)
+    return this.description.match(/(?<=(?:^|\s)\+)\S+/g)
   }
 
   get contexts() {
-    return this.raw.match(/(?<=(?:^|\s)@)\S+/g)
+    return this.description.match(/(?<=(?:^|\s)@)\S+/g)
   }
 
   get tags() {
-    return this.raw.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
+    return this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
   }
 
   // Instance methods: Actions
@@ -54,18 +70,18 @@ class Todo extends Base implements TodoInterface {
     super.save()
   }
 
-  update(raw: string) {
-    this.raw = raw
-    super.update({ raw: this.raw })
+  update(editable: string) {
+    this.editable = editable
+    super.update({ description: this.description, priority: this.priority })
   }
 
   toggle() {
     var currentTime = new Date().toISOString()
     var todo = Todo.find(this.id, this.collection) as Todo
     if (todo.done) {
-      this.collection.update({ ...todo, ...{ done: null, collection: undefined } })
+      super.update({ done: null })
     } else {
-      this.collection.update({ ...todo, ...{ done: currentTime, collection: undefined } })
+      super.update({ done: currentTime })
     }
   }
 

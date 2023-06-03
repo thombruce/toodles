@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template lang="pug">
-ul.mb-4
+ul
   li(v-for="todo in todos" :key="todo.id")
     TodoItem(:todo="todo")
 </template>

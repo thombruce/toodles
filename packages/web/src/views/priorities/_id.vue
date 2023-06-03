@@ -9,15 +9,15 @@ import TodoList from "@/components/TodoList.vue"
 import TodoForm from '@/components/TodoForm.vue'
 
 const route = useRoute()
-const { context } = route.params
+const { priority } = route.params
 
 const store = useTodosStore()
 
-const { forContext } = storeToRefs(store)
+const { forPriority } = storeToRefs(store)
 </script>
 
 <template lang="pug">
 main
-  TodoList.mb-4(:todos="forContext(context)")
+  TodoList.mb-4(:todos="forPriority(priority)")
   TodoForm
 </template>

@@ -8,5 +8,5 @@ const props = defineProps({
 </script>
 
 <template lang="pug">
-span.text-amber-500.font-bold.rounded.bg-amber-50.px-1 {{ tag }}
+span.text-amber-500.font-bold.rounded.bg-amber-50 {{ tag }}
 </template>
