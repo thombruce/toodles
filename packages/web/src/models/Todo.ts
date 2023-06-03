@@ -50,6 +50,7 @@ class Todo extends Base implements TodoInterface {
       this.priority = split[1]
       this.description = split[2]
     } else {
+      this.priority = undefined
       this.description = split[0]
     }
   }
