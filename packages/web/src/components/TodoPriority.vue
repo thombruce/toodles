@@ -24,5 +24,5 @@ const color = computed(() => {
 </script>
 
 <template lang="pug">
-RouterLink.font-mono.font-bold.cursor-pointer(:class="color" :to="{ name: 'priority', params: { priority: priority }}") {{ priority }}
+RouterLink.font-bold.cursor-pointer(:class="color" :to="{ name: 'priority', params: { priority: priority }}") {{ priority }}
 </template>
