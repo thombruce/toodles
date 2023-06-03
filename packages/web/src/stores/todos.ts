@@ -51,6 +51,14 @@ export const useTodosStore = defineStore('todos', () => {
       .map((t) => new Todo(t, list.value))
   })
 
+  const forPriority = computed(() => (priority: string) => {
+    return list.value.chain()
+      .find({ 'priority': priority.replace(/[()]/g, '') })
+      .sort((obj1,obj2) => sortFunction(obj1,obj2))
+      .data()
+      .map((t) => new Todo(t, list.value))
+  })
+
   // Actions
   function addTodo(editable: string) {
     new Todo(editable, list.value).save()
@@ -69,5 +77,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, all, find, forProject, forContext, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, all, find, forProject, forContext, forPriority, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
