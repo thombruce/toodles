@@ -14,6 +14,6 @@ const { all } = storeToRefs(store)
 
 <template lang="pug">
 main
-  TodoList(:todos="all()")
+  TodoList.mb-4(:todos="all()")
   TodoForm
 </template>

@@ -18,6 +18,6 @@ const { forContext } = storeToRefs(store)
 
 <template lang="pug">
 main
-  TodoList(:todos="forContext(context)")
+  TodoList.mb-4(:todos="forContext(context)")
   TodoForm
 </template>

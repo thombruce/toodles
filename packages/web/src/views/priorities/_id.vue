@@ -18,6 +18,6 @@ const { forPriority } = storeToRefs(store)
 
 <template lang="pug">
 main
-  TodoList(:todos="forPriority(priority)")
+  TodoList.mb-4(:todos="forPriority(priority)")
   TodoForm
 </template>
