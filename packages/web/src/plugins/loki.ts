@@ -20,6 +20,7 @@ db = new loki(dbName, {
   // adapter: fsStructuredAdapter,
   // adapter: nativeScriptAdapter,
   autosave: true,
+  autosaveInterval: 1000,
   autoload: true,
   autoloadCallback: ready
 })
