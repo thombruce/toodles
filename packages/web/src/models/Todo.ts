@@ -31,8 +31,6 @@ class Todo extends Base implements TodoInterface {
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
-
-    console.log(this.priority)
   }
 
   // Class methods

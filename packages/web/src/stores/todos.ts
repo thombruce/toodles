@@ -6,10 +6,16 @@ import { Todo } from '../models/Todo'
 import { TodoCollection } from '@/models/TodoCollection'
 
 const sortFunction = (obj1:any,obj2:any) => {
-  // TODO: After sorting by priority, also sort by created
-  //       This is presently happening by default
-  if (obj1.priority > obj2.priority) return 1
-  if ((obj1.priority < obj2.priority) || (obj1.priority && !obj2.priority)) return -1
+  if (obj1.done == obj2.done) {
+    if (obj1.priority > obj2.priority) return 1
+    if ((obj1.priority < obj2.priority) || (obj1.priority && !obj2.priority)) return -1
+    return 0
+    // TODO: After sorting by priority, also sort by created
+    //       This is presently happening by default
+  }
+
+  if ((obj1.done > obj2.done) || (!obj1.done && obj2.done)) return -1
+  if ((obj1.done < obj2.done) || (obj1.done && !obj2.done)) return 1
   return 0
 }
 
