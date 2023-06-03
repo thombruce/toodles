@@ -2,6 +2,7 @@
 import { RouterLink } from "vue-router"
 import { useTodosStore } from "../stores/todos"
 
+import TodoPriority from "./TodoPriority.vue"
 import TodoText from "./TodoText.vue"
 
 const props = defineProps({
@@ -26,7 +27,8 @@ const updateTodo = (e: Event) => {
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
-  TodoText(v-model="todo.name" @blur="updateTodo" @keydown.enter="$event.target.blur()")
+  TodoPriority(v-if="todo.priority" :priority="todo.priority")
+  TodoText(v-model="todo.raw" @blur="updateTodo" @keydown.enter="$event.target.blur()")
   //- RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
   button.text-red-600(@click="deleteTodo(todo.id)") Delete
 </template>

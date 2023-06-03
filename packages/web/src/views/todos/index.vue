@@ -9,11 +9,11 @@ import TodoForm from '@/components/TodoForm.vue'
 
 const store = useTodosStore()
 
-const { list } = storeToRefs(store)
+const { all } = storeToRefs(store)
 </script>
 
 <template lang="pug">
 main
-  TodoList(:todos="list.data")
+  TodoList(:todos="all()")
   TodoForm
 </template>

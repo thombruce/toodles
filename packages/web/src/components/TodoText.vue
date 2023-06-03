@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
+import TodoPriority from "./TodoPriority.vue"
 import ProjectTag from "./ProjectTag.vue"
 import ContextTag from "./ContextTag.vue"
 import TagTag from "./TagTag.vue"
 
 const props = defineProps({
-  modelValue: String
+  modelValue: {
+    type: String,
+    required: true
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -17,9 +21,20 @@ function update(e: Event) {
 }
 
 const items = computed(() => {
-  return props.modelValue?.split(/((?<=^|\s)(?:\+|@|[^\s:]+?:)\S+)/g)
+  let priority, description
+  const split = props.modelValue.split(/(^\([A-Z]\))(?=\s)/)
+
+  if (split.length > 1) {
+    priority = split[1]
+    description = split[2]
+  } else {
+    description = split[0]
+  }
+
+  return [priority, ...description.split(/((?<=^|\s)(?:\+|@|[^\s:]+?:)\S+)/g)]
 })
 
+const priorityMatcher = (item: string) => /^\([A-Z]\)$/.test(item)
 const projectMatcher = (item: string) => /^\+\S+$/.test(item)
 const contextMatcher = (item: string) => /^@\S+$/.test(item)
 const tagMatcher = (item: string) => /^[^\s:]+?:[^\s:]+$/.test(item)
@@ -28,7 +43,8 @@ const tagMatcher = (item: string) => /^[^\s:]+?:[^\s:]+$/.test(item)
 <template lang="pug">
 span(contenteditable spellcheck="false" :key="modelValue")
   template(v-for="item in items")
-    ProjectTag(v-if="projectMatcher(item)" :tag="item" @input="update")
+    TodoPriority(v-if="priorityMatcher(item)" :priority="item" @input="update")
+    ProjectTag(v-else-if="projectMatcher(item)" :tag="item" @input="update")
     ContextTag(v-else-if="contextMatcher(item)" :tag="item" @input="update")
     TagTag(v-else-if="tagMatcher(item)" :tag="item" @input="update")
     span(v-else) {{ item }}
