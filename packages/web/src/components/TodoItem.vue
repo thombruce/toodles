@@ -27,6 +27,8 @@ const updateTodo = (e: Event) => {
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
+  RouterLink.opacity-50(v-if="todo.done" :to="{ name: 'done' }")
+    time.text-gray-500(:datetime="todo.done") {{ new Date(todo.done).toDateString() }}
   TodoText(v-model="todo.editable" @blur="updateTodo" @keydown.enter="$event.target.blur()" :class="todo.done ? 'opacity-50 line-through decoration-gray-500' : ''")
   //- RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
   button.text-red-600(@click="deleteTodo(todo.id)") Delete

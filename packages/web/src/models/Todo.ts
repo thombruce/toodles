@@ -6,14 +6,14 @@ import { Base, type BaseInterface } from './Base'
 interface TodoInterface extends BaseInterface {
   description: string
   priority?: string
-  done?: string | null // ISO-8601 or null
+  done?: string // ISO-8601
   created: string // ISO-8601
 }
 
 class Todo extends Base implements TodoInterface {
   description!: string
   priority?: string
-  done?: string | null
+  done?: string
   created: string
 
   // Constructor
@@ -79,7 +79,7 @@ class Todo extends Base implements TodoInterface {
     var currentTime = new Date().toISOString()
     var todo = Todo.find(this.id, this.collection) as Todo
     if (todo.done) {
-      super.update({ done: null })
+      super.update({ done: undefined })
     } else {
       super.update({ done: currentTime })
     }

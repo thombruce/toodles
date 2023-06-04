@@ -31,6 +31,14 @@ export const useTodosStore = defineStore('todos', () => {
       .map((t) => new Todo(t, list.value))
   })
 
+  const done = computed(() => () => {
+    return list.value.chain()
+      .find({ '$and': [{'done': { '$exists': true }}, {'done': { '$ne': null }}]})
+      .sort((obj1,obj2) => sortFunction(obj1,obj2))
+      .data()
+      .map((t) => new Todo(t, list.value))
+  })
+
   const find = computed(() => (id: string) => {
     return Todo.find(id, list.value)
   })
@@ -77,5 +85,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, all, find, forProject, forContext, forPriority, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, all, done, find, forProject, forContext, forPriority, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
