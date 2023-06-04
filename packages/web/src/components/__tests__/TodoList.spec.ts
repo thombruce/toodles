@@ -13,6 +13,9 @@ describe('TodoList', () => {
       global: {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
       },
+      props: {
+        todos: []
+      }
     })
     expect(wrapper.html()).toContain('<ul')
   })
