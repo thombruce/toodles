@@ -28,5 +28,6 @@ describe('TodoItem', () => {
 
   it('renders properly', () => {
     expect(wrapper.html()).toContain('<div')
+    expect(wrapper.html()).toContain('<button')
   })
 })
