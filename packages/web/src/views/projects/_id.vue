@@ -13,6 +13,8 @@ const { project } = route.params
 
 const store = useTodosStore()
 
+store.fetchTodos()
+
 const { forProject } = storeToRefs(store)
 </script>
 

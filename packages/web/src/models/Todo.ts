@@ -1,31 +1,28 @@
-import { Collection } from 'lokijs'
+import { nanoid } from "nanoid"
 
-// TODO: Prefer not to do this; what alternatives exist?
-import { Base, type BaseInterface } from './Base'
-
-interface TodoInterface extends BaseInterface {
+interface TodoInterface {
+  id?: string
   description: string
   priority?: string
   done?: string // ISO-8601
   created: string // ISO-8601
 }
 
-class Todo extends Base implements TodoInterface {
+class Todo implements TodoInterface {
+  id?: string
   description!: string
   priority?: string
   done?: string
   created: string
 
   // Constructor
-  constructor(todo: string | TodoInterface, collection: Collection) {
+  constructor(todo: string | TodoInterface) {
     if (typeof todo === 'string') {
-      super({}, collection)
-
+      this.id = nanoid()
       this.editable = todo
       this.created = new Date().toISOString()
     } else {
-      super(todo, collection)
-
+      this.id = (todo.id || nanoid())
       this.description = todo.description
       this.priority = todo.priority
       this.done = todo.done
@@ -37,7 +34,6 @@ class Todo extends Base implements TodoInterface {
 
   // Instance methods: Getters
   get editable() {
-    // return this.description.match(/^\([A-Z]\)(?=\s)/)?.[0]
     return `${this.priority ? '(' + this.priority + ') ' : ''}${this.description}`
   }
 
@@ -66,28 +62,14 @@ class Todo extends Base implements TodoInterface {
   }
 
   // Instance methods: Actions
-  save() {
-    super.save()
-  }
-
-  update(editable: string) {
-    this.editable = editable
-    super.update({ description: this.description, priority: this.priority })
-  }
-
   toggle() {
     var currentTime = new Date().toISOString()
-    var todo = Todo.find(this.id, this.collection) as Todo
-    if (todo.done) {
-      super.update({ done: undefined })
+    if (this.done) {
+      this.done = undefined
     } else {
-      super.update({ done: currentTime })
+      this.done = currentTime
     }
-  }
-
-  destroy() {
-    super.destroy()
   }
 }
 
-export { Todo }
+export { Todo, type TodoInterface }
