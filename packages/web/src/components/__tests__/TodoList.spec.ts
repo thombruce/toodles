@@ -12,6 +12,9 @@ describe('TodoList', () => {
     const wrapper = mount(TodoList, {
       global: {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
+        mocks: {
+          $route: {}
+        }
       },
       props: {
         todos: []

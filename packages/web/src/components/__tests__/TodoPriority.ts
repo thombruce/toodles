@@ -12,9 +12,9 @@ describe('TodoPriority', () => {
     const wrapper = mount(TodoPriority, {
       global: {
         plugins: [createTestingPinia({ createSpy: vi.fn })],
-        props: {
-          priority: '(A)'
-        },
+      },
+      props: {
+        priority: '(A)'
       },
     })
     expect(wrapper.html()).toContain('<a')
