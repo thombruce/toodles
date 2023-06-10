@@ -20,6 +20,11 @@ export const useTodosStore = defineStore('todos', () => {
     return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
+  const open = computed(() => () => {
+    const todos = list.value.filter(t => !t.done)
+    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
+  })
+
   const done = computed(() => () => {
     const todos = list.value.filter(t => t.done)
     return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
@@ -82,5 +87,5 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, find, all, done, forProject, forContext, forPriority, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, find, all, open, done, forProject, forContext, forPriority, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo }
 })
