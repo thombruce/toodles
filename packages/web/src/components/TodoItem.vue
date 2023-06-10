@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router"
 import { useTodosStore } from "../stores/todos"
 
 import TodoPriority from "./TodoPriority.vue"
