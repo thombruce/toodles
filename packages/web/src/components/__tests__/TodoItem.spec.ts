@@ -1,10 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { setActivePinia, createPinia } from 'pinia'
 
 import { VueWrapper, mount } from '@vue/test-utils'
 
 import TodoItem from '../TodoItem.vue'
 import { Todo } from '@/models/Todo'
+import { createTestingPinia } from '@pinia/testing'
 
 vi.mock('vue-router', () => ({
   RouterLink: vi.fn()
@@ -14,12 +14,12 @@ describe('TodoItem', () => {
   let wrapper: VueWrapper
 
   beforeEach(() => {
-    // TODO: We should probably createTestingPinia and setup mocks of internal actions
-    setActivePinia(createPinia())
-
     const todo = new Todo("Get milk!")
 
     wrapper = mount(TodoItem, {
+      global: {
+        plugins: [createTestingPinia({ createSpy: vi.fn })],
+      },
       props: {
         todo: todo
       }
