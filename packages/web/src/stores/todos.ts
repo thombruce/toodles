@@ -1,89 +1,86 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { Collection } from 'lokijs'
+
+import { reject as _reject, findIndex as _findIndex, orderBy as _orderBy } from 'lodash'
 
 import { Todo } from '../models/Todo'
-import { TodoCollection } from '@/models/TodoCollection'
-
-const sortFunction = (obj1:any,obj2:any) => {
-  if (obj1.done == obj2.done) {
-    if (obj1.priority > obj2.priority) return 1
-    if ((obj1.priority < obj2.priority) || (obj1.priority && !obj2.priority)) return -1
-    return 0
-    // TODO: After sorting by priority, also sort by created
-    //       This is presently happening by default
-  }
-
-  if ((obj1.done > obj2.done) || (!obj1.done && obj2.done)) return -1
-  if ((obj1.done < obj2.done) || (obj1.done && !obj2.done)) return 1
-  return 0
-}
+import { db } from '@/plugins/dexie'
 
 export const useTodosStore = defineStore('todos', () => {
   // State
-  const list = ref(new TodoCollection() as Collection)
+  const list = ref([] as Todo[])
 
   // Getters
+  const find = computed(() => (id: string) => {
+    return list.value.find(t => t.id === id)
+  })
+
   const all = computed(() => () => {
-    return list.value.chain()
-      .sort((obj1,obj2) => sortFunction(obj1,obj2))
-      .data()
-      .map((t) => new Todo(t, list.value))
+    const todos = list.value
+    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const done = computed(() => () => {
-    return list.value.chain()
-      .find({ '$and': [{'done': { '$exists': true }}, {'done': { '$ne': null }}]})
-      .sort((obj1,obj2) => sortFunction(obj1,obj2))
-      .data()
-      .map((t) => new Todo(t, list.value))
-  })
-
-  const find = computed(() => (id: string) => {
-    return Todo.find(id, list.value)
+    const todos = list.value.filter(t => t.done)
+    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const forProject = computed(() => (project: string) => {
-    return list.value.chain()
-      .find({'description': { '$regex' : new RegExp(`\\${project}`) }})
-      .sort((obj1,obj2) => sortFunction(obj1,obj2))
-      .data()
-      .map((t) => new Todo(t, list.value))
+    const todos = list.value.filter(t => new RegExp(`\\${project}`).test(t.description))
+    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
-    return list.value.chain()
-      .find({'description': { '$regex' : new RegExp(`${context}`) }})
-      .sort((obj1,obj2) => sortFunction(obj1,obj2))
-      .data()
-      .map((t) => new Todo(t, list.value))
+    const todos = list.value.filter(t => new RegExp(`${context}`).test(t.description))
+    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forPriority = computed(() => (priority: string) => {
-    return list.value.chain()
-      .find({ 'priority': priority.replace(/[()]/g, '') })
-      .sort((obj1,obj2) => sortFunction(obj1,obj2))
-      .data()
-      .map((t) => new Todo(t, list.value))
+    const todos = list.value.filter(t => t.priority === priority.replace(/[()]/g, ''))
+    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   // Actions
+  async function fetchTodos() {
+    const items = await db.todos.toArray()
+    list.value = items
+  }
+
   function addTodo(editable: string) {
-    new Todo(editable, list.value).save()
+    const todo = new Todo(editable)
+    list.value.push(todo)
+    // db sync:
+    db.todos.add(todo).then().catch()
   }
 
   function updateTodo(id: string, editable: string) {
-    Todo.find(id, list.value)?.update(editable)
+    const todo = find.value(id)
+    if (todo) {
+      Object.assign(todo, { editable })
+      const index = _findIndex(list.value, { id: id })
+      list.value.splice(index, 1, todo)
+      // db sync:
+      db.todos.update(id, todo).then().catch()
+    }
   }
 
   function toggleTodo(id: string) {
-    Todo.find(id, list.value)?.toggle()
+    const todo = find.value(id)
+    if (todo) {
+      todo.toggle()
+      const index = _findIndex(list.value, { id: id })
+      list.value.splice(index, 1, todo)
+      // db sync:
+      db.todos.update(id, todo).then().catch()
+    }
   }
 
   function deleteTodo(id: string) {
-    Todo.find(id, list.value)?.destroy()
+    list.value = _reject(list.value, { id })
+    // db sync:
+    db.todos.delete(id).then().catch()
   }
 
   // Export
-  return { list, all, done, find, forProject, forContext, forPriority, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return { list, find, all, done, forProject, forContext, forPriority, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo }
 })

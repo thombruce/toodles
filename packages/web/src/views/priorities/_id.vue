@@ -13,6 +13,8 @@ const { priority } = route.params
 
 const store = useTodosStore()
 
+store.fetchTodos()
+
 const { forPriority } = storeToRefs(store)
 </script>
 

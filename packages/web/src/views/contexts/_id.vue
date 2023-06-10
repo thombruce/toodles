@@ -13,6 +13,8 @@ const { context } = route.params
 
 const store = useTodosStore()
 
+store.fetchTodos()
+
 const { forContext } = storeToRefs(store)
 </script>
 

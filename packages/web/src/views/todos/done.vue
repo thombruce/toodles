@@ -9,6 +9,8 @@ import TodoForm from '@/components/TodoForm.vue'
 
 const store = useTodosStore()
 
+store.fetchTodos()
+
 const { done } = storeToRefs(store)
 </script>
 
