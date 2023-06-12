@@ -11,4 +11,4 @@ const getTokenStream = (text: string) =>
     lunr.tokenizer(text)
   )
 
-export const tokenize = (text: string) => _uniq(getTokenStream(text).map(({ str }: { str: string }) => str))
+export const tokenize = (text: string) => _uniq(getTokenStream(text).map(({ str }: { str: string }) => str)) as string[]
