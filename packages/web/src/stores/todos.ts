@@ -19,33 +19,39 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const all = computed(() => () => {
-    const todos = list.value
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const open = computed(() => () => {
-    const todos = list.value.filter(t => !t.done)
-    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => !t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const done = computed(() => () => {
-    const todos = list.value.filter(t => t.done)
-    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const forProject = computed(() => (project: string) => {
-    const todos = list.value.filter(t => new RegExp(`\\${project}`).test(t.description))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
-    const todos = list.value.filter(t => new RegExp(`${context}`).test(t.description))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forPriority = computed(() => (priority: string) => {
-    const todos = list.value.filter(t => t.priority === priority.replace(/[()]/g, ''))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   // Actions

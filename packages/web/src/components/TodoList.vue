@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 
+import MultiBar from "./MultiBar.vue"
 import ProgressBar from "./ProgressBar.vue"
 import TodoItem from "./TodoItem.vue"
 
@@ -21,6 +22,7 @@ const progress = computed(() => {
 </script>
 
 <template lang="pug">
+MultiBar.mb-4
 ProgressBar.mb-4(:progress="progress")
 ul
   li(v-for="todo in todos" :key="todo.id")
