@@ -6,6 +6,7 @@ header.mb-4
   strong Toodles
   nav.space-x-4
     RouterLink(to="/") Home
+    RouterLink(to="/s") Search
     RouterLink(to="/about") About
 RouterView(:key="$route.fullPath")
 </template>

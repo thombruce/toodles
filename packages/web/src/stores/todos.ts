@@ -6,9 +6,12 @@ import { reject as _reject, findIndex as _findIndex, orderBy as _orderBy } from 
 import { Todo } from '../models/Todo'
 import { db } from '@/plugins/dexie'
 
+import { tokenize } from '@/plugins/lunr'
+
 export const useTodosStore = defineStore('todos', () => {
   // State
   const list = ref([] as Todo[])
+  const results = ref([] as Todo[])
 
   // Getters
   const find = computed(() => (id: string) => {
@@ -51,6 +54,15 @@ export const useTodosStore = defineStore('todos', () => {
     list.value = items
   }
 
+  async function searchTodos(query: string) {
+    const tokenized = tokenize(query)
+    const items = await db.todos
+      .where('tokens').startsWithAnyOf(tokenized)
+      .distinct()
+      .toArray()
+    results.value = items
+  }
+
   function addTodo(editable: string) {
     const todo = new Todo(editable)
     list.value.push(todo)
@@ -87,5 +99,13 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, find, all, open, done, forProject, forContext, forPriority, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return {
+    // State
+    list,
+    results,
+    // Getters
+    find, all, open, done, forProject, forContext, forPriority,
+    // Actions
+    fetchTodos, searchTodos, addTodo, updateTodo, toggleTodo, deleteTodo
+  }
 })

@@ -6,6 +6,7 @@ interface TodoInterface {
   priority?: string
   done?: string // ISO-8601
   created: string // ISO-8601
+  tokens?: string[]
 }
 
 class Todo implements TodoInterface {
@@ -14,6 +15,7 @@ class Todo implements TodoInterface {
   priority?: string
   done?: string
   created: string
+  tokens?: string[]
 
   // Constructor
   constructor(todo: string | TodoInterface) {

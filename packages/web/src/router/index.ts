@@ -11,6 +11,11 @@ const router = createRouter({
       component: Home
     },
     {
+      path: '/s',
+      name: 'search',
+      component: () => import('../views/search/index.vue')
+    },
+    {
       path: '/!x',
       name: 'open',
       component: () => import('../views/todos/open.vue')
