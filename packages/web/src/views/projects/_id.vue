@@ -6,7 +6,6 @@ import { useRoute } from "vue-router"
 import { useTodosStore } from "@/stores/todos"
 
 import TodoList from "@/components/TodoList.vue"
-import TodoForm from '@/components/TodoForm.vue'
 
 const route = useRoute()
 const { project } = route.params
@@ -21,5 +20,4 @@ const { forProject } = storeToRefs(store)
 <template lang="pug">
 main
   TodoList.mb-4(:todos="forProject(project)")
-  TodoForm
 </template>
