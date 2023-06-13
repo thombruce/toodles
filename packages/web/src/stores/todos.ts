@@ -4,33 +4,7 @@ import { defineStore } from 'pinia'
 import { reject as _reject, findIndex as _findIndex, orderBy as _orderBy } from 'lodash'
 
 import { Todo } from '../models/Todo'
-import { db } from '@/plugins/dexie'
-
-import { tokenize } from '@/plugins/lunr'
-import Dexie from 'dexie'
-
-// Searches for todos matching ALL words
-function advancedSearch(query: string) {
-  const prefixes = tokenize(query)
-  return db.transaction('r', db.todos, function*(): any {
-    // Parallell search for all prefixes - just select resulting primary keys
-    const results = yield Dexie.Promise.all(prefixes.map(prefix =>
-      db.todos
-        .where('tokens')
-        .startsWith(prefix)
-        .primaryKeys()))
-
-    // Intersect result set of primary keys
-    const reduced = results
-      .reduce((a: string[], b: string[]) => {
-        const set = new Set(b)
-        return a.filter((k: string) => set.has(k))
-      })
-
-    // Finally select entire documents from intersection
-    return yield db.todos.where('id').anyOf(reduced).toArray()
-  })
-}
+import { db, advancedSearch } from '@/plugins/dexie'
 
 export const useTodosStore = defineStore('todos', () => {
   // State

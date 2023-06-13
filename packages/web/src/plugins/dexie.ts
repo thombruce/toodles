@@ -29,3 +29,26 @@ db.todos.hook("updating", function (mods: any, primKey, obj, trans) {
       return { tokens: [] }
   }
 })
+
+// Searches for todos matching ALL words
+export function advancedSearch(query: string) {
+  const prefixes = tokenize(query)
+  return db.transaction('r', db.todos, function*(): any {
+    // Parallell search for all prefixes - just select resulting primary keys
+    const results = yield Dexie.Promise.all(prefixes.map(prefix =>
+      db.todos
+        .where('tokens')
+        .startsWith(prefix)
+        .primaryKeys()))
+
+    // Intersect result set of primary keys
+    const reduced = results
+      .reduce((a: string[], b: string[]) => {
+        const set = new Set(b)
+        return a.filter((k: string) => set.has(k))
+      })
+
+    // Finally select entire documents from intersection
+    return yield db.todos.where('id').anyOf(reduced).toArray()
+  })
+}
