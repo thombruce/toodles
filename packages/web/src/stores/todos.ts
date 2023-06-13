@@ -6,9 +6,36 @@ import { reject as _reject, findIndex as _findIndex, orderBy as _orderBy } from 
 import { Todo } from '../models/Todo'
 import { db } from '@/plugins/dexie'
 
+import { tokenize } from '@/plugins/lunr'
+import Dexie from 'dexie'
+
+// Searches for todos matching ALL words
+function advancedSearch(query: string) {
+  const prefixes = tokenize(query)
+  return db.transaction('r', db.todos, function*(): any {
+    // Parallell search for all prefixes - just select resulting primary keys
+    const results = yield Dexie.Promise.all(prefixes.map(prefix =>
+      db.todos
+        .where('tokens')
+        .startsWith(prefix)
+        .primaryKeys()))
+
+    // Intersect result set of primary keys
+    const reduced = results
+      .reduce((a: string[], b: string[]) => {
+        const set = new Set(b)
+        return a.filter((k: string) => set.has(k))
+      })
+
+    // Finally select entire documents from intersection
+    return yield db.todos.where('id').anyOf(reduced).toArray()
+  })
+}
+
 export const useTodosStore = defineStore('todos', () => {
   // State
   const list = ref([] as Todo[])
+  const results = ref([] as Todo[])
 
   // Getters
   const find = computed(() => (id: string) => {
@@ -16,39 +43,55 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const all = computed(() => () => {
-    const todos = list.value
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const open = computed(() => () => {
-    const todos = list.value.filter(t => !t.done)
-    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => !t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const done = computed(() => () => {
-    const todos = list.value.filter(t => t.done)
-    return _orderBy(todos, ['priority', 'created'], ['asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const forProject = computed(() => (project: string) => {
-    const todos = list.value.filter(t => new RegExp(`\\${project}`).test(t.description))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
-    const todos = list.value.filter(t => new RegExp(`${context}`).test(t.description))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forPriority = computed(() => (priority: string) => {
-    const todos = list.value.filter(t => t.priority === priority.replace(/[()]/g, ''))
-    return _orderBy(todos, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    const todos = results.value.length > 0 ? results.value : list.value
+    const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   // Actions
   async function fetchTodos() {
     const items = await db.todos.toArray()
     list.value = items
+  }
+
+  async function searchTodos(query: string) {
+    advancedSearch(query)
+      .then(todos => {
+        results.value = todos
+      })
+      .catch(() => {
+        results.value = []
+      })
   }
 
   function addTodo(editable: string) {
@@ -65,7 +108,7 @@ export const useTodosStore = defineStore('todos', () => {
       const index = _findIndex(list.value, { id: id })
       list.value.splice(index, 1, todo)
       // db sync:
-      db.todos.update(id, todo).then().catch()
+      db.todos.update(id, { description: todo.description, priority: todo.priority }).then().catch()
     }
   }
 
@@ -76,7 +119,7 @@ export const useTodosStore = defineStore('todos', () => {
       const index = _findIndex(list.value, { id: id })
       list.value.splice(index, 1, todo)
       // db sync:
-      db.todos.update(id, todo).then().catch()
+      db.todos.update(id, { done: todo.done }).then().catch()
     }
   }
 
@@ -87,5 +130,13 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   // Export
-  return { list, find, all, open, done, forProject, forContext, forPriority, fetchTodos, addTodo, updateTodo, toggleTodo, deleteTodo }
+  return {
+    // State
+    list,
+    results,
+    // Getters
+    find, all, open, done, forProject, forContext, forPriority,
+    // Actions
+    fetchTodos, searchTodos, addTodo, updateTodo, toggleTodo, deleteTodo
+  }
 })
