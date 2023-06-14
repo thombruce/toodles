@@ -9,6 +9,7 @@ import { db, advancedSearch } from '@/plugins/dexie'
 export const useTodosStore = defineStore('todos', () => {
   // State
   const list = ref([] as Todo[])
+  const activeQuery = ref('')
   const results = ref([] as Todo[])
 
   // Getters
@@ -17,9 +18,11 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const all = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
-    const filtered = todos
-    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    return _orderBy(list.value, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const allSearch = computed(() => () => {
+    return _orderBy(results.value, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const open = computed(() => () => {
@@ -59,6 +62,7 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   async function searchTodos(query: string) {
+    activeQuery.value = query
     advancedSearch(query)
       .then(todos => {
         results.value = todos
@@ -107,10 +111,23 @@ export const useTodosStore = defineStore('todos', () => {
   return {
     // State
     list,
+    activeQuery,
     results,
     // Getters
-    find, all, open, done, forProject, forContext, forPriority,
+    find,
+    all,
+    allSearch,
+    open,
+    done,
+    forProject,
+    forContext,
+    forPriority,
     // Actions
-    fetchTodos, searchTodos, addTodo, updateTodo, toggleTodo, deleteTodo
+    fetchTodos,
+    searchTodos,
+    addTodo,
+    updateTodo,
+    toggleTodo,
+    deleteTodo
   }
 })
