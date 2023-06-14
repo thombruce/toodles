@@ -26,31 +26,61 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const open = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => !t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
+  })
+
+  const openSearch = computed(() => () => {
+    const todos = results.value
     const filtered = todos.filter(t => !t.done)
     return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const done = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
+  })
+
+  const doneSearch = computed(() => () => {
+    const todos = results.value
     const filtered = todos.filter(t => t.done)
     return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const forProject = computed(() => (project: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forProjectSearch = computed(() => (project: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forContextSearch = computed(() => (context: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forPriority = computed(() => (priority: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forPrioritySearch = computed(() => (priority: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
@@ -118,10 +148,15 @@ export const useTodosStore = defineStore('todos', () => {
     all,
     allSearch,
     open,
+    openSearch,
     done,
+    doneSearch,
     forProject,
+    forProjectSearch,
     forContext,
+    forContextSearch,
     forPriority,
+    forPrioritySearch,
     // Actions
     fetchTodos,
     searchTodos,
