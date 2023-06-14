@@ -4,7 +4,6 @@ import { storeToRefs } from "pinia"
 
 import { useTodosStore } from "@/stores/todos"
 
-import MultiBar from "@/components/MultiBar.vue"
 import TodoList from "@/components/TodoList.vue"
 
 const store = useTodosStore()
@@ -16,7 +15,6 @@ const { activeQuery, done, doneSearch } = storeToRefs(store)
 
 <template lang="pug">
 main
-  MultiBar.mb-4
   TodoList.mb-4(v-if="activeQuery && doneSearch().length" :todos="doneSearch()")
   .opacity-50(v-else-if="activeQuery")
     TodoList.mb-4(:todos="done()")
