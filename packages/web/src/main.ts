@@ -1,6 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import i18n from './plugins/i18n'
 import pinia from './plugins/pinia'
 
 import App from './App.vue'
@@ -10,10 +11,11 @@ import router from './router'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSquare, faMessage } from '@fortawesome/free-regular-svg-icons'
-import { faSquareCheck, faClock, faPause, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faSquareCheck, faClock, faPause, faPlus, faTrashCan, faLanguage } from '@fortawesome/free-solid-svg-icons'
 
 const app = createApp(App)
 
+app.use(i18n)
 app.use(pinia)
 app.use(router)
 
@@ -25,7 +27,8 @@ library.add(
   faClock,
   faPause,
   faPlus,
-  faTrashCan
+  faTrashCan,
+  faLanguage
 )
 app.component('fa', FontAwesomeIcon)
 
