@@ -1,13 +1,13 @@
 import { createI18n } from 'vue-i18n'
 
-import { en } from '@/i18n'
+import * as languages from '@/i18n'
 
 const messages = {
-  en
+  ...languages
 }
 
 const i18n = createI18n({
-  locale: 'en',
+  locale: navigator.language,
   fallbackLocale: 'en',
   messages,
 })
