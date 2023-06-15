@@ -1,6 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import i18n from './plugins/i18n'
 import pinia from './plugins/pinia'
 
 import App from './App.vue'
@@ -14,6 +15,7 @@ import { faSquareCheck, faClock, faPause, faPlus, faTrashCan } from '@fortawesom
 
 const app = createApp(App)
 
+app.use(i18n)
 app.use(pinia)
 app.use(router)
 
