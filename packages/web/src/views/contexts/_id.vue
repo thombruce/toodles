@@ -14,10 +14,13 @@ const store = useTodosStore()
 
 store.fetchTodos()
 
-const { forContext } = storeToRefs(store)
+const { activeQuery, forContext, forContextSearch } = storeToRefs(store)
 </script>
 
 <template lang="pug">
 main
-  TodoList.mb-4(:todos="forContext(context)")
+  TodoList.mb-4(v-if="activeQuery && forContextSearch(context).length" :todos="forContextSearch(context)")
+  .opacity-50(v-else-if="activeQuery")
+    TodoList.mb-4(:todos="forContext(context)")
+  TodoList.mb-4(v-else :todos="forContext(context)")
 </template>

@@ -9,6 +9,7 @@ import { db, advancedSearch } from '@/plugins/dexie'
 export const useTodosStore = defineStore('todos', () => {
   // State
   const list = ref([] as Todo[])
+  const activeQuery = ref('')
   const results = ref([] as Todo[])
 
   // Getters
@@ -17,37 +18,69 @@ export const useTodosStore = defineStore('todos', () => {
   })
 
   const all = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
-    const filtered = todos
-    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+    return _orderBy(list.value, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const allSearch = computed(() => () => {
+    return _orderBy(results.value, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const open = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => !t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
+  })
+
+  const openSearch = computed(() => () => {
+    const todos = results.value
     const filtered = todos.filter(t => !t.done)
     return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const done = computed(() => () => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => t.done)
+    return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
+  })
+
+  const doneSearch = computed(() => () => {
+    const todos = results.value
     const filtered = todos.filter(t => t.done)
     return _orderBy(filtered, ['priority', 'created'], ['asc', 'asc'])
   })
 
   const forProject = computed(() => (project: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forProjectSearch = computed(() => (project: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forContextSearch = computed(() => (context: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forPriority = computed(() => (priority: string) => {
-    const todos = results.value.length > 0 ? results.value : list.value
+    const todos = list.value
+    const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forPrioritySearch = computed(() => (priority: string) => {
+    const todos = results.value
     const filtered = todos.filter(t => t.priority === priority.replace(/[()]/g, ''))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
@@ -59,6 +92,7 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   async function searchTodos(query: string) {
+    activeQuery.value = query
     advancedSearch(query)
       .then(todos => {
         results.value = todos
@@ -107,10 +141,22 @@ export const useTodosStore = defineStore('todos', () => {
   return {
     // State
     list,
+    activeQuery,
     results,
     // Getters
-    find, all, open, done, forProject, forContext, forPriority,
+    find,
+    all, allSearch,
+    open, openSearch,
+    done, doneSearch,
+    forProject, forProjectSearch,
+    forContext, forContextSearch,
+    forPriority, forPrioritySearch,
     // Actions
-    fetchTodos, searchTodos, addTodo, updateTodo, toggleTodo, deleteTodo
+    fetchTodos,
+    searchTodos,
+    addTodo,
+    updateTodo,
+    toggleTodo,
+    deleteTodo
   }
 })

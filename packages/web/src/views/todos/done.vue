@@ -10,10 +10,13 @@ const store = useTodosStore()
 
 store.fetchTodos()
 
-const { done } = storeToRefs(store)
+const { activeQuery, done, doneSearch } = storeToRefs(store)
 </script>
 
 <template lang="pug">
 main
-  TodoList.mb-4(:todos="done()")
+  TodoList.mb-4(v-if="activeQuery && doneSearch().length" :todos="doneSearch()")
+  .opacity-50(v-else-if="activeQuery")
+    TodoList.mb-4(:todos="done()")
+  TodoList.mb-4(v-else :todos="done()")
 </template>

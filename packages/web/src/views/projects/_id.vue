@@ -14,10 +14,13 @@ const store = useTodosStore()
 
 store.fetchTodos()
 
-const { forProject } = storeToRefs(store)
+const { activeQuery, forProject, forProjectSearch } = storeToRefs(store)
 </script>
 
 <template lang="pug">
 main
-  TodoList.mb-4(:todos="forProject(project)")
+  TodoList.mb-4(v-if="activeQuery && forProjectSearch(project).length" :todos="forProjectSearch(project)")
+  .opacity-50(v-else-if="activeQuery")
+    TodoList.mb-4(:todos="forProject(project)")
+  TodoList.mb-4(v-else :todos="forProject(project)")
 </template>
