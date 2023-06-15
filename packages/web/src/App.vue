@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router'
 
 import DefaultLayout from '@/layouts/default.vue'
 
+import LocaleSelect from '@/components/LocaleSelect.vue'
+
 const route = useRoute()
 const layout = ref(DefaultLayout)
 
@@ -27,6 +29,7 @@ header.mb-4
   nav.space-x-4
     RouterLink(to="/") {{ $t("pages.home") }}
     RouterLink(to="/about") {{ $t("pages.about") }}
+    LocaleSelect.inline
 component(:is="layout")
   RouterView(:layout.sync="layout" :key="$route.fullPath")
 </template>

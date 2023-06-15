@@ -7,7 +7,7 @@ const messages = {
 }
 
 const i18n = createI18n({
-  locale: navigator.language,
+  locale: Object.keys(languages).find(lang => lang === navigator.language.split('-')[0]) || 'en',
   fallbackLocale: 'en',
   messages,
 })
