@@ -22,14 +22,13 @@ const updateTodo = (e: Event) => {
 </script>
 
 <template lang="pug">
-.space-x-4.mb-1.flex.items-center
+.flex.flex-row.gap-x-4.mb-1.items-center
   button(@click="toggleTodo(todo.id)")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
-  RouterLink.opacity-50(v-if="todo.done" :to="{ name: 'done' }")
+  RouterLink.whitespace-nowrap.opacity-50(v-if="todo.done" :to="{ name: 'done' }")
     time.text-gray-500(:datetime="todo.done") {{ new Date(todo.done).toDateString() }}
-  TodoText(v-model="todo.editable" @blur="updateTodo" @keydown.enter="$event.target.blur()" :class="todo.done ? 'opacity-50 line-through decoration-gray-500' : ''")
-  //- RouterLink(:to="{ name: 'todo', params: { id: todo.id }}") Link
+  TodoText.grow.overflow-hidden.break-words(v-model="todo.editable" @blur="updateTodo" @keydown.enter="$event.target.blur()" :class="todo.done ? 'opacity-50 line-through decoration-gray-500' : ''")
   button.text-red-300.text-sm(@click="deleteTodo(todo.id)" class="hover:text-red-500")
     fa(icon="fa-solid fa-trash-can")
 </template>

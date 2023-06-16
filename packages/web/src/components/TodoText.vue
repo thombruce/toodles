@@ -41,7 +41,7 @@ const tagMatcher = (item: string) => /^[^\s:]+?:[^\s:]+$/.test(item)
 </script>
 
 <template lang="pug">
-span(contenteditable spellcheck="false" :key="modelValue")
+p(contenteditable spellcheck="false" :key="modelValue")
   template(v-for="item in items")
     TodoPriority(v-if="priorityMatcher(item)" :priority="item" @input="update")
     ProjectTag(v-else-if="projectMatcher(item)" :tag="item" @input="update")

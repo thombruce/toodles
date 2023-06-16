@@ -24,12 +24,13 @@ watch(
 </script>
 
 <template lang="pug">
-header.mb-4
-  strong {{ $t("app.name") }}
-  nav.space-x-4
-    RouterLink(to="/") {{ $t("pages.home") }}
-    RouterLink(to="/about") {{ $t("pages.about") }}
-    LocaleSelect.inline
-component(:is="layout")
-  RouterView(:layout.sync="layout" :key="$route.fullPath")
+.max-w-4xl.mx-auto
+  header.mb-4
+    strong {{ $t("app.name") }}
+    nav.space-x-4
+      RouterLink(to="/") {{ $t("pages.home") }}
+      RouterLink(to="/about") {{ $t("pages.about") }}
+      LocaleSelect.inline
+  component(:is="layout")
+    RouterView(:layout.sync="layout" :key="$route.fullPath")
 </template>
