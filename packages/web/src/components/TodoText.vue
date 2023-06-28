@@ -4,6 +4,7 @@ import { computed } from "vue"
 import TodoPriority from "./TodoPriority.vue"
 import ProjectTag from "./ProjectTag.vue"
 import ContextTag from "./ContextTag.vue"
+import HashTag from "./HashTag.vue"
 import TagTag from "./TagTag.vue"
 
 const props = defineProps({
@@ -31,12 +32,13 @@ const items = computed(() => {
     description = split[0]
   }
 
-  return [priority, ...description.split(/((?<=^|\s)(?:\+|@|[^\s:]+?:)\S+)/g)]
+  return [priority, ...description.split(/((?<=^|\s)(?:\+|@|#|[^\s:]+?:)\S+)/g)]
 })
 
 const priorityMatcher = (item: string) => /^\([A-Z]\)$/.test(item)
 const projectMatcher = (item: string) => /^\+\S+$/.test(item)
 const contextMatcher = (item: string) => /^@\S+$/.test(item)
+const hashMatcher = (item: string) => /^#\S+$/.test(item)
 const tagMatcher = (item: string) => /^[^\s:]+?:[^\s:]+$/.test(item)
 </script>
 
@@ -46,6 +48,7 @@ p(contenteditable spellcheck="false" :key="modelValue")
     TodoPriority(v-if="priorityMatcher(item)" :priority="item" @input="update")
     ProjectTag(v-else-if="projectMatcher(item)" :tag="item" @input="update")
     ContextTag(v-else-if="contextMatcher(item)" :tag="item" @input="update")
+    HashTag(v-else-if="hashMatcher(item)" :tag="item" @input="update")
     TagTag(v-else-if="tagMatcher(item)" :tag="item" @input="update")
     span(v-else) {{ item }}
 </template>

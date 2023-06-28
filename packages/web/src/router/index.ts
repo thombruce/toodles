@@ -31,6 +31,12 @@ const router = createRouter({
       component: () => import('../views/contexts/_id.vue')
     },
     {
+      // BRUH! Obviously hashtags aren't allowed in route.
+      path: '/:hashtag(%23\\S+)',
+      name: 'hashtag',
+      component: () => import('../views/hashtags/_id.vue')
+    },
+    {
       path: '/:priority(\\([A-Z]\\\\))',
       name: 'priority',
       component: () => import('../views/priorities/_id.vue')
