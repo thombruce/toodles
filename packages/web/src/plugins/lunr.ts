@@ -4,7 +4,7 @@ import { uniq as _uniq } from 'lodash'
 
 const index = lunr(() => {}) as any
 
-lunr.tokenizer.separator = /[+@:\s\-]+/
+lunr.tokenizer.separator = /\W+/
 
 const getTokenStream = (text: string) =>
   index.pipeline.run(
