@@ -59,6 +59,10 @@ class Todo implements TodoInterface {
     return this.description.match(/(?<=(?:^|\s)@)\S+/g)
   }
 
+  get hashtags() {
+    return this.description.match(/(?<=(?:^|\s)#)\S+/g)
+  }
+
   get tags() {
     return this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
   }

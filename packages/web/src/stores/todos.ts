@@ -51,25 +51,37 @@ export const useTodosStore = defineStore('todos', () => {
 
   const forProject = computed(() => (project: string) => {
     const todos = list.value
-    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)\\${project}(?=\\s|$)`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forProjectSearch = computed(() => (project: string) => {
     const todos = results.value
-    const filtered = todos.filter(t => new RegExp(`\\${project}`).test(t.description))
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)\\${project}(?=\\s|$)`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContext = computed(() => (context: string) => {
     const todos = list.value
-    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)${context}(?=\\s|$)`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
   const forContextSearch = computed(() => (context: string) => {
     const todos = results.value
-    const filtered = todos.filter(t => new RegExp(`${context}`).test(t.description))
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)${context}(?=\\s|$)`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forHashtag = computed(() => (hashtag: string) => {
+    const todos = list.value
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)${hashtag}(?=\\s|$)`).test(t.description))
+    return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
+  })
+
+  const forHashtagSearch = computed(() => (hashtag: string) => {
+    const todos = results.value
+    const filtered = todos.filter(t => new RegExp(`(?<=^|\\s)${hashtag}(?=\\s|$)`).test(t.description))
     return _orderBy(filtered, ['done', 'priority', 'created'], ['desc', 'asc', 'asc'])
   })
 
@@ -150,6 +162,7 @@ export const useTodosStore = defineStore('todos', () => {
     done, doneSearch,
     forProject, forProjectSearch,
     forContext, forContextSearch,
+    forHashtag, forHashtagSearch,
     forPriority, forPrioritySearch,
     // Actions
     fetchTodos,
