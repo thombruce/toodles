@@ -36,6 +36,14 @@ function clear() {
 
 <template lang="pug">
 form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear(text)")
-  input.grow(v-model="text" type="text" class="border rounded py-2 px-3 text-gray-700" @input="search(text)" @keydown.ctrl.enter="globalSearch(text)" @keydown.esc="clear();$event.target.blur()")
-  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") {{ $t("actions.add") }}
+  input.grow(
+    v-model="text"
+    type="text"
+    class="border rounded py-2 px-3 text-gray-700"
+    @input="search(text)"
+    @keydown.ctrl.enter="globalSearch(text)"
+    @keydown.esc="clear();$event.target.blur()"
+    aria-labelledby="addTodo"
+  )
+  button#addTodo(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") {{ $t("actions.add") }}
 </template>
