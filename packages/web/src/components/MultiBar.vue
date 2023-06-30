@@ -45,5 +45,5 @@ form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear(text)")
     @keydown.esc="clear();$event.target.blur()"
     aria-labelledby="addTodo"
   )
-  button#addTodo(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") {{ $t("actions.add") }}
+  button#addTodo(class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") {{ $t("actions.add") }}
 </template>
