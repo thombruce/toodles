@@ -8,5 +8,9 @@ export const en = {
   },
   actions: {
     add: 'Add'
+  },
+  conditions: {
+    open: 'Open',
+    closed: 'Closed'
   }
 }

@@ -5,5 +5,9 @@ export const fr = {
   },
   actions: {
     add: 'Ajouter'
+  },
+  conditions: {
+    open: 'Ouvert',
+    closed: 'Clos'
   }
 }
