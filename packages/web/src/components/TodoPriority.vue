@@ -11,11 +11,11 @@ const props = defineProps({
 const color = computed(() => {
   switch(props.priority) {
     case '(A)':
-      return 'text-red-500'
+      return 'text-red-600'
     case '(B)':
-      return 'text-amber-500'
+      return 'text-yellow-600'
     case '(C)':
-      return 'text-yellow-500'
+      return 'text-green-600'
     default:
       return 'text-gray-500'
   }
