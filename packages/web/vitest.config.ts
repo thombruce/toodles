@@ -14,7 +14,8 @@ export default mergeConfig(
         web: [/\.[jt]sx$/],
       },
       setupFiles: [
-        'fake-indexeddb/auto'
+        'fake-indexeddb/auto',
+        './vitest.setup.ts'
       ],
       coverage: {
         statements: 60,
