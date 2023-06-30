@@ -14,5 +14,8 @@ export const fr = {
   conditions: {
     open: 'Ouvert',
     closed: 'Clos'
+  },
+  hints: {
+    multi: 'Rechercher ou ajouter une tâche'
   }
 }

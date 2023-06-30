@@ -17,5 +17,8 @@ export const en = {
   conditions: {
     open: 'Open',
     closed: 'Closed'
+  },
+  hints: {
+    multi: 'Search for or add a todo'
   }
 }
