@@ -1,5 +1,5 @@
+@import './tailwind.css';
 @import './base.css';
-
-body {
-  @apply p-4;
-}
+@import './forms.css';
+@import './tags.css';
+@import './progress.css';

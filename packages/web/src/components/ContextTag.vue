@@ -8,5 +8,5 @@ const props = defineProps({
 </script>
 
 <template lang="pug">
-RouterLink.text-purple-600.font-bold.cursor-pointer(:to="{ name: 'context', params: { context: tag }}") {{ tag }}
+RouterLink.tag.context(:to="{ name: 'context', params: { context: tag }}") {{ tag }}
 </template>

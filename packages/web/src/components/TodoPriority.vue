@@ -8,20 +8,11 @@ const props = defineProps({
   }
 })
 
-const color = computed(() => {
-  switch(props.priority) {
-    case '(A)':
-      return 'text-rose-700'
-    case '(B)':
-      return 'text-yellow-700'
-    case '(C)':
-      return 'text-green-700'
-    default:
-      return 'text-gray-500'
-  }
+const alpha = computed(() => {
+  return props.priority.replace(/[()]/g, '')
 })
 </script>
 
 <template lang="pug">
-RouterLink.font-bold.cursor-pointer(:class="color" :to="{ name: 'priority', params: { priority: priority }}") {{ priority }}
+RouterLink.tag.priority(:class="alpha" :to="{ name: 'priority', params: { priority: priority }}") {{ priority }}
 </template>

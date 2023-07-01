@@ -7,6 +7,7 @@ export const en = {
   },
   pages: {
     home: 'Home',
+    settings: 'Settings',
     about: 'About'
   },
   actions: {
@@ -16,7 +17,12 @@ export const en = {
   },
   conditions: {
     open: 'Open',
-    closed: 'Closed'
+    closed: 'Closed',
+    darkMode: 'Dark mode',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+    language: 'Language'
   },
   hints: {
     multi: 'Search for or add a todo'

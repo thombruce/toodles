@@ -1,0 +1,23 @@
+
+.progress {
+  @apply
+    block
+    absolute
+    w-full
+    rounded-full
+    h-2.5;
+}
+
+.progress.open {
+  @apply
+    bg-gray-200
+    dark:bg-gray-800;
+}
+
+.progress.closed {
+  @apply
+    bg-emerald-500
+    transition-[width]
+    ease-in-out
+    duration-500;
+}

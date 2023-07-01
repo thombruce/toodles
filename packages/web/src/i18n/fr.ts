@@ -1,6 +1,7 @@
 export const fr = {
   pages: {
     home: 'Accueil',
+    settings: 'Paramètres',
     about: 'À propos'
   },
   objects: {
@@ -13,7 +14,12 @@ export const fr = {
   },
   conditions: {
     open: 'Ouvert',
-    closed: 'Clos'
+    closed: 'Clos',
+    darkMode: 'Mode sombre',
+    light: 'Lumière',
+    dark: 'Sombre',
+    system: 'Système',
+    language: 'Langue'
   },
   hints: {
     multi: 'Rechercher ou ajouter une tâche'
