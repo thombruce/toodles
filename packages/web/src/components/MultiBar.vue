@@ -39,7 +39,7 @@ form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear(text)")
   input.grow(
     v-model="text"
     type="text"
-    class="border rounded py-2 px-3 bg-white text-gray-700 dark:bg-black dark:text-gray-300"
+    class="border rounded py-2 px-3 bg-white text-gray-700 dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300"
     @input="search(text)"
     @keydown.ctrl.enter="globalSearch(text)"
     @keydown.esc="clear();$event.target.blur()"
