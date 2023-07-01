@@ -1,0 +1,58 @@
+.tag {
+  @apply font-bold;
+}
+
+a.tag {
+  @apply cursor-pointer;
+}
+
+.project {
+  @apply
+    text-teal-700
+    dark:text-teal-500;
+}
+
+.context {
+  @apply
+    text-purple-600
+    dark:text-purple-500;
+}
+
+.hashtag {
+  @apply
+    text-indigo-600
+    dark:text-indigo-400;
+}
+
+.custom {
+  @apply
+    rounded
+    text-amber-700
+    bg-amber-50
+    dark:text-amber-500
+    dark:bg-amber-950;
+}
+
+.priority {
+  @apply
+    text-gray-500
+    dark:text-gray-400;
+}
+
+.priority.A {
+  @apply
+    text-rose-700
+    dark:text-rose-500;
+}
+
+.priority.B {
+  @apply
+    text-yellow-700
+    dark:text-yellow-500;
+}
+
+.priority.C {
+  @apply
+    text-green-700
+    dark:text-green-500;
+}
