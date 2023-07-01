@@ -24,7 +24,7 @@ watch(
 </script>
 
 <template lang="pug">
-.max-w-4xl.mx-auto
+.max-w-4xl.mx-auto.my-4
   header.mb-4
     strong {{ $t("app.name") }}
     nav.space-x-4
