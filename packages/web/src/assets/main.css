@@ -1,5 +1,2 @@
+@import './tailwind.css';
 @import './base.css';
-
-body {
-  @apply bg-white text-black dark:bg-black dark:text-white;
-}
