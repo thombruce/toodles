@@ -41,6 +41,14 @@ const router = createRouter({
       component: () => import('../views/priorities/_id.vue')
     },
     {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/settings.vue'),
+      meta: {
+        layout: 'info'
+      }
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
