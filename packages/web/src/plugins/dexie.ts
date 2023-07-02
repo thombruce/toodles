@@ -33,16 +33,42 @@ export class Database extends Dexie {
 
 export const db = new Database()
 
+// TODO: Repetition of tags code
 db.todos.hook("creating", function (primKey, obj, trans) {
-  if (typeof obj.description == 'string') obj.tokens = tokenize(obj.description)
+  if (typeof obj.description == 'string') {
+    obj.tokens = tokenize(obj.description)
+    obj.projects = obj.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined,
+    obj.contexts = obj.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined,
+    obj.hashtags = obj.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined,
+    obj.tags = obj.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
+      let [key, value] = t.split(':')
+      return { key, value }
+    }) || undefined
+  }
 })
 
+// TODO: Repetition of tags code
 db.todos.hook("updating", function (mods: any, primKey, obj, trans) {
   if (mods.hasOwnProperty("description")) {
     if (typeof mods.description == 'string')
-      return { tokens: tokenize(mods.description) }
+      return {
+        tokens: tokenize(mods.description),
+        projects: mods.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined,
+        contexts: mods.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined,
+        hashtags: mods.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined,
+        tags: mods.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map((t: string) => {
+          let [key, value] = t.split(':')
+          return { key, value }
+        }) || undefined
+      }
     else
-      return { tokens: [] }
+      return {
+        tokens: [],
+        projects: [],
+        contexts: [],
+        hashtags: [],
+        tags: []
+      }
   }
 })
 

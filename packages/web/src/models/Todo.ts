@@ -38,17 +38,6 @@ class Todo implements TodoInterface {
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
-
-    // TODO: This all works great! But it only works on initial creation.
-    //       You need this to also work for updating.
-    this.projects = this.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined
-    this.contexts = this.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined
-    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined
-    this.tags = this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
-      let [key, value] = t.split(':')
-      console.log({ key, value })
-      return { key, value }
-    }) || undefined
   }
 
   // Class methods
