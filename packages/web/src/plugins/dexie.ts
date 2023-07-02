@@ -37,13 +37,6 @@ export const db = new Database()
 db.todos.hook("creating", function (primKey, obj, trans) {
   if (typeof obj.description == 'string') {
     obj.tokens = tokenize(obj.description)
-    obj.projects = obj.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined,
-    obj.contexts = obj.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined,
-    obj.hashtags = obj.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined,
-    obj.tags = obj.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
-      let [key, value] = t.split(':')
-      return { key, value }
-    }) || undefined
   }
 })
 
@@ -52,22 +45,11 @@ db.todos.hook("updating", function (mods: any, primKey, obj, trans) {
   if (mods.hasOwnProperty("description")) {
     if (typeof mods.description == 'string')
       return {
-        tokens: tokenize(mods.description),
-        projects: mods.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined,
-        contexts: mods.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined,
-        hashtags: mods.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined,
-        tags: mods.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map((t: string) => {
-          let [key, value] = t.split(':')
-          return { key, value }
-        }) || undefined
+        tokens: tokenize(mods.description)
       }
     else
       return {
-        tokens: [],
-        projects: [],
-        contexts: [],
-        hashtags: [],
-        tags: []
+        tokens: []
       }
   }
 })
