@@ -6,6 +6,10 @@ interface TodoInterface {
   priority?: string
   done?: string // ISO-8601
   created: string // ISO-8601
+  projects?: string[]
+  contexts?: string[]
+  hashtags?: string[]
+  tags?: object[]
   tokens?: string[]
 }
 
@@ -15,6 +19,10 @@ class Todo implements TodoInterface {
   priority?: string
   done?: string
   created: string
+  projects?: string[]
+  contexts?: string[]
+  hashtags?: string[]
+  tags?: object[]
   tokens?: string[]
 
   // Constructor
@@ -30,6 +38,17 @@ class Todo implements TodoInterface {
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
+
+    // TODO: This all works great! But it only works on initial creation.
+    //       You need this to also work for updating.
+    this.projects = this.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined
+    this.contexts = this.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined
+    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined
+    this.tags = this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
+      let [key, value] = t.split(':')
+      console.log({ key, value })
+      return { key, value }
+    }) || undefined
   }
 
   // Class methods
@@ -49,22 +68,6 @@ class Todo implements TodoInterface {
       this.priority = undefined
       this.description = split[0]
     }
-  }
-
-  get projects() {
-    return this.description.match(/(?<=(?:^|\s)\+)\S+/g)
-  }
-
-  get contexts() {
-    return this.description.match(/(?<=(?:^|\s)@)\S+/g)
-  }
-
-  get hashtags() {
-    return this.description.match(/(?<=(?:^|\s)#)\S+/g)
-  }
-
-  get tags() {
-    return this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)
   }
 
   // Instance methods: Actions

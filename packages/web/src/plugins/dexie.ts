@@ -11,6 +11,22 @@ export class Database extends Dexie {
     this.version(1).stores({
       todos: 'id, description, priority, done, created, *tokens'
     })
+    this.version(2).stores({
+      todos: `
+        id,
+        description,
+        priority,
+        done,
+        created,
+        *projects,
+        *contexts,
+        *hashtags,
+        *tokens
+      `
+      // TODO: Tags omitted; objects in array can't be indexed.
+      //       If indexing required, consider storing array of strings,
+      //       for example: *tagKeys
+    })
     this.todos.mapToClass(Todo)
   }
 }
