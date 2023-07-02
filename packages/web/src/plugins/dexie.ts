@@ -11,22 +11,46 @@ export class Database extends Dexie {
     this.version(1).stores({
       todos: 'id, description, priority, done, created, *tokens'
     })
+    this.version(2).stores({
+      todos: `
+        id,
+        description,
+        priority,
+        done,
+        created,
+        *projects,
+        *contexts,
+        *hashtags,
+        *tokens
+      `
+      // TODO: Tags omitted; objects in array can't be indexed.
+      //       If indexing required, consider storing array of strings,
+      //       for example: *tagKeys
+    })
     this.todos.mapToClass(Todo)
   }
 }
 
 export const db = new Database()
 
+// TODO: Repetition of tags code
 db.todos.hook("creating", function (primKey, obj, trans) {
-  if (typeof obj.description == 'string') obj.tokens = tokenize(obj.description)
+  if (typeof obj.description == 'string') {
+    obj.tokens = tokenize(obj.description)
+  }
 })
 
+// TODO: Repetition of tags code
 db.todos.hook("updating", function (mods: any, primKey, obj, trans) {
   if (mods.hasOwnProperty("description")) {
     if (typeof mods.description == 'string')
-      return { tokens: tokenize(mods.description) }
+      return {
+        tokens: tokenize(mods.description)
+      }
     else
-      return { tokens: [] }
+      return {
+        tokens: []
+      }
   }
 })
 

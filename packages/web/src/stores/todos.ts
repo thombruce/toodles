@@ -128,7 +128,7 @@ export const useTodosStore = defineStore('todos', () => {
       const index = _findIndex(list.value, { id: id })
       list.value.splice(index, 1, todo)
       // db sync:
-      db.todos.update(id, { description: todo.description, priority: todo.priority }).then().catch()
+      db.todos.update(id, JSON.parse(JSON.stringify(todo))).then().catch()
     }
   }
 
