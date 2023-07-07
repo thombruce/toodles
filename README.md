@@ -16,7 +16,7 @@ yarn lerna run test:unit
 
 ### Deploying Manually
 
-_Configure `TOODLES_BASE` to the name of your repo (e.g. `/toodles/`) in your environment if you want to deploy to GitHub Pages from a project repo._
+_Configure `VITE_BASE` to the name of your repo (e.g. `/toodles/`) in your environment if you want to deploy to GitHub Pages from a project repo._
 
 ```sh
 cd packages/web
