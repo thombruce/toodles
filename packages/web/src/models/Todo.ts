@@ -9,7 +9,7 @@ interface TodoInterface {
   projects?: string[] | null
   contexts?: string[] | null
   hashtags?: string[] | null
-  tags?: object[] | null
+  // tags?: object[] | null
   tokens?: string[]
 }
 
@@ -22,7 +22,7 @@ class Todo implements TodoInterface {
   projects?: string[] | null
   contexts?: string[] | null
   hashtags?: string[] | null
-  tags?: object[] | null
+  // tags?: object[] | null
   tokens?: string[]
 
   // Constructor
@@ -75,11 +75,11 @@ class Todo implements TodoInterface {
   setTags() {
     this.projects = this.description.match(/(?<=(?:^|\s)\+)\S+/g),
     this.contexts = this.description.match(/(?<=(?:^|\s)@)\S+/g),
-    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g),
-    this.tags = this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
-      let [key, value] = t.split(':')
-      return { key, value }
-    })
+    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g)
+    // this.tags = this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
+    //   let [key, value] = t.split(':')
+    //   return { key, value }
+    // })
   }
 }
 
