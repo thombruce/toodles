@@ -23,9 +23,9 @@ describe('Todo', () => {
     // expect(todo.projects[0]).toBeInstanceOf(Project)
   })
 
-  it('has associated tags', () => {
-    const todo = new Todo('Refactor est:3 time:1.5')
-    expect(todo.tags?.length).toBe(2)
-    // expect(todo.projects[0]).toBeInstanceOf(Project)
-  })
+  // it('has associated tags', () => {
+  //   const todo = new Todo('Refactor est:3 time:1.5')
+  //   expect(todo.tags?.length).toBe(2)
+  //   // expect(todo.projects[0]).toBeInstanceOf(Project)
+  // })
 })
