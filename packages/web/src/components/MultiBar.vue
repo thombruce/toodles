@@ -39,11 +39,11 @@ form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear()")
   input.grow(
     v-model="text"
     type="text"
+    @input="search()"
+    @keydown.ctrl.enter="globalSearch()"
+    @keydown.esc="clear();$event.target.blur()"
+    aria-labelledby="addTodo"
+    :placeholder="$t('hints.multi')"
   )
-  //- @input="search()"
-  //- @keydown.ctrl.enter="globalSearch()"
-  //- @keydown.esc="clear();$event.target.blur()"
-  //- aria-labelledby="addTodo"
-  //- :placeholder="$t('hints.multi')"
   button#addTodo {{ $t("actions.add") }}
 </template>
