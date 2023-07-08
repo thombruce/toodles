@@ -34,12 +34,11 @@ class Todo implements TodoInterface {
     } else {
       this.id = (todo.id || nanoid())
       this.description = todo.description
+      // this.setTags()
       this.priority = todo.priority
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
     }
-
-    this.setTags()
   }
 
   // Class methods
@@ -60,7 +59,7 @@ class Todo implements TodoInterface {
       this.description = split[0]
     }
 
-    this.setTags()
+    // this.setTags()
   }
 
   // Instance methods: Actions
