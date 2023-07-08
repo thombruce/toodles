@@ -22,7 +22,6 @@ const progress = computed(() => {
 
 <template lang="pug">
 ProgressBar.mb-4(:progress="progress")
-ul.w-full
-  li.w-full(v-for="todo in todos" :key="todo.id")
-    TodoItem(:todo="todo")
+.w-full(v-for="todo in todos" :key="todo.id")
+  TodoItem(:todo="todo")
 </template>
