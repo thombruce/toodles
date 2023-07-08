@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: yarn lerna run build
         env:
-          VITE_BASE: ${{ env.TOODLES_BASE }}
+          VITE_BASE: ${{ vars.TOODLES_BASE }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
