@@ -22,7 +22,7 @@ const updateTodo = (e: Event) => {
 </script>
 
 <template lang="pug">
-.flex.flex-row.gap-x-4.mb-1.items-center
+.w-full.flex.flex-row.gap-x-4.mb-1.items-center
   button(@click="toggleTodo(todo.id)" :aria-label="$t('actions.toggle')")
     fa(v-if="todo.done" icon="fa-solid fa-square-check")
     fa(v-else icon="fa-regular fa-square")
