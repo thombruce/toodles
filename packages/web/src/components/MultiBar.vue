@@ -19,10 +19,9 @@ function globalSearch() {
 }
 
 function addTodoAndClear() {
-  // TODO:
-  // if (text.value.length === 0) {
-  //   return
-  // }
+  if (text.value.length === 0) {
+    return
+  }
 
   store.addTodo(text.value)
   text.value = ""
