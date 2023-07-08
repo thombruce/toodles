@@ -34,7 +34,7 @@ class Todo implements TodoInterface {
     } else {
       this.id = (todo.id || nanoid())
       this.description = todo.description
-      // this.setTags()
+      this.setTags()
       this.priority = todo.priority
       this.done = todo.done
       this.created = todo.created || new Date().toISOString()
@@ -59,7 +59,7 @@ class Todo implements TodoInterface {
       this.description = split[0]
     }
 
-    // this.setTags()
+    this.setTags()
   }
 
   // Instance methods: Actions
@@ -73,9 +73,9 @@ class Todo implements TodoInterface {
   }
 
   setTags() {
-    this.projects = this.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined,
-    this.contexts = this.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined,
-    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined,
+    this.projects = this.description.match(/(?<=(?:^|\s)\+)\S+/g) || undefined
+    this.contexts = this.description.match(/(?<=(?:^|\s)@)\S+/g) || undefined
+    this.hashtags = this.description.match(/(?<=(?:^|\s)#)\S+/g) || undefined
     this.tags = this.description.match(/(?<=^|\s)[^\s:]+?:[^\s:]+(?=$|\s)/g)?.map(t => {
       let [key, value] = t.split(':')
       return { key, value }
