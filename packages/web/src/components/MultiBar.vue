@@ -19,9 +19,10 @@ function globalSearch() {
 }
 
 function addTodoAndClear() {
-  if (text.value.length === 0) {
-    return
-  }
+  // TODO:
+  // if (text.value.length === 0) {
+  //   return
+  // }
 
   store.addTodo(text.value)
   text.value = ""
