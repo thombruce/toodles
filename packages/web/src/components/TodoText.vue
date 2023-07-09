@@ -32,7 +32,7 @@ const items = computed(() => {
     description = split[0]
   }
 
-  return [priority, ...description.split(/((?<=^|\s)(?:\+|@|#|[^\s:]+?:)\S+)/g)]
+  return [priority, ...description.split(/(^|\s)((?:\+|@|#|[^\s:]+?:)\S+)/g).filter(n => n)]
 })
 
 const priorityMatcher = (item: string) => /^\([A-Z]\)$/.test(item)
