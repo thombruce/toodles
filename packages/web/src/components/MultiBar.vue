@@ -9,38 +9,38 @@ const text = ref("")
 
 const store = useTodosStore()
 
-function search(q: string) {
-  store.searchTodos(q)
+function search() {
+  store.searchTodos(text.value)
 }
 
-function globalSearch(q: string) {
+function globalSearch() {
   router.push('/')
-  store.searchTodos(q)
+  store.searchTodos(text.value)
 }
 
-function addTodoAndClear(item: string) {
-  if (item.length === 0) {
+function addTodoAndClear() {
+  if (text.value.length === 0) {
     return
   }
 
-  store.addTodo(item)
+  store.addTodo(text.value)
   text.value = ""
-  search(text.value)
+  search()
 }
 
 function clear() {
   text.value = ""
-  search(text.value)
+  search()
 }
 </script>
 
 <template lang="pug">
-form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear(text)")
+form.flex.w-full.space-x-4(@submit.prevent="addTodoAndClear()")
   input.grow(
     v-model="text"
     type="text"
-    @input="search(text)"
-    @keydown.ctrl.enter="globalSearch(text)"
+    @input="search()"
+    @keydown.ctrl.enter="globalSearch()"
     @keydown.esc="clear();$event.target.blur()"
     aria-labelledby="addTodo"
     :placeholder="$t('hints.multi')"
