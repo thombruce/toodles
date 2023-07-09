@@ -1,8 +1,8 @@
 # Toodles
 
-![CI](https://github.com/thombruce/toodles/actions/workflows/ci.yml/badge.svg?branch=main)
-![Version](https://img.shields.io/github/v/tag/thombruce/toodles?label=release)
-![License](https://img.shields.io/github/license/thombruce/toodles)
+[![CI](https://github.com/thombruce/toodles/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/thombruce/toodles/actions/workflows/ci.yml?query=branch%3Amain)
+[![Version](https://img.shields.io/github/v/tag/thombruce/toodles?label=release)](https://github.com/thombruce/toodles/tags)
+[![License](https://img.shields.io/github/license/thombruce/toodles)](https://github.com/thombruce/toodles/blob/main/COPYING)
 
 ## Testing
 
