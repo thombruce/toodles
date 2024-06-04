@@ -1,8 +1,10 @@
 {
   "name": "vscode",
   "displayName": "Toodles",
-  "description": "",
+  "description": "Adds Toodles language features to VS Code",
   "version": "0.0.3",
+  "publisher": "thombruce",
+  "repository": "https://github.com/thombruce/toodles",
   "private": true,
   "engines": {
     "vscode": "^1.89.0"
