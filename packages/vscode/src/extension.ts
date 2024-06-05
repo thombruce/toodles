@@ -99,8 +99,11 @@ export function activate(context: vscode.ExtensionContext) {
             parseRegex(AppConstants.PRICE_REGEX, prices, lineObject);
             parseRegex(AppConstants.PRIORITY_REGEX, priorities, lineObject);
 
-            if (lineObject.text.startsWith("x ") || lineObject.text.startsWith("X ")) {
-                let decoration = { range: lineObject.range};
+            if (lineObject.text.startsWith("x ", lineObject.firstNonWhitespaceCharacterIndex) || lineObject.text.startsWith("X ", lineObject.firstNonWhitespaceCharacterIndex)) {
+                let beginPosition = new vscode.Position(lineObject.range.start.line, lineObject.firstNonWhitespaceCharacterIndex);
+                let endPosition = new vscode.Position(lineObject.range.start.line, lineObject.text.length);
+                let decoration = { range: new vscode.Range(beginPosition, endPosition) };
+                // let decoration = { range: lineObject.range };
                 completed.push(decoration);
             }
         }
