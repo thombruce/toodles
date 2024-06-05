@@ -54,6 +54,14 @@ export function activate(context: vscode.ExtensionContext) {
             color: StyleConstants.HASHTAG_DARK
         }
     });
+    const priceDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.PRICE_LIGHT
+        },
+        dark: {
+            color: StyleConstants.PRICE_DARK
+        }
+    });
     const completedDecorationType = vscode.window.createTextEditorDecorationType({
         textDecoration: StyleConstants.COMPLETED_CSS
     });
@@ -77,6 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const completed: vscode.DecorationOptions[] = [];
 		const contexts: vscode.DecorationOptions[] = [];
 		const hashtags: vscode.DecorationOptions[] = [];
+		const prices: vscode.DecorationOptions[] = [];
 
         // Iterate over each line and parse accordingly
         let totalLines = activeEditor.document.lineCount;
@@ -87,6 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
             parseRegex(AppConstants.PROJECT_REGEX, projects, lineObject);
             parseRegex(AppConstants.CONTEXT_REGEX, contexts, lineObject);
             parseRegex(AppConstants.HASHTAG_REGEX, hashtags, lineObject);
+            parseRegex(AppConstants.PRICE_REGEX, prices, lineObject);
             parseRegex(AppConstants.PRIORITY_REGEX, priorities, lineObject);
 
             if (lineObject.text.startsWith("x ") || lineObject.text.startsWith("X ")) {
@@ -99,6 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
         activeEditor.setDecorations(projectDecorationType, projects);
         activeEditor.setDecorations(contextDecorationType, contexts);
         activeEditor.setDecorations(hashtagDecorationType, hashtags);
+        activeEditor.setDecorations(priceDecorationType, prices);
         activeEditor.setDecorations(completedDecorationType, completed);
 		// activeEditor.setDecorations(overdueDecorationType, overdue);
         activeEditor.setDecorations(priorityDecorationType, priorities);
