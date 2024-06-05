@@ -151,8 +151,8 @@ export function deactivate() {}
 function parseRegex(iRegExp: RegExp, decorationOptions: vscode.DecorationOptions[], inputLine: vscode.TextLine) {
 	let match: RegExpExecArray;
 	while (match = iRegExp.exec(inputLine.text)) {
-		let beginPosition = new vscode.Position(inputLine.range.start.line, inputLine.firstNonWhitespaceCharacterIndex + match.index);
-		let endPosition = new vscode.Position(inputLine.range.start.line, inputLine.firstNonWhitespaceCharacterIndex + match.index + match[0].length);
+		let beginPosition = new vscode.Position(inputLine.range.start.line, /*inputLine.firstNonWhitespaceCharacterIndex +*/ match.index);
+		let endPosition = new vscode.Position(inputLine.range.start.line, /*inputLine.firstNonWhitespaceCharacterIndex +*/ match.index + match[0].length);
 		let decoration = { range: new vscode.Range(beginPosition, endPosition) };
 		decorationOptions.push(decoration);
 	}
