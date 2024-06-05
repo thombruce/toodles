@@ -74,7 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		let fileName = path.basename(activeEditor.document.fileName);
-		if (!(AppConstants.ACCEPTED_FILENAMES.lastIndexOf(fileName) >= 0 || fileName.match(AppConstants.FILENAMES_REGEX))) {
+		if (!(fileName.match(AppConstants.FILENAMES_REGEX) || AppConstants.OTHER_FILENAMES.lastIndexOf(fileName) >= 0)) {
 			return;
 		}
 

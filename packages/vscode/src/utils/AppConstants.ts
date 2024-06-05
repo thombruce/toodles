@@ -1,13 +1,10 @@
 export default class AppConstants {
-  public static readonly ACCEPTED_FILENAMES = [
+  public static readonly FILENAMES_REGEX = /.+\.(?:todo|shop|list)$/;
+
+  public static readonly OTHER_FILENAMES = [
     'todo.txt',
     'done.txt'
   ];
-
-  public static readonly FILENAMES_REGEX = /.+\.(?:todo|shop|list)$/;
-
-  public static ARCHIVE_FILENAME = 'done.txt';
-  public static TODO_FILENAME = 'todo.txt';
 
   public static DATE_REGEX = new RegExp(/\d{4}-\d{2}-\d{2}/g);
   public static PROJECT_REGEX = new RegExp(/\B\+\w+/g);
