@@ -29,6 +29,14 @@ export function activate(context: vscode.ExtensionContext) {
             color: StyleConstants.PROJECT_DARK
         }
     });
+    const tagDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.TAG_LIGHT
+        },
+        dark: {
+            color: StyleConstants.TAG_DARK
+        }
+    });
     const priorityDecorationType = vscode.window.createTextEditorDecorationType({
 		light: {
             color: StyleConstants.PRIORITY_LIGHT
@@ -80,6 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const dates: vscode.DecorationOptions[] = [];
 		const projects: vscode.DecorationOptions[] = [];
+		const tags: vscode.DecorationOptions[] = [];
 		const priorities: vscode.DecorationOptions[] = [];
 		// const overdue: vscode.DecorationOptions[] = [];
 		const completed: vscode.DecorationOptions[] = [];
@@ -94,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
 
             parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
             parseRegex(AppConstants.PROJECT_REGEX, projects, lineObject);
+            parseRegex(AppConstants.TAG_REGEX, tags, lineObject);
             parseRegex(AppConstants.CONTEXT_REGEX, contexts, lineObject);
             parseRegex(AppConstants.HASHTAG_REGEX, hashtags, lineObject);
             parseRegex(AppConstants.PRICE_REGEX, prices, lineObject);
@@ -110,6 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 		activeEditor.setDecorations(dateDecorationType, dates);
         activeEditor.setDecorations(projectDecorationType, projects);
+        activeEditor.setDecorations(tagDecorationType, tags);
         activeEditor.setDecorations(contextDecorationType, contexts);
         activeEditor.setDecorations(hashtagDecorationType, hashtags);
         activeEditor.setDecorations(priceDecorationType, prices);

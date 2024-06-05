@@ -4,6 +4,9 @@ export default class StyleConstants {
   public static readonly PROJECT_DARK = 'rgb(186, 234, 244)';
   public static readonly PROJECT_LIGHT = 'rgb(21, 141, 168)';
 
+  public static readonly TAG_DARK = 'rgb(244, 180, 124)';
+  public static readonly TAG_LIGHT = 'rgb(141, 90, 42)';
+
   public static readonly CONTEXT_DARK = 'rgb(190, 244, 186)';
   public static readonly CONTEXT_LIGHT = 'rgb(91, 124, 88)';
 
