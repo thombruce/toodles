@@ -1,26 +1,34 @@
-// TODO: Import a pallette and set colors according to light and dark themes on pallette.
+import colors from './colors'
 
 export default class StyleConstants {
-  public static readonly PROJECT_DARK = 'rgb(186, 234, 244)';
-  public static readonly PROJECT_LIGHT = 'rgb(21, 141, 168)';
+  // Priorities
+  public static readonly PRIORITY_DARK = colors['violet']['200'];
+  public static readonly PRIORITY_LIGHT = colors['violet']['900'];
 
-  public static readonly TAG_DARK = 'rgb(244, 180, 124)';
-  public static readonly TAG_LIGHT = 'rgb(141, 90, 42)';
+  // Dates
+  public static readonly DATE_DARK = colors['yellow']['200'];
+  public static readonly DATE_LIGHT = colors['yellow']['900'];
 
-  public static readonly CONTEXT_DARK = 'rgb(190, 244, 186)';
-  public static readonly CONTEXT_LIGHT = 'rgb(91, 124, 88)';
+  // Context
+  public static readonly CONTEXT_DARK = colors['lime']['200'];
+  public static readonly CONTEXT_LIGHT = colors['lime']['900'];
 
-  public static readonly HASHTAG_DARK = 'rgb(244, 124, 42)';
-  public static readonly HASHTAG_LIGHT = 'rgb(124, 88, 13)';
+  // Project
+  public static readonly PROJECT_DARK = colors['blue']['200'];
+  public static readonly PROJECT_LIGHT = colors['blue']['900'];
 
-  public static readonly PRICE_DARK = 'rgb(100, 180, 92)';
-  public static readonly PRICE_LIGHT = 'rgb(64, 124, 60)';
+  // Tag
+  public static readonly TAG_DARK = colors['grape']['200'];
+  public static readonly TAG_LIGHT = colors['grape']['900'];
 
-  public static readonly DATE_DARK = 'rgb(244, 244, 186)';
-  public static readonly DATE_LIGHT = 'rgb(135, 135, 29)';
+  // Hashtag
+  public static readonly HASHTAG_DARK = colors['orange']['200'];
+  public static readonly HASHTAG_LIGHT = colors['orange']['900'];
 
-  public static readonly PRIORITY_DARK = 'rgb(209, 186, 244)';
-  public static readonly PRIORITY_LIGHT = 'rgb(117, 43, 229)';
+  // Prices
+  public static readonly PRICE_DARK = colors['green']['200'];
+  public static readonly PRICE_LIGHT = colors['green']['900'];
 
+  // Completed
   public static readonly COMPLETED_CSS = 'font-style: italic; text-decoration: line-through; opacity: 0.5;';
 }
