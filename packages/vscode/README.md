@@ -21,3 +21,8 @@ Users appreciate release notes as you update your extension.
 ### 0.0.3
 
 Initial release of Toodles VS Code
+
+### 0.0.4
+
+- Additional date colors to differentiate between created date, due date and completed date
+- Improved regex to identify priority (e.g. `(A)`) only near start of string

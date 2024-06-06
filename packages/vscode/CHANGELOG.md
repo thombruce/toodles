@@ -6,6 +6,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.4] - 2024-06-07
+
+### Added
+
+- Additional date colors to differentiate between created date, due date and completed date
+
+### Changed
+
+- Improved regex to identify priority (e.g. `(A)`) only near start of string
+
 ## [0.0.3] - 2024-06-06
 
 - Initial release
