@@ -13,12 +13,36 @@ export function activate(context: vscode.ExtensionContext) {
 	let timeout: NodeJS.Timeout | undefined = undefined;
 
 	// Decoration Types
-	const dateDecorationType = vscode.window.createTextEditorDecorationType({
+	const completedDateDecorationType = vscode.window.createTextEditorDecorationType({
 		light: {
-            color: StyleConstants.DATE_LIGHT
+            color: StyleConstants.DATE_COMPLETED_LIGHT
         },
         dark: {
-            color: StyleConstants.DATE_DARK
+            color: StyleConstants.DATE_COMPLETED_DARK
+        }
+    });
+	const createdDateDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.DATE_CREATED_LIGHT
+        },
+        dark: {
+            color: StyleConstants.DATE_CREATED_DARK
+        }
+    });
+	const dueDateDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.DATE_DUE_LIGHT
+        },
+        dark: {
+            color: StyleConstants.DATE_DUE_DARK
+        }
+    });
+	const genericDateDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.DATE_GENERIC_LIGHT
+        },
+        dark: {
+            color: StyleConstants.DATE_GENERIC_DARK
         }
     });
     const projectDecorationType = vscode.window.createTextEditorDecorationType({
@@ -86,7 +110,10 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-		const dates: vscode.DecorationOptions[] = [];
+		const completedDates: vscode.DecorationOptions[] = [];
+        const createdDates: vscode.DecorationOptions[] = [];
+        const dueDates: vscode.DecorationOptions[] = [];
+        const genericDates: vscode.DecorationOptions[] = [];
 		const projects: vscode.DecorationOptions[] = [];
 		const tags: vscode.DecorationOptions[] = [];
 		const priorities: vscode.DecorationOptions[] = [];
@@ -101,7 +128,6 @@ export function activate(context: vscode.ExtensionContext) {
         for (var i = 0; i <= totalLines - 1; i++) {
             let lineObject = activeEditor.document.lineAt(i);
 
-            parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
             parseRegex(AppConstants.PROJECT_REGEX, projects, lineObject);
             parseRegex(AppConstants.TAG_REGEX, tags, lineObject);
             parseRegex(AppConstants.CONTEXT_REGEX, contexts, lineObject);
@@ -115,10 +141,33 @@ export function activate(context: vscode.ExtensionContext) {
                 let decoration = { range: new vscode.Range(beginPosition, endPosition) };
                 // let decoration = { range: lineObject.range };
                 completed.push(decoration);
+                
+                // TODO: createdDate and dueDate should only be applied if found at start of string;
+                //       otherwise, genericDates should be used
+                const dates: vscode.DecorationOptions[] = [];
+                parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
+                let completedDate, createdDate, dueDate;
+                if (completedDate = dates.shift()) { completedDates.push(completedDate); }
+                if (createdDate = dates.shift()) { createdDates.push(createdDate); }
+                if (dueDate = dates.shift()) { dueDates.push(dueDate); }
+                genericDates.push(...dates);
+            } else {
+                // TODO: createdDate and dueDate should only be applied if found at start of string;
+                //       otherwise, genericDates should be used
+                const dates: vscode.DecorationOptions[] = [];
+                parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
+                let createdDate, dueDate;
+                if (createdDate = dates.shift()) { createdDates.push(createdDate); }
+                if (dueDate = dates.shift()) { dueDates.push(dueDate); }
+                genericDates.push(...dates);
             }
         }
 
-		activeEditor.setDecorations(dateDecorationType, dates);
+        activeEditor.setDecorations(completedDateDecorationType, completedDates);
+        activeEditor.setDecorations(createdDateDecorationType, createdDates);
+        activeEditor.setDecorations(dueDateDecorationType, dueDates);
+        activeEditor.setDecorations(genericDateDecorationType, genericDates);
+
         activeEditor.setDecorations(projectDecorationType, projects);
         activeEditor.setDecorations(tagDecorationType, tags);
         activeEditor.setDecorations(contextDecorationType, contexts);

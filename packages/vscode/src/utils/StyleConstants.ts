@@ -1,4 +1,4 @@
-import colors from './colors'
+import colors from './colors';
 
 export default class StyleConstants {
   // Priorities
@@ -6,8 +6,14 @@ export default class StyleConstants {
   public static readonly PRIORITY_LIGHT = colors['violet']['900'];
 
   // Dates
-  public static readonly DATE_DARK = colors['yellow']['200'];
-  public static readonly DATE_LIGHT = colors['yellow']['900'];
+  public static readonly DATE_COMPLETED_DARK = colors['lime']['200'];
+  public static readonly DATE_COMPLETED_LIGHT = colors['lime']['900'];
+  public static readonly DATE_CREATED_DARK = colors['cyan']['200'];
+  public static readonly DATE_CREATED_LIGHT = colors['cyan']['900'];
+  public static readonly DATE_DUE_DARK = colors['yellow']['200'];
+  public static readonly DATE_DUE_LIGHT = colors['yellow']['900'];
+  public static readonly DATE_GENERIC_DARK = colors['indigo']['200'];
+  public static readonly DATE_GENERIC_LIGHT = colors['indigo']['900'];
 
   // Context
   public static readonly CONTEXT_DARK = colors['lime']['200'];
