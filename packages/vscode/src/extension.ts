@@ -150,6 +150,7 @@ export function activate(context: vscode.ExtensionContext) {
             parseRegex(AppConstants.PRIORITY_REGEX, priorities, lineObject);
 
             let focus, done, obsolete;
+
             if (
                 (focus = lineObject.text.startsWith("! ", lineObject.firstNonWhitespaceCharacterIndex)) ||
                 (done = lineObject.text.startsWith("X ", lineObject.firstNonWhitespaceCharacterIndex)) ||
@@ -162,24 +163,17 @@ export function activate(context: vscode.ExtensionContext) {
 
                 if (focus) { focused.push(decoration); }
                 if (obsolete) { obsoleted.push(decoration); }
-                if (done) {
-                    completed.push(decoration);
-                    const dates: vscode.DecorationOptions[] = [];
-                    parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
-                    let completedDate, createdDate, dueDate;
-                    if (completedDate = dates.shift()) { completedDates.push(completedDate); }
-                    if (createdDate = dates.shift()) { createdDates.push(createdDate); }
-                    if (dueDate = dates.shift()) { dueDates.push(dueDate); }
-                    genericDates.push(...dates);
-                } else {
-                    // TODO: This is duplicated from below else statement; rework to DRY code
-                    const dates: vscode.DecorationOptions[] = [];
-                    parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
-                    let createdDate, dueDate;
-                    if (createdDate = dates.shift()) { createdDates.push(createdDate); }
-                    if (dueDate = dates.shift()) { dueDates.push(dueDate); }
-                    genericDates.push(...dates);
-                }                
+                if (done) { completed.push(decoration); }
+            }
+
+            if (done) {
+                const dates: vscode.DecorationOptions[] = [];
+                parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
+                let completedDate, createdDate, dueDate;
+                if (completedDate = dates.shift()) { completedDates.push(completedDate); }
+                if (createdDate = dates.shift()) { createdDates.push(createdDate); }
+                if (dueDate = dates.shift()) { dueDates.push(dueDate); }
+                genericDates.push(...dates);
             } else {
                 const dates: vscode.DecorationOptions[] = [];
                 parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
