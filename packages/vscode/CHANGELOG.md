@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.6] - 2024-06-07
+
 ### Added
 
 - Multiplier highlighting for shopping list items
@@ -37,3 +39,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.0.3] - 2024-06-06
 
 - Initial release
+
+[unreleased]: https://github.com/thombruce/toodles/compare/v0.0.6...HEAD
+[0.0.6]: https://github.com/thombruce/toodles/compare/v0.0.5...v0.0.6
+[0.0.5]: https://github.com/thombruce/toodles/compare/v0.0.4...v0.0.5
+[0.0.4]: https://github.com/thombruce/toodles/compare/2cd5b0b2f62a2887e92404590ffc100642a0b91c...v0.0.4
+[0.0.3]: https://github.com/thombruce/toodles/tree/2cd5b0b2f62a2887e92404590ffc100642a0b91c/packages/vscode

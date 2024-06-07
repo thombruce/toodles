@@ -32,6 +32,6 @@ Initial release of Toodles VS Code
 
 - Added focus and obsolete status for list items; these can be marked by a `!` or `~` at the start of the line
 
-### Unreleased
+### 0.0.6
 
 - Added multiplier highlighting for shopping list items
