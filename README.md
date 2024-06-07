@@ -23,3 +23,20 @@ cd packages/web
 yarn build
 # Output in packages/web/dist
 ```
+
+## Development
+
+### General
+
+```sh
+# Update CHANGELOG and README and commit where relevant, then...
+lerna publish
+```
+
+### VS Code
+
+```sh
+cd packages/vscode
+vsce package
+vsce publish
+```
