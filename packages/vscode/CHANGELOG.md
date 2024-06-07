@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Fixes
+
+- Prices now only match when followed by a space, fixing a false positive where the decimal separator counted as a word boundary
+
 ## [0.0.6] - 2024-06-07
 
 ### Added
