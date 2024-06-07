@@ -6,6 +6,18 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Added
+
+- Multiplier highlighting for shopping list items
+
+### Changed
+
+- Improved price/currency matching; decimal prices can now be separated by comma
+
+### Fixes
+
+- No longer match prices/currencies that are just a symbol; some numeric value must be present
+
 ## [0.0.5] - 2024-06-07
 
 ### Added
