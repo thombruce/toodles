@@ -94,6 +94,14 @@ export function activate(context: vscode.ExtensionContext) {
             color: StyleConstants.PRICE_DARK
         }
     });
+    const multiplierDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.MULTIPLIER_LIGHT
+        },
+        dark: {
+            color: StyleConstants.MULTIPLIER_DARK
+        }
+    });
     const focusedDecorationType = vscode.window.createTextEditorDecorationType({
 		light: {
             color: StyleConstants.FOCUSED_LIGHT
@@ -136,6 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const contexts: vscode.DecorationOptions[] = [];
 		const hashtags: vscode.DecorationOptions[] = [];
 		const prices: vscode.DecorationOptions[] = [];
+        const multipliers: vscode.DecorationOptions[] = [];
 
         // Iterate over each line and parse accordingly
         let totalLines = activeEditor.document.lineCount;
@@ -147,6 +156,7 @@ export function activate(context: vscode.ExtensionContext) {
             parseRegex(AppConstants.CONTEXT_REGEX, contexts, lineObject);
             parseRegex(AppConstants.HASHTAG_REGEX, hashtags, lineObject);
             parseRegex(AppConstants.PRICE_REGEX, prices, lineObject);
+            parseRegex(AppConstants.MULTIPLIER_REGEX, multipliers, lineObject);
             parseRegex(AppConstants.PRIORITY_REGEX, priorities, lineObject);
 
             let focus, done, obsolete;
@@ -193,7 +203,9 @@ export function activate(context: vscode.ExtensionContext) {
         activeEditor.setDecorations(tagDecorationType, tags);
         activeEditor.setDecorations(contextDecorationType, contexts);
         activeEditor.setDecorations(hashtagDecorationType, hashtags);
+
         activeEditor.setDecorations(priceDecorationType, prices);
+        activeEditor.setDecorations(multiplierDecorationType, multipliers);
 
         activeEditor.setDecorations(focusedDecorationType, focused);
         activeEditor.setDecorations(completedDecorationType, completed);

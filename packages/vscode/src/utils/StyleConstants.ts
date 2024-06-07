@@ -34,6 +34,8 @@ export default class StyleConstants {
   // Prices
   public static readonly PRICE_DARK = colors['green']['200'];
   public static readonly PRICE_LIGHT = colors['green']['900'];
+  public static readonly MULTIPLIER_DARK = colors['pink']['200'];
+  public static readonly MULTIPLIER_LIGHT = colors['pink']['900'];
 
   // Status
   public static readonly FOCUSED_DARK = colors['gray']['200'];
