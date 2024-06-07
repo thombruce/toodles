@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ### Fixes
 
-- Prices now only match when followed by a space, fixing a false positive where the decimal separator counted as a word boundary
+- Certain RegExes now only match when followed by a space or zero-length boundary, fixing some false positives
 
 ## [0.0.6] - 2024-06-07
 
