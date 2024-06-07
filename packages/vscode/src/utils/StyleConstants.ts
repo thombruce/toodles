@@ -35,6 +35,9 @@ export default class StyleConstants {
   public static readonly PRICE_DARK = colors['green']['200'];
   public static readonly PRICE_LIGHT = colors['green']['900'];
 
-  // Completed
+  // Status
+  public static readonly FOCUSED_DARK = colors['gray']['200'];
+  public static readonly FOCUSED_LIGHT = colors['gray']['900'];
   public static readonly COMPLETED_CSS = 'font-style: italic; text-decoration: line-through; opacity: 0.5;';
+  public static readonly OBSOLETED_CSS = 'font-style: italic; opacity: 0.4;';
 }

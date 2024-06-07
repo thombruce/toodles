@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Added
+
+- Focus and obsolete status for list items; these can be marked by a `!` or `~` at the start of the line
+
 ## [0.0.4] - 2024-06-07
 
 ### Added
