@@ -9,6 +9,7 @@ Adds syntax highlighting for `.todo`, `.shop` and `.list` documents based on an 
 - Highlighting for todo lists, shopping lists and general checklists
 - Priorities, contexts, projects and tags based on the `todo.txt` spec
 - Additional support for hashtags and a (currently limited) range of prices (for shopping lists)
+- Experimental support for subtasks/nested todos
 
 ## Known Issues
 
