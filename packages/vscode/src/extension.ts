@@ -94,8 +94,20 @@ export function activate(context: vscode.ExtensionContext) {
             color: StyleConstants.PRICE_DARK
         }
     });
+    const focusedDecorationType = vscode.window.createTextEditorDecorationType({
+		light: {
+            color: StyleConstants.FOCUSED_LIGHT
+        },
+        dark: {
+            color: StyleConstants.FOCUSED_DARK
+        },
+        fontWeight: 'bold'
+    });
     const completedDecorationType = vscode.window.createTextEditorDecorationType({
         textDecoration: StyleConstants.COMPLETED_CSS
+    });
+    const obsoletedDecorationType = vscode.window.createTextEditorDecorationType({
+        textDecoration: StyleConstants.OBSOLETED_CSS
     });
 
 	let activeEditor = vscode.window.activeTextEditor;
@@ -118,7 +130,9 @@ export function activate(context: vscode.ExtensionContext) {
 		const tags: vscode.DecorationOptions[] = [];
 		const priorities: vscode.DecorationOptions[] = [];
 		// const overdue: vscode.DecorationOptions[] = [];
+        const focused: vscode.DecorationOptions[] = [];
 		const completed: vscode.DecorationOptions[] = [];
+        const obsoleted: vscode.DecorationOptions[] = [];
 		const contexts: vscode.DecorationOptions[] = [];
 		const hashtags: vscode.DecorationOptions[] = [];
 		const prices: vscode.DecorationOptions[] = [];
@@ -135,25 +149,38 @@ export function activate(context: vscode.ExtensionContext) {
             parseRegex(AppConstants.PRICE_REGEX, prices, lineObject);
             parseRegex(AppConstants.PRIORITY_REGEX, priorities, lineObject);
 
-            if (lineObject.text.startsWith("x ", lineObject.firstNonWhitespaceCharacterIndex) || lineObject.text.startsWith("X ", lineObject.firstNonWhitespaceCharacterIndex)) {
+            let focus, done, obsolete;
+            if (
+                (focus = lineObject.text.startsWith("! ", lineObject.firstNonWhitespaceCharacterIndex)) ||
+                (done = lineObject.text.startsWith("X ", lineObject.firstNonWhitespaceCharacterIndex)) ||
+                (done = lineObject.text.startsWith("x ", lineObject.firstNonWhitespaceCharacterIndex)) ||
+                (obsolete = lineObject.text.startsWith("~ ", lineObject.firstNonWhitespaceCharacterIndex))
+            ) {
                 let beginPosition = new vscode.Position(lineObject.range.start.line, lineObject.firstNonWhitespaceCharacterIndex);
                 let endPosition = new vscode.Position(lineObject.range.start.line, lineObject.text.length);
                 let decoration = { range: new vscode.Range(beginPosition, endPosition) };
-                // let decoration = { range: lineObject.range };
-                completed.push(decoration);
-                
-                // TODO: createdDate and dueDate should only be applied if found at start of string;
-                //       otherwise, genericDates should be used
-                const dates: vscode.DecorationOptions[] = [];
-                parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
-                let completedDate, createdDate, dueDate;
-                if (completedDate = dates.shift()) { completedDates.push(completedDate); }
-                if (createdDate = dates.shift()) { createdDates.push(createdDate); }
-                if (dueDate = dates.shift()) { dueDates.push(dueDate); }
-                genericDates.push(...dates);
+
+                if (focus) { focused.push(decoration); }
+                if (obsolete) { obsoleted.push(decoration); }
+                if (done) {
+                    completed.push(decoration);
+                    const dates: vscode.DecorationOptions[] = [];
+                    parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
+                    let completedDate, createdDate, dueDate;
+                    if (completedDate = dates.shift()) { completedDates.push(completedDate); }
+                    if (createdDate = dates.shift()) { createdDates.push(createdDate); }
+                    if (dueDate = dates.shift()) { dueDates.push(dueDate); }
+                    genericDates.push(...dates);
+                } else {
+                    // TODO: This is duplicated from below else statement; rework to DRY code
+                    const dates: vscode.DecorationOptions[] = [];
+                    parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
+                    let createdDate, dueDate;
+                    if (createdDate = dates.shift()) { createdDates.push(createdDate); }
+                    if (dueDate = dates.shift()) { dueDates.push(dueDate); }
+                    genericDates.push(...dates);
+                }                
             } else {
-                // TODO: createdDate and dueDate should only be applied if found at start of string;
-                //       otherwise, genericDates should be used
                 const dates: vscode.DecorationOptions[] = [];
                 parseRegex(AppConstants.DATE_REGEX, dates, lineObject);
                 let createdDate, dueDate;
@@ -173,8 +200,12 @@ export function activate(context: vscode.ExtensionContext) {
         activeEditor.setDecorations(contextDecorationType, contexts);
         activeEditor.setDecorations(hashtagDecorationType, hashtags);
         activeEditor.setDecorations(priceDecorationType, prices);
+
+        activeEditor.setDecorations(focusedDecorationType, focused);
         activeEditor.setDecorations(completedDecorationType, completed);
-		// activeEditor.setDecorations(overdueDecorationType, overdue);
+        activeEditor.setDecorations(obsoletedDecorationType, obsoleted);
+
+        // activeEditor.setDecorations(overdueDecorationType, overdue);
         activeEditor.setDecorations(priorityDecorationType, priorities);
 	}
 

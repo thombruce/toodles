@@ -26,3 +26,7 @@ Initial release of Toodles VS Code
 
 - Additional date colors to differentiate between created date, due date and completed date
 - Improved regex to identify priority (e.g. `(A)`) only near start of string
+
+### Unreleased
+
+- Added focus and obsolete status for list items; these can be marked by a `!` or `~` at the start of the line
