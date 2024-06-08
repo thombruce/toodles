@@ -35,3 +35,7 @@ Initial release of Toodles VS Code
 ### 0.0.6
 
 - Added multiplier highlighting for shopping list items
+
+### 0.0.7
+
+- Fixes some false positives when matching tags at the beginning or end of a string
