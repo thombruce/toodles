@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.8] - 2024-07-09
+
 ### Added
 
 - Support for use of hyphen (`-`) at the beginning of line for alignment with focus, done and obsolete tasks
@@ -54,7 +56,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Initial release
 
-[unreleased]: https://github.com/thombruce/toodles/compare/v0.0.7...HEAD
+[unreleased]: https://github.com/thombruce/toodles/compare/v0.0.8...HEAD
+[0.0.8]: https://github.com/thombruce/toodles/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/thombruce/toodles/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/thombruce/toodles/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/thombruce/toodles/compare/v0.0.4...v0.0.5

@@ -39,3 +39,7 @@ Initial release of Toodles VS Code
 ### 0.0.7
 
 - Fixes some false positives when matching tags at the beginning or end of a string
+
+## 0.0.8
+
+Adds support for use of hyphen (`-`) at the beginning of line for alignment with focus, done and obsolete tasks
