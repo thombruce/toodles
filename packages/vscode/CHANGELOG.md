@@ -6,6 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Added
+
+- Support for use of hyphen (`-`) at the beginning of line for alignment with focus, done and obsolete tasks
+
+### Fixes
+
+- Regexes: Check only for whitespace padding at beginning of line (before focus character), instead of all non-word characters
+
 ## [0.0.7] - 2024-06-08
 
 ### Fixes
