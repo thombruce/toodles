@@ -2,7 +2,7 @@
   "name": "toodles",
   "displayName": "Toodles",
   "description": "Adds Toodles language features to VS Code",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "thombruce",
   "repository": "https://github.com/thombruce/toodles",
   "private": true,
