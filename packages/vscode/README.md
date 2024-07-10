@@ -42,4 +42,8 @@ Initial release of Toodles VS Code
 
 ## 0.0.8
 
-Adds support for use of hyphen (`-`) at the beginning of line for alignment with focus, done and obsolete tasks
+- Adds support for use of hyphen (`-`) at the beginning of line for alignment with focus, done and obsolete tasks
+
+## 0.0.9
+
+- Adds support for currency ranges in shopping lists of the format `$10.00-$50.00`

@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.9] - 2024-07-10
+
 ### Added
 
 - Support for currency ranges in shopping lists of the format `$10.00-$50.00`
