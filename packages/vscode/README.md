@@ -51,3 +51,7 @@ Initial release of Toodles VS Code
 ## 0.0.10
 
 - Fixes custom tag regex: now matches non-whitespace characters instead of non-space literal, preventing match with newline
+
+## 0.0.11
+
+- Stricter matching of custom tags (`tag:custom`) to prevent matching URL strings and valid Markdown link syntax

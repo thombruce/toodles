@@ -6,6 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [0.0.11] - 2024-07-19
+
 ### Changed
 
 - Stricter matching of custom tags (`tag:custom`) to prevent matching URL strings and valid Markdown link syntax
@@ -72,7 +74,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Initial release
 
-[unreleased]: https://github.com/thombruce/toodles/compare/v0.0.8...HEAD
+[unreleased]: https://github.com/thombruce/toodles/compare/v0.0.11...HEAD
+[0.0.11]: https://github.com/thombruce/toodles/compare/v0.0.10...v0.0.11
+[0.0.10]: https://github.com/thombruce/toodles/compare/v0.0.9...v0.0.10
+[0.0.9]: https://github.com/thombruce/toodles/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/thombruce/toodles/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/thombruce/toodles/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/thombruce/toodles/compare/v0.0.5...v0.0.6
