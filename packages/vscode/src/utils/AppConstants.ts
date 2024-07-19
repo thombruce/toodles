@@ -6,9 +6,9 @@ export default class AppConstants {
     'done.txt'
   ];
 
-  public static PRIORITY_REGEX = new RegExp(/(?<=^\s*(?:[!Xx~-] )?)\([A-Z]\)\B/g);
-  public static DATE_REGEX = new RegExp(/(?<=^\s*(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,2})\d{4}-\d{2}-\d{2}\b/g);
-  public static PRICE_REGEX = new RegExp(/(?<=^\s*(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3})(?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2}(?= )/g); // TODO: Support additional currencies; possibly allow user configuration; possibly also support negative currencies with different style if it seems applicable
+  public static PRIORITY_REGEX = new RegExp(/(?<=^ *(?:[!Xx~-] )?)\([A-Z]\)\B/g);
+  public static DATE_REGEX = new RegExp(/(?<=^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,2})\d{4}-\d{2}-\d{2}\b/g);
+  public static PRICE_REGEX = new RegExp(/(?<=^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3})(?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2}(?= )/g); // TODO: Support additional currencies; possibly allow user configuration; possibly also support negative currencies with different style if it seems applicable
 
   public static CONTEXT_REGEX = new RegExp(/\B\@\w+/g);
   public static PROJECT_REGEX = new RegExp(/\B\+\w+/g);
