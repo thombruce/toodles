@@ -13,7 +13,7 @@ export default class AppConstants {
   public static CONTEXT_REGEX = new RegExp(/\B\@\w+/g);
   public static PROJECT_REGEX = new RegExp(/\B\+\w+/g);
   public static HASHTAG_REGEX = new RegExp(/\B\#\w+/g);
-  public static TAG_REGEX = new RegExp(/\b\w+:[^ ]+/g); // TODO: Allow additional characters  
+  public static TAG_REGEX = new RegExp(/\b\w+:\S+/g); // TODO: Allow additional characters
 
   public static MULTIPLIER_REGEX = new RegExp(/\bx\d+$/g);
 }

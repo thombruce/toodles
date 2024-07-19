@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Fixes
+
+- Regexes: Custom tag regex now matches non-whitespace characters instead of non-space literal, preventing match with newline
+
 ## [0.0.9] - 2024-07-10
 
 ### Added
