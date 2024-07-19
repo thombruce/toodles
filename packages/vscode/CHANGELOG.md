@@ -6,6 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+### Changed
+
+- Stricter matching of custom tags (`tag:custom`) to prevent matching URL strings and valid Markdown link syntax
+
 ## [0.0.10] - 2024-07-19
 
 ### Fixes
