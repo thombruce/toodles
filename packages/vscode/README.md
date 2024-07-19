@@ -47,3 +47,7 @@ Initial release of Toodles VS Code
 ## 0.0.9
 
 - Adds support for currency ranges in shopping lists of the format `$10.00-$50.00`
+
+## 0.0.10
+
+- Fixes custom tag regex: now matches non-whitespace characters instead of non-space literal, preventing match with newline
