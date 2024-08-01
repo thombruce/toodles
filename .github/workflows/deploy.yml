@@ -41,16 +41,16 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build
-        run: yarn lerna run build
+        run: yarn lerna run generate # CHANGEME: to `yarn lerna run build` to build the app on GitHub Pages
         env:
           VITE_BASE: ${{ vars.TOODLES_BASE }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload dist repository
-          path: './packages/web/dist'
+          path: './packages/docs/dist' # CHANGEME: to `./packages/web/dist` to build the app on GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v2
