@@ -2,6 +2,6 @@ export default defineAppConfig({
   name: 'Toodles',
   hostname: 'https://toodles.thombruce.com',
   rss: false,
-  copyright: 'Toodles',
+  copyright: `Copyright © 2023 - ${new Date().getFullYear()} Thom Bruce`,
   gradient: true,
 })

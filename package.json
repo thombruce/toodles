@@ -5,6 +5,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "docs": "cd packages/docs && nuxt dev"
+  },
   "devDependencies": {
     "lerna": "^6.1.0"
   }

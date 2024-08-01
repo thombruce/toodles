@@ -1,0 +1,117 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "toodles",
+    "scopeName": "source.toodles",
+    "fileTypes": [],
+    "repository": {
+        "priority": {
+            "name": "keyword.control.toodles.priority",
+            "match": "(?<=^ *(?:[!Xx~-] )?)(\\([A-Z]\\))\\B"
+        },
+        "date": {
+            "name": "string.interpolated.toodles.date",
+            "match": "(?<=^ *(?:[!Xx~-] )?(?:\\([A-Z]\\) )?)(\\d{4}-\\d{2}-\\d{2})\\b"
+        },
+        "due": {
+            "name": "markup.changed.toodles.due",
+            "match": "(?<=^ *(?:[!Xx~-] )?(?:\\([A-Z]\\) )?(?:\\d{4}-\\d{2}-\\d{2} ))(\\d{4}-\\d{2}-\\d{2})\\b"
+        },
+        "price": {
+            "name": "markup.inserted.toodles.price",
+            "match": "(?<=^ *(?:[!Xx~-] )?(?:\\([A-Z]\\) )?(?:\\d{4}-\\d{2}-\\d{2} ){0,3})((?:[$£€]\\d*[.,]?\\d{1,2}-)?[$£€]\\d*[.,]?\\d{1,2})(?= )"
+        },
+        "context": {
+            "name": "entity.name.class.toodles.context",
+            "match": "\\B(\\@\\w+)"
+        },
+        "project": {
+            "name": "constant.other.toodles.project",
+            "match": "\\B(\\+\\w+)"
+        },
+        "hashtag": {
+            "name": "markup.deleted.toodles.hashtag",
+            "match": "\\B(\\#\\w+)"
+        },
+        "tag": {
+            "name": "variable.parameter.toodles.tag",
+            "match": "(?<!<|\\]\\()\\b(\\w+(?<!https?):\\S+)"
+        },
+        "multiplier": {
+            "name": "keyword.other.unit.toodles.multiplier",
+            "match": "\\b(x\\d+)$"
+        }
+    },
+    "patterns": [
+        {
+            "include": "#priority"
+        },
+        {
+            "include": "#date"
+        },
+        {
+            "include": "#due"
+        },
+        {
+            "include": "#price"
+        },
+        {
+            "include": "#context"
+        },
+        {
+            "include": "#project"
+        },
+        {
+            "include": "#hashtag"
+        },
+        {
+            "include": "#tag"
+        },
+        {
+            "include": "#multiplier"
+        },
+        {
+            "name": "markup.bold.toodles",
+            "begin": "(?<=^ *)!",
+            "end": "$",
+            "patterns": [
+                {
+                    "include": "#priority"
+                },
+                {
+                    "include": "#date"
+                },
+                {
+                    "include": "#due"
+                },
+                {
+                    "include": "#price"
+                },
+                {
+                    "include": "#context"
+                },
+                {
+                    "include": "#project"
+                },
+                {
+                    "include": "#hashtag"
+                },
+                {
+                    "include": "#tag"
+                },
+                {
+                    "include": "#multiplier"
+                }
+            ]
+        },
+        {
+            "name": "comment.line.toodles.done",
+            "begin": "(?<=^ *)[xX]",
+            "end": "$"
+        },
+        {
+            "name": "comment.line.toodles.obsolete",
+            "begin": "(?<=^ *)~",
+            "end": "$"
+        }
+    ]
+}
