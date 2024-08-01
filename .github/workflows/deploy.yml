@@ -33,24 +33,42 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: "20.12"
+          cache: yarn
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          # CHANGEME: to `packages/web/*` to build the app on GitHub Pages
+          path: |
+            packages/docs/dist
+            packages/docs/.nuxt
+          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('packages/docs/dist') }}
+          restore-keys: |
+            ${{ runner.os }}-nuxt-build-
+
       - name: Install dependencies
         run: yarn install --immutable
+
       - name: Build
         run: yarn lerna run generate # CHANGEME: to `yarn lerna run build` to build the app on GitHub Pages
         env:
-          VITE_BASE: ${{ vars.TOODLES_BASE }}
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+          NUXT_APP_BASE_URL: ${{ vars.NUXT_APP_BASE_URL }}
+          # VITE_BASE: ${{ vars.TOODLES_BASE }}
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist repository
           path: './packages/docs/dist' # CHANGEME: to `./packages/web/dist` to build the app on GitHub Pages
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
