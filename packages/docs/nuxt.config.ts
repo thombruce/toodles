@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   extends: [
     '@thombruce/tnt-content',
   ],
+  routeRules: {
+    '/vscode': { redirect: 'https://marketplace.visualstudio.com/items?itemName=thombruce.toodles' },
+  },
   content: {
     highlight: {
       langs: [

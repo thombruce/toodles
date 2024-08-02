@@ -1,0 +1,5 @@
+title: VSCode
+icon: devicon:vscode
+navigation: false
+layout: redirect
+link: https://marketplace.visualstudio.com/items?itemName=thombruce.toodles
