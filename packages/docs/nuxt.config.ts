@@ -8,6 +8,7 @@ export default defineNuxtConfig({
   ],
   routeRules: {
     '/vscode': { redirect: 'https://marketplace.visualstudio.com/items?itemName=thombruce.toodles' },
+    '/github': { redirect: 'https://github.com/thombruce/toodles' },
   },
   content: {
     highlight: {
