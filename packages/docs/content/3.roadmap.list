@@ -1,0 +1,24 @@
+~ icon=fa6-solid:road
+Spec
+    x 2024-08-02 2024-08-02 [/spec](/spec) page added to docs
+    2024-08-02 Full spec description published in docs
+    2024-08-02 Finalize support for inline Markdown
+VSCode
+    x 2024-08-02 2024-08-02 Supports full Toodles spec
+    2024-08-02 Adds functions for sorting/managing lists
+Web
+    2024-08-02 Reworked web application built with TNT
+    2024-08-02 Supports full Toodles spec
+    2024-08-02 Saves to browser storage
+    2024-08-02 PWA can be installed for offline use
+Desktop
+    2024-08-02 Web application wrapped in Electron
+    2024-08-02 Windows support
+    2024-08-02 Linux support
+    2024-08-02 MacOS support
+Mobile
+    2024-08-02 Web application wrapped in Ionic/Capacitor
+    2024-08-02 Android support
+    2024-08-02 iOS support
+Cloud
+    2024-08-02 Syncing support between platforms/environments
