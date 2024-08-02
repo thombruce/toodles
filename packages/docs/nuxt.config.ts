@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 
 export default defineNuxtConfig({
   extends: [
+    './layers/toodles',
     '@thombruce/tnt-content',
   ],
   routeRules: {
