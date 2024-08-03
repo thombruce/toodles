@@ -1,0 +1,16 @@
+{
+  "name": "app",
+  "version": "0.0.12",
+  "private": true,
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "electron:build": "ELECTRON=true nuxt build",
+    "electron:dev": "ELECTRON=true nuxt dev"
+  },
+  "devDependencies": {
+    "@thombruce/tnt-electron": "^0.29.1",
+    "nuxt": "^3.12.4"
+  }
+}
