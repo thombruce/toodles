@@ -1,2 +1,3 @@
 .nuxt
 dist-electron
+tnt.config.json
