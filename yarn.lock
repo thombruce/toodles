@@ -3433,12 +3433,12 @@
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.29.2.tgz#a9b134a13bf255dae90b28ee4d8a63312a585c38"
-  integrity sha512-tcr3damVF35ah+aHaffSGRnsjZciCuLFMrl5x9YCyDTKJY1fcxhWfD+uxtd7n1X67CX1mG+wJRCdrmJRQZbOYA==
+"@thombruce/tnt-electron@^0.29.3":
+  version "0.29.3"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.29.3.tgz#ef7893d6e6bd6412aa5c001ad9301f62d744fd52"
+  integrity sha512-ujS85oCVIoG1r/cl9HXHeKpsLROYKlUJQv/7NDzQpWSqM4qR4rVreiatAe64lwgRhvS0UPuwC7Tq+UlqLiqtbA==
   dependencies:
-    "@thombruce/tnt" "^0.29.2"
+    "@thombruce/tnt" "^0.29.3"
     electron "^31.3.1"
     electron-builder "^24.13.3"
     nuxt-electron "^0.7.0"
@@ -3465,10 +3465,10 @@
     pug "^3.0.2"
     yup "^1.4.0"
 
-"@thombruce/tnt@^0.29.2":
-  version "0.29.2"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.29.2.tgz#d0fdd99f4c62c7d163f3abadb8e63a0432bd81f3"
-  integrity sha512-MRYdKARSAIuaUnQE/Xd6FeBrlsySpPnzJY26FwUowXw4F0vn6n5ziawmrYzUoJNuonWBnyvUUubHStIeHUNo4g==
+"@thombruce/tnt@^0.29.3":
+  version "0.29.3"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.29.3.tgz#09a08b6e52bc43137c8a5c1d2e0e38b9fa4c4df6"
+  integrity sha512-cuoEcO2GoY9El4d+v2KgPPHkjXxW8tcHX/VAlsC145LVXRfplbULa2zXVNp7Ss3hYKdbRGM6hfFIN9xCh3XpXQ==
   dependencies:
     "@iconify-json/fa" "^1.1.8"
     "@nuxt/image" "^1.6.0"
@@ -3480,6 +3480,7 @@
     "@vee-validate/yup" "^4.13.2"
     "@vueuse/core" "^10.9.0"
     "@vueuse/nuxt" "^10.9.0"
+    is-electron "^2.2.2"
     nuxt-icon "^0.6.10"
     nuxt-lodash "^2.5.3"
     pug "^3.0.2"
@@ -8911,6 +8912,11 @@ is-docker@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-3.0.0.tgz#90093aa3106277d8a77a5910dbae71747e15a200"
   integrity sha512-eljcgEDlEns/7AXFosB5K/2nCM4P7FQPkGc/DWLy5rmFEWvZayGrik1d9/QIY5nJ4f9YsVvBkA6kJpHn9rISdQ==
+
+is-electron@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/is-electron/-/is-electron-2.2.2.tgz#3778902a2044d76de98036f5dc58089ac4d80bb9"
+  integrity sha512-FO/Rhvz5tuw4MCWkpMzHFKWD2LsfHzIb7i6MdPYZ/KW7AlxawyLkqdy+jPZP1WubqEADE3O4FUENlJHDfQASRg==
 
 is-expression@^4.0.0:
   version "4.0.0"
