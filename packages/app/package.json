@@ -10,7 +10,7 @@
     "electron:dev": "ELECTRON=true nuxt dev"
   },
   "devDependencies": {
-    "@thombruce/tnt-electron": "^0.29.3",
+    "@thombruce/tnt-electron": "^0.29.4",
     "nuxt": "^3.12.4"
   }
 }
