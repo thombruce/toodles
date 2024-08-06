@@ -46,8 +46,15 @@ export const useTodosStore = defineStore('todos', () => {
   }
 
   function deleteTodo(id: string, parent?: string) {
-    // TODO: Handle parent-child case
-    list.value = _reject(list.value, { id })
+    let parentTodo
+    if (parent) parentTodo = list.value.find(t => t.id === parent)
+
+    if (parentTodo) {
+      parentTodo.children = _reject(parentTodo.children, { id })
+    } else {
+      list.value = _reject(list.value, { id })
+    }
+
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }
 
