@@ -44,7 +44,7 @@ div
 
   ProgressBar.mb-3(:value="progress")
 
-  ul
+  ul.space-y-2
     li(v-for="item in todos")
       TodoItem(:todo="item")
 </template>

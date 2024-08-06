@@ -80,6 +80,14 @@ export class Todo {
     this.children = children.map((c) => new Todo(c))
   }
 
+  get decorated() {
+    return this.description
+      .replace(/(\@\S+)/, '<span class="context-span">$1</span>')
+      .replace(/(\+\S+)/, '<span class="project-span">$1</span>')
+      .replace(/(\#\S+)/, '<span class="hashtag-span">$1</span>')
+      .replace(/([^\s:]+?:[^\s:]+)/, '<span class="tag-span">$1</span>')
+  }
+
   get status() {
     switch(this.state) {
       case '!':
