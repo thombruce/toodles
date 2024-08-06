@@ -20,6 +20,7 @@ div
   .flex.space-x-2(:class="todo.status === 'focus' ? 'font-bold' : todo.status === 'done' ? 'toodles-done' : todo.status === 'obsolete' ? 'toodles-obsolete' : ''")
     TntButton.btn-none(@click="toggleTodo(todo.id, parent)")
       Icon(v-if="todo.status === 'done'" name="fa:check-square")
+      Icon(v-else-if="todo.status === 'obsolete'" name="fa:minus-square")
       Icon(v-else name="fa:square")
     TntButton.btn-none(@click="toggleTodoFocus(todo.id, parent)")
       Icon(name="fa:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")

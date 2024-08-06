@@ -22,6 +22,12 @@ export const useTodosStore = defineStore('todos', () => {
     return parentTodo ? parentTodo.children.find(t => t.id === id) : list.value.find(t => t.id === id)
   })
 
+  const progress = computed(() => {
+    const count = list.value.reduce((accumulator, t) => accumulator + 1 + (t.children?.length || 0), 0)
+    const done = list.value.reduce((accumulator, t) => accumulator + (["done", "obsolete"].includes(t.status) ? 1 : 0) + (t.children?.filter(c => ["done", "obsolete"].includes(c.status)).length || 0), 0)
+    return done / count * 100
+  })
+
   // Actions
   async function fetchTodos() {
     const file = await useTntApi().loadFile('todo.txt')
@@ -58,5 +64,5 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }
 
-  return { list, all, fetchTodos, addTodo, toggleTodo, toggleTodoFocus, deleteTodo }
+  return { list, all, progress, fetchTodos, addTodo, toggleTodo, toggleTodoFocus, deleteTodo }
 })

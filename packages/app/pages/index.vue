@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia'
 // Store
 const store = useTodosStore()
 // Store: State/Getters
-const { all: todos } = storeToRefs(store)
+const { all: todos, progress } = storeToRefs(store)
 // Store: Actions
 const { fetchTodos, addTodo } = store
 
@@ -13,12 +13,6 @@ const { fetchTodos, addTodo } = store
 fetchTodos()
 
 const text = ref("")
-
-const progress = computed(() => {
-  const count = todos.value.length
-  const done = todos.value.filter(t => ["done", "obsolete"].includes(t.status)).length
-  return done / count * 100
-})
 
 function addTodoAndClear() {
   if (text.value.length === 0) {
