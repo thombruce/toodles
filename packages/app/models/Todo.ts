@@ -1,5 +1,7 @@
+import { uniqueId as _uniqueId } from 'lodash'
+
 export class Todo {
-  // id?: string // Is it necessary to implement ID at this point?
+  id?: string
   description!: string
   state?: string
   priority?: string
@@ -17,15 +19,15 @@ export class Todo {
   // Constructor
   constructor(todo: string | any) {
     if (typeof todo === 'string') {
-      // this.id = nanoid()
+      this.id = _uniqueId() // nanoid()
       this.string = todo
     } else {
-      // this.id = (todo.id || nanoid())
+      this.id = (todo.id || _uniqueId()) // (todo.id || nanoid())
       this.description = todo.description
-      this.state = todo.state
+      this.state = todo.state || '*'
       this.priority = todo.priority
       this.completed = todo.completed
-      this.created = todo.created || new Date().toISOString()
+      this.created = todo.created || new Date().toISOString().substring(0, 10)
       this.due = todo.due
       this.price = todo.price
       this.multiplier = todo.multiplier
@@ -39,7 +41,7 @@ export class Todo {
   // Instance methods: Getters
   get string() {
     let str = ''
-    if (this.state) str += `${this.state} `
+    if (this.state && this.state !== '*') str += `${this.state} `
     if (this.priority) str += `(${this.priority}) `
     if (this.completed) str += `${this.completed} `
     if (this.created) str += `${this.created} `
@@ -51,7 +53,7 @@ export class Todo {
   }
 
   set string(string) {
-    this.state = string.match(/^([!Xx~-])\s/)?.[1]
+    this.state = string.match(/^([!Xx~-])\s/)?.[1] || '*'
     this.priority = string.match(/^(?:[!Xx~-]\s)?\(([A-Z])\)\s/)?.[1]
 
     const dates = string.match(/(?<=^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,2})\d{4}-\d{2}-\d{2}\b/)
@@ -78,6 +80,7 @@ export class Todo {
         return 'done'
       case '~':
         return 'obsolete'
+      case '*':
       case '-':
       default:
         return 'open'
@@ -85,6 +88,26 @@ export class Todo {
   }
 
   // Instance methods: Actions
+  toggle() {
+    var currentDate = new Date().toISOString().substring(0, 10)
+    if (this.status === 'done') {
+      this.state = '*'
+      this.completed = undefined
+    } else {
+      this.state = 'x'
+      if (this.created) this.completed = currentDate
+    }
+  }
+
+  toggleFocus() {
+    if (this.status === 'focus') {
+      this.state = '*'
+    } else {
+      this.state = '!'
+      this.completed = undefined
+    }
+  }
+
   setTags() {
     // [...str.matchAll(regex)] returns an array in all cases, empty if no matches
     this.projects = [...this.description.matchAll(/(?:^|\s)\+(\S+)/g)].map(i => i[1])
