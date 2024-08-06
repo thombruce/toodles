@@ -23,7 +23,7 @@ div
       Icon(v-else name="fa:square")
     TntButton.btn-none(@click="toggleTodoFocus(todo.id, parent)")
       Icon(name="fa:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")
-    span.toodles-description
+    span.toodles-description.grow
       span(class="font-black text-violet-800 dark:text-violet-300") {{ todo.priority }}
       span(class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
       span(class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}

@@ -14,6 +14,12 @@ fetchTodos()
 
 const text = ref("")
 
+const progress = computed(() => {
+  const count = todos.value.length
+  const done = todos.value.filter(t => ["done", "obsolete"].includes(t.status)).length
+  return done / count * 100
+})
+
 function addTodoAndClear() {
   if (text.value.length === 0) {
     return
@@ -42,7 +48,7 @@ div
     //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
     button(type="submit") Add
 
-  ProgressBar.mb-3(value="50")
+  ProgressBar.mb-3(:value="progress")
 
   ul
     li(v-for="item in todos")
