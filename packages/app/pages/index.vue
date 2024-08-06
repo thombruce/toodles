@@ -11,15 +11,36 @@ const { fetchTodos, addTodo } = store
 
 // Init
 fetchTodos()
+
+const text = ref("")
+
+function addTodoAndClear() {
+  if (text.value.length === 0) {
+    return
+  }
+
+  addTodo(text.value)
+  clear()
+}
+
+function clear() {
+  text.value = ""
+  // search()
+}
 </script>
 
 <template lang="pug">
 div
-  form.flex.w-full.space-x-4.mb-3
-    TntInput.grow(
+  //- TntForm not working here - investigate
+  form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
+    //- TntInput does not clear when text model is cleared ???
+    input.grow(
+      v-model="text"
       type="text"
+      @keydown.esc="clear();$event.target.blur()"
     )
-    TntButton(@click="addTodo('! (B) 2024-01-01 2024-12-31 £1.00-£5.00 This #programmaticallyAdded and #focused +Todo has @Everything including:tags x2')") Add
+    //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
+    button(type="submit") Add
 
   ProgressBar.mb-3(value="50")
 
