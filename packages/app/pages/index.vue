@@ -16,7 +16,7 @@ fetchTodos()
 <template lang="pug">
 div
   ul
-    li
-      TodoItem(v-for="item in todos" :todo="item")
+    li(v-for="item in todos")
+      TodoItem(:todo="item")
   TntButton(@click="addTodo('! (B) 2024-01-01 2024-12-31 £1.00-£5.00 This #programmaticallyAdded and #focused +Todo has @Everything including:tags x2')") Add todo
 </template>

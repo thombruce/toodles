@@ -6,6 +6,7 @@ const props = defineProps({
     type: Object,
     required: true
   },
+  parent: String,
 })
 
 // Store
@@ -15,20 +16,24 @@ const { toggleTodo, toggleTodoFocus } = store
 </script>
 
 <template lang="pug">
-.flex.space-x-2(:class="todo.status === 'focus' ? 'font-bold' : todo.status === 'done' ? 'toodles-done' : todo.status === 'obsolete' ? 'toodles-obsolete' : ''")
-  TntButton.btn-none(@click="toggleTodo(todo.id)")
-    Icon(v-if="todo.status === 'done'" name="fa:check-square")
-    Icon(v-else name="fa:square")
-  TntButton.btn-none(@click="toggleTodoFocus(todo.id)")
-    Icon(name="fa:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")
-  span.toodles-description
-    span(class="font-black text-violet-800 dark:text-violet-300") {{ todo.priority }}
-    span(class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
-    span(class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
-    span(class="text-yellow-800 dark:text-yellow-300") {{ todo.due }}
-    span(class="text-green-800 dark:text-green-300") {{ todo.price }}
-    span(class="") {{ todo.description }}
-    span(class="text-pink-800 dark:text-pink-300") {{ todo.multiplier }}
+div
+  .flex.space-x-2(:class="todo.status === 'focus' ? 'font-bold' : todo.status === 'done' ? 'toodles-done' : todo.status === 'obsolete' ? 'toodles-obsolete' : ''")
+    TntButton.btn-none(@click="toggleTodo(todo.id, parent)")
+      Icon(v-if="todo.status === 'done'" name="fa:check-square")
+      Icon(v-else name="fa:square")
+    TntButton.btn-none(@click="toggleTodoFocus(todo.id, parent)")
+      Icon(name="fa:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")
+    span.toodles-description
+      span(class="font-black text-violet-800 dark:text-violet-300") {{ todo.priority }}
+      span(class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
+      span(class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
+      span(class="text-yellow-800 dark:text-yellow-300") {{ todo.due }}
+      span(class="text-green-800 dark:text-green-300") {{ todo.price }}
+      span(class="") {{ todo.description }}
+      span(class="text-pink-800 dark:text-pink-300") {{ todo.multiplier }}
+  ul.pl-12(v-if="todo.children")
+    li(v-for="child in todo.children")
+      TodoItem(:todo="child" :parent="todo.id")
 </template>
 
 <style lang="postcss">

@@ -15,14 +15,17 @@ export const useTodosStore = defineStore('todos', () => {
   // Getters
   const all = computed(() => _orderBy(list.value, ['state', 'priority', 'completed', 'created', 'due']))
 
-  const find = computed(() => (id: string) => {
-    return list.value.find(t => t.id === id)
+  const find = computed(() => (id: string, parent?: string) => {
+    let parentTodo
+    if (parent) parentTodo = list.value.find(t => t.id === parent)
+
+    return parentTodo ? parentTodo.children.find(t => t.id === id) : list.value.find(t => t.id === id)
   })
 
   // Actions
   async function fetchTodos() {
     const file = await useTntApi().loadFile('todo.txt')
-    if (file) list.value = file.trim().split('\n').map(string => new Todo(string))
+    if (file) list.value = file.trim().split(/\n(?=\S)/).map(string => new Todo(string))
   }
 
   function addTodo(todo: String) {
@@ -30,14 +33,14 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }
 
-  function toggleTodo(id: string) {
-    const todo = find.value(id)
+  function toggleTodo(id: string, parent?: string) {
+    const todo = find.value(id, parent)
     if (todo) todo.toggle()
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }
 
-  function toggleTodoFocus(id: string) {
-    const todo = find.value(id)
+  function toggleTodoFocus(id: string, parent?: string) {
+    const todo = find.value(id, parent)
     if (todo) todo.toggleFocus()
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }

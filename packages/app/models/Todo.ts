@@ -15,6 +15,7 @@ export class Todo {
   hashtags?: string[]
   tags?: object[]
   // tokens?: string[] // We are not yet implementing search
+  children?: Todo[]
 
   // Constructor
   constructor(todo: string | any) {
@@ -31,6 +32,7 @@ export class Todo {
       this.due = todo.due
       this.price = todo.price
       this.multiplier = todo.multiplier
+      this.children = this.children
     }
     this.setTags()
   }
@@ -49,26 +51,33 @@ export class Todo {
     if (this.price) str += `${this.price} `
     str += this.description
     if (this.multiplier) str += ` x${this.multiplier}`
+    if (this.children?.length) str += `\n    ${this.children.map((c) => c.string).join('\n    ')}`
     return str
   }
 
   set string(string) {
-    this.state = string.match(/^([!Xx~-])\s/)?.[1] || '*'
-    this.priority = string.match(/^(?:[!Xx~-]\s)?\(([A-Z])\)\s/)?.[1]
+    const multiline = string.split('\n')
+    const parent = multiline[0].trim()
+    const children = multiline.slice(1)
 
-    const dates = string.match(/(?<=^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,2})\d{4}-\d{2}-\d{2}\b/)
+    this.state = parent.match(/^([!Xx~-])\s/)?.[1] || '*'
+    this.priority = parent.match(/^(?:[!Xx~-]\s)?\(([A-Z])\)\s/)?.[1]
+
+    // const dates = parent.match(/(?<=^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,2})\d{4}-\d{2}-\d{2}\b/)
     if (this.state && ['X', 'x'].includes(this.state)) {
-      this.completed = string.match(/^(?:[Xx]\s)(?:\([A-Z]\)\s)?(\d{4}-\d{2}-\d{2})\s/)?.[1]
-      this.created = string.match(/^(?:[Xx]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s)(\d{4}-\d{2}-\d{2})\s/)?.[1]
-      this.due = string.match(/^(?:[Xx]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s){2}(\d{4}-\d{2}-\d{2})\s/)?.[1]
+      this.completed = parent.match(/^(?:[Xx]\s)(?:\([A-Z]\)\s)?(\d{4}-\d{2}-\d{2})\s/)?.[1]
+      this.created = parent.match(/^(?:[Xx]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s)(\d{4}-\d{2}-\d{2})\s/)?.[1]
+      this.due = parent.match(/^(?:[Xx]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s){2}(\d{4}-\d{2}-\d{2})\s/)?.[1]
     } else {
-      this.created = string.match(/^(?:[!~-]\s)?(?:\([A-Z]\)\s)?(\d{4}-\d{2}-\d{2})\s/)?.[1]
-      this.due = string.match(/^(?:[!~-]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s)(\d{4}-\d{2}-\d{2})\s/)?.[1]
+      this.created = parent.match(/^(?:[!~-]\s)?(?:\([A-Z]\)\s)?(\d{4}-\d{2}-\d{2})\s/)?.[1]
+      this.due = parent.match(/^(?:[!~-]\s)?(?:\([A-Z]\)\s)?(?:\d{4}-\d{2}-\d{2}\s)(\d{4}-\d{2}-\d{2})\s/)?.[1]
     }
 
-    this.price = string.match(/^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3}((?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2})(?= )/)?.[1]
-    this.description = string.match(/^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3}(?:(?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2} )?(.*?)(?:\sx\d+)?$/)?.[1] || ''
-    this.multiplier = string.match(/(?<=\bx)(\d+)(?=$)/)?.[1]
+    this.price = parent.match(/^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3}((?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2})(?= )/)?.[1]
+    this.description = parent.match(/^ *(?:[!Xx~-] )?(?:\([A-Z]\) )?(?:\d{4}-\d{2}-\d{2} ){0,3}(?:(?:[$£€]\d*[.,]?\d{1,2}-)?[$£€]\d*[.,]?\d{1,2} )?(.*?)(?:\sx\d+)?$/)?.[1] || ''
+    this.multiplier = parent.match(/(?<=\bx)(\d+)(?=$)/)?.[1]
+
+    this.children = children.map((c) => new Todo(c))
   }
 
   get status() {
