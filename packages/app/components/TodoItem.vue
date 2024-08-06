@@ -12,7 +12,7 @@ const props = defineProps({
 // Store
 const store = useTodosStore()
 // Store: Actions
-const { toggleTodo, toggleTodoFocus } = store
+const { toggleTodo, toggleTodoFocus, deleteTodo } = store
 </script>
 
 <template lang="pug">
@@ -31,6 +31,8 @@ div
       span(class="text-green-800 dark:text-green-300") {{ todo.price }}
       span(class="") {{ todo.description }}
       span(class="text-pink-800 dark:text-pink-300") {{ todo.multiplier }}
+    TntButton.btn-none(@click="deleteTodo(todo.id, parent)" class="text-danger-light hover:text-danger-light-hover dark:text-danger-dark dark:hover:text-danger-dark-hover")
+      Icon(name="fa:trash")
   ul.pl-12(v-if="todo.children")
     li(v-for="child in todo.children")
       TodoItem(:todo="child" :parent="todo.id")

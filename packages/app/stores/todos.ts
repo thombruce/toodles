@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-import { orderBy as _orderBy } from 'lodash'
+import { reject as _reject, orderBy as _orderBy } from 'lodash'
 
 import { Todo } from '../models/Todo'
 
@@ -45,5 +45,11 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
   }
 
-  return { list, all, fetchTodos, addTodo, toggleTodo, toggleTodoFocus }
+  function deleteTodo(id: string, parent?: string) {
+    // TODO: Handle parent-child case
+    list.value = _reject(list.value, { id })
+    useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
+  }
+
+  return { list, all, fetchTodos, addTodo, toggleTodo, toggleTodoFocus, deleteTodo }
 })
