@@ -9,6 +9,9 @@
     "electron:build": "ELECTRON=true nuxt build",
     "electron:dev": "ELECTRON=true nuxt dev"
   },
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  },
   "devDependencies": {
     "@thombruce/tnt-electron": "^0.29.5",
     "nuxt": "^3.12.4"

@@ -30,7 +30,7 @@ div.text-lg
       span.mr-1(v-if="todo.created" class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
       span.mr-1(v-if="todo.due" class="text-yellow-800 dark:text-yellow-300") {{ todo.due }}
       span.mr-1(v-if="todo.price" class="text-green-800 dark:text-green-300") {{ todo.price }}
-      span(v-html="todo.decorated")
+      span.prose.prose-lg(v-html="todo.decorated")
       span.ml-1(v-if="todo.multiplier" class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
     TntButton.btn-none(@click="deleteTodo(todo.id, parent)" class="text-danger-light hover:text-danger-light-hover dark:text-danger-dark dark:hover:text-danger-dark-hover")
       Icon(name="fa:trash")

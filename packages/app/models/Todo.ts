@@ -1,4 +1,10 @@
 import { uniqueId as _uniqueId } from 'lodash'
+import markdownit from 'markdown-it'
+
+const md = markdownit({
+  html: true,
+  linkify: true,
+})
 
 interface TodoInterface {
   id?: string
@@ -105,11 +111,13 @@ export class Todo implements TodoInterface {
   }
 
   get decorated() {
-    return this.description
-      .replace(/(\@\S+)/, '<span class="context-span">$1</span>')
-      .replace(/(\+\S+)/, '<span class="project-span">$1</span>')
-      .replace(/(\#\S+)/, '<span class="hashtag-span">$1</span>')
-      .replace(/([^\s:]+?:[^\s:]+)/, '<span class="tag-span">$1</span>')
+    return md.renderInline(
+      this.description
+        .replace(/(?:^|\s)(\@\S+)/, '<span class="context-span">$1</span>')
+        .replace(/(?:^|\s)(\+\S+)/, '<span class="project-span">$1</span>')
+        .replace(/(?:^|\s)(\#\S+)/, '<span class="hashtag-span">$1</span>')
+        .replace(/(?:^|\s)(\w+(?<!https?|mailto):[^\s:]+)/, '<span class="tag-span">$1</span>')
+    )
   }
 
   get status() {
@@ -154,7 +162,7 @@ export class Todo implements TodoInterface {
     this.projects = [...this.description.matchAll(/(?:^|\s)\+(\S+)/g)].map(i => i[1])
     this.contexts = [...this.description.matchAll(/(?:^|\s)@(\S+)/g)].map(i => i[1])
     this.hashtags = [...this.description.matchAll(/(?:^|\s)#(\S+)/g)].map(i => i[1])
-    this.tags = [...this.description.matchAll(/(?:^|\s)([^\s:]+?:[^\s:]+)/g)].map(t => {
+    this.tags = [...this.description.matchAll(/(?:^|\s)(\w+(?<!https?|mailto):[^\s:]+)/g)].map(t => {
       let [key, value] = t[1].split(':')
       return { key, value }
     })
