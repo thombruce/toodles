@@ -33,10 +33,11 @@ function clear() {
 div
   //- TntForm not working here - investigate
   form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
-    input.flex-1.min-w-9(
+    //- TntSelect doesn't reset when model does...
+    //- Will try to figure this out when we move this into own component.
+    TntSelect.flex-1.min-w-16(
       v-model="newTodo.priority"
-      type="text"
-      placeholder="A"
+      :options="['', 'A', 'B', 'C']"
     )
     //- TntInput does not clear when text model is cleared ???
     input.flex-0(
