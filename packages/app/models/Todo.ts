@@ -1,6 +1,24 @@
 import { uniqueId as _uniqueId } from 'lodash'
 
-export class Todo {
+interface TodoInterface {
+  id?: string
+  description: string
+  state?: string
+  priority?: string
+  completed?: string
+  created?: string
+  due?: string
+  price?: string
+  multiplier?: string
+  projects?: string[]
+  contexts?: string[]
+  hashtags?: string[]
+  tags?: object[]
+  // tokens?: string[]
+  children?: Todo[]
+}
+
+export class Todo implements TodoInterface {
   id?: string
   description!: string
   state?: string
@@ -18,7 +36,7 @@ export class Todo {
   children?: Todo[]
 
   // Constructor
-  constructor(todo: string | any) {
+  constructor(todo: string | TodoInterface) {
     if (typeof todo === 'string') {
       this.id = _uniqueId() // nanoid()
       this.string = todo
@@ -38,7 +56,13 @@ export class Todo {
   }
 
   // Class methods
-  // None
+  static toFile(todos: Todo[]):String {
+    return todos.map(todo => todo.string).join('\n')
+  }
+
+  static fromFile(file: String):Todo[] {
+    return file.trim().split(/\n(?=\S)/).map(string => new Todo(string))
+  }
 
   // Instance methods: Getters
   get string() {

@@ -31,24 +31,24 @@ export const useTodosStore = defineStore('todos', () => {
   // Actions
   async function fetchTodos() {
     const file = await useTntApi().loadFile('todo.txt')
-    if (file) list.value = file.trim().split(/\n(?=\S)/).map(string => new Todo(string))
+    if (file) list.value = Todo.fromFile(file)
   }
 
-  function addTodo(todo: String) {
-    list.value.push(new Todo(todo))
-    useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
+  function addTodo(todo: string) {
+    list.value.push(new Todo({ description: todo }))
+    useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
   function toggleTodo(id: string, parent?: string) {
     const todo = find.value(id, parent)
     if (todo) todo.toggle()
-    useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
+    useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
   function toggleTodoFocus(id: string, parent?: string) {
     const todo = find.value(id, parent)
     if (todo) todo.toggleFocus()
-    useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
+    useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
   function deleteTodo(id: string, parent?: string) {
@@ -61,7 +61,7 @@ export const useTodosStore = defineStore('todos', () => {
       list.value = _reject(list.value, { id })
     }
 
-    useTntApi().updateFile('todo.txt', list.value.map(t => t.string).join('\n'))
+    useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
   return { list, all, progress, fetchTodos, addTodo, toggleTodo, toggleTodoFocus, deleteTodo }
