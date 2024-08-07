@@ -6,6 +6,18 @@ const md = markdownit({
   linkify: true,
 })
 
+var defaultRender = md.renderer.rules.link_open || function (tokens, idx, options, env, self) {
+  return self.renderToken(tokens, idx, options)
+}
+
+md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+  // Set target="_blank" on links unless they start with mailto
+  if (!/^mailto:/.test(tokens[idx].attrGet('href'))) tokens[idx].attrSet('target', '_blank')
+
+  // Pass the token to the default renderer.
+  return defaultRender(tokens, idx, options, env, self)
+}
+
 interface TodoInterface {
   id?: string
   description: string
