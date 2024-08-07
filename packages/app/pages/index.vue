@@ -12,19 +12,19 @@ const { fetchTodos, addTodo } = store
 // Init
 fetchTodos()
 
-const text = ref("")
+const newTodo = ref({ priority: undefined, description: "" })
 
 function addTodoAndClear() {
-  if (text.value.length === 0) {
+  if (newTodo.value.description.length === 0) {
     return
   }
 
-  addTodo(text.value)
+  addTodo(newTodo.value)
   clear()
 }
 
 function clear() {
-  text.value = ""
+  newTodo.value = { priority: undefined, description: "" }
   // search()
 }
 </script>
@@ -33,9 +33,14 @@ function clear() {
 div
   //- TntForm not working here - investigate
   form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
+    input.flex-1.min-w-9(
+      v-model="newTodo.priority"
+      type="text"
+      placeholder="A"
+    )
     //- TntInput does not clear when text model is cleared ???
-    input.grow(
-      v-model="text"
+    input.flex-0(
+      v-model="newTodo.description"
       type="text"
       @keydown.esc="clear();$event.target.blur()"
     )

@@ -36,21 +36,21 @@ export class Todo implements TodoInterface {
   children?: Todo[]
 
   // Constructor
-  constructor(todo: string | TodoInterface) {
+  constructor(todo: string | Todo) {
     if (typeof todo === 'string') {
       this.id = _uniqueId() // nanoid()
       this.string = todo
     } else {
-      this.id = (todo.id || _uniqueId()) // (todo.id || nanoid())
+      this.id = todo.id || _uniqueId() // (todo.id || nanoid())
       this.description = todo.description
       this.state = todo.state || '*'
-      this.priority = todo.priority
-      this.completed = todo.completed
+      this.priority = todo.priority || undefined
+      this.completed = todo.completed || undefined
       this.created = todo.created || new Date().toISOString().substring(0, 10)
-      this.due = todo.due
-      this.price = todo.price
-      this.multiplier = todo.multiplier
-      this.children = this.children
+      this.due = todo.due || undefined
+      this.price = todo.price || undefined
+      this.multiplier = todo.multiplier || undefined
+      this.children = this.children || undefined
     }
     this.setTags()
   }

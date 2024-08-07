@@ -34,8 +34,8 @@ export const useTodosStore = defineStore('todos', () => {
     if (file) list.value = Todo.fromFile(file)
   }
 
-  function addTodo(todo: string) {
-    list.value.push(new Todo({ description: todo }))
+  function addTodo(todo: Todo) {
+    list.value.push(new Todo(todo))
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
