@@ -19,7 +19,9 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 }
 
 const props = defineProps([
-  'description'
+  'description',
+  'todo',
+  'parent'
 ])
 
 const decorated = computed(() => {
@@ -45,7 +47,7 @@ const decorated = computed(() => {
 <template lang="pug">
 span
   template(v-for="item in decorated")
-    TodoCount.count-span(v-if="/^count:[^\s:]+$/.test(item)" v-model="item.match(/count:([^\s:]+)/)[1]")
-    TodoTime.time-span(v-else-if="/^time:[^\s:]+$/.test(item)" v-model="item.match(/time:([^\s:]+)/)[1]")
+    TodoCount.count-span(v-if="/^count:[^\s:]+$/.test(item)" :value="item.match(/count:([^\s:]+)/)[1]" :todo="todo" :parent="parent")
+    TodoTime.time-span(v-else-if="/^time:[^\s:]+$/.test(item)" :value="item.match(/time:([^\s:]+)/)[1]" :todo="todo" :parent="parent")
     span(v-else v-html="item")
 </template>

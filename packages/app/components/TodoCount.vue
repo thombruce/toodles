@@ -1,11 +1,27 @@
 <script setup>
+import { useTodosStore } from '@/stores/todos'
+
 const props = defineProps([
-  'modelValue'
+  'value',
+  'todo',
+  'parent',
 ])
 
-const count = ref(props.modelValue)
+const count = ref(props.value)
 
-const increment = () => count.value++
+const increment = () => {
+  count.value++
+  updateTodoDescription(
+    props.todo.id,
+    `${props.todo.description}`.replace(/count:[^\s:]+/, `count:${count.value}`),
+    props.parent
+  )
+}
+
+// Store
+const store = useTodosStore()
+// Store: Actions
+const { updateTodoDescription } = store
 </script>
 
 <template lang="pug">
