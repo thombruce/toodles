@@ -60,6 +60,10 @@ const stopTimer = () => {
   )
 }
 
+onUnmounted(() => {
+  clearInterval(tick)
+})
+
 // Store
 const store = useTodosStore()
 // Store: Actions
