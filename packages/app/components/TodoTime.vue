@@ -2,9 +2,8 @@
 import { useTodosStore } from '@/stores/todos'
 
 import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
-
-dayjs.extend(duration)
+import { default as dayjsDuration } from 'dayjs/plugin/duration'
+dayjs.extend(dayjsDuration)
 
 const props = defineProps([
   'value',
@@ -16,7 +15,7 @@ const time = ref(props.value)
 
 const startedAt = ref(null)
 
-const dur = computed(() => {
+const duration = computed(() => {
   let milliseconds = 0
   const hours = time.value.match(/(\d+)h/)
   const minutes = time.value.match(/(\d+)m/)
@@ -28,7 +27,7 @@ const dur = computed(() => {
 })
 
 const toString = computed(() => {
-  return dur.value.format('H[h]m[m]s[s]')
+  return duration.value.format('H[h]m[m]s[s]')
 })
 
 let tick
@@ -41,7 +40,7 @@ const startTimer = () => {
   tick = setInterval(() => {
     const current = dayjs(new Date())
     const durSinceLastTick = dayjs.duration(current.diff(lastTick.value))
-    time.value = dur.value.add(durSinceLastTick).format('H[h]m[m]s[s]')
+    time.value = duration.value.add(durSinceLastTick).format('H[h]m[m]s[s]')
     lastTick.value = current
   }, 1000)
 }
