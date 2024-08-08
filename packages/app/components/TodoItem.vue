@@ -87,4 +87,31 @@ div.text-lg
     dark:text-amber-500
     dark:bg-amber-950;
 }
+
+.count-span {
+  @apply
+    rounded
+    text-yellow-700
+    bg-yellow-50
+    dark:text-yellow-500
+    dark:bg-yellow-950;
+}
+
+.time-span {
+  @apply
+    rounded
+    text-lime-700
+    bg-lime-50
+    dark:text-lime-500
+    dark:bg-lime-950;
+}
+
+.every-span {
+  @apply
+    rounded
+    text-purple-700
+    bg-purple-50
+    dark:text-purple-500
+    dark:bg-purple-950;
+}
 </style>
