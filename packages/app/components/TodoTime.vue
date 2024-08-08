@@ -31,14 +31,23 @@ const toString = computed(() => {
   return dur.value.format('H[h]m[m]s[s]')
 })
 
+let tick
+
+const lastTick = ref(null)
+
 const startTimer = () => {
   startedAt.value = dayjs(new Date())
+  lastTick.value = startedAt.value
+  tick = setInterval(() => {
+    const current = dayjs(new Date())
+    const durSinceLastTick = dayjs.duration(current.diff(lastTick.value))
+    time.value = dur.value.add(durSinceLastTick).format('H[h]m[m]s[s]')
+    lastTick.value = current
+  }, 1000)
 }
 
 const stopTimer = () => {
-  const endedAt = dayjs(new Date)
-  const durSinceStart = dayjs.duration(endedAt.diff(startedAt.value))
-  time.value = dur.value.add(durSinceStart).format('H[h]m[m]s[s]')
+  clearInterval(tick)
   startedAt.value = null
   updateTodoDescription(
     props.todo.id,
@@ -59,16 +68,13 @@ span(:class="startedAt ? 'is-active' : ''")
   |
   TntButton.btn-none.align-text-top(v-if="!startedAt" @click="startTimer()")
     Icon(name="fa:play")
-  TntButton.btn-none.align-text-top.animate-pulse(v-if="startedAt" @click="stopTimer()")
+  TntButton.btn-none.align-text-top(v-if="startedAt" @click="stopTimer()")
     Icon(name="fa:pause")
 </template>
 
 <style lang="postcss">
 span.is-active {
   @apply
-    text-orange-700
-    bg-orange-50
-    dark:text-orange-500
-    dark:bg-orange-950;
+    animate-pulse;
 }
 </style>
