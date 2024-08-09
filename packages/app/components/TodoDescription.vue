@@ -47,7 +47,7 @@ const decorated = computed(() => {
 <template lang="pug">
 span
   template(v-for="item in decorated")
-    TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :value="item.match(/count:([^ :]+)/)[1]" :todo="todo" :parent="parent")
+    TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
     TodoTime.time-span.text-nowrap(v-else-if="/^time:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
     span(v-else v-html="item")
 </template>

@@ -57,6 +57,14 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
+  function incrementTodoCount(id: string, parent?: string) {
+    const todo = find.value(id, parent)
+    if (todo) {
+      todo.incrementCount()
+      useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
+    }
+  }
+
   function toggleTodoTimer(id: string, parent?: string) {
     const todo = find.value(id, parent)
     if (todo) {
@@ -90,6 +98,7 @@ export const useTodosStore = defineStore('todos', () => {
     updateTodoDescription,
     toggleTodoDone,
     toggleTodoFocus,
+    incrementTodoCount,
     toggleTodoTimer,
     deleteTodo
   }

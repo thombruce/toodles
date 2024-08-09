@@ -39,6 +39,9 @@ export class Todo implements TodoInterface {
   // tokens?: string[] // We are not yet implementing search
   children?: Todo[]
 
+  // Count
+  count?: number
+
   // Timer
   timer?: string
   // Timer utilities
@@ -64,6 +67,7 @@ export class Todo implements TodoInterface {
       this.multiplier = todo.multiplier || undefined
       this.children = this.children || undefined
     }
+    this.count = Number(this.description.match(/count:(\d+)/)?.[1])
     this.timer = this.description.match(/time:([^ :]+)/)?.[1]
     this.setTags()
   }
@@ -174,6 +178,11 @@ export class Todo implements TodoInterface {
       this.state = '!'
       this.completed = undefined
     }
+  }
+
+  incrementCount() {
+    if (this.count) this.count++
+    this.description = `${this.description}`.replace(/count:[^: ]+/, `count:${this.count}`)
   }
 
   toggleTimer() {
