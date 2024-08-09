@@ -12,13 +12,13 @@ const props = defineProps({
 // Store
 const store = useTodosStore()
 // Store: Actions
-const { toggleTodo, toggleTodoFocus, deleteTodo } = store
+const { toggleTodoDone, toggleTodoFocus, deleteTodo } = store
 </script>
 
 <template lang="pug">
 div.text-lg
   .flex.space-x-2(:class="todo.status === 'focus' ? 'font-bold' : todo.status === 'done' ? 'toodles-done' : todo.status === 'obsolete' ? 'toodles-obsolete' : ''")
-    TntButton.btn-none(@click="toggleTodo(todo.id, parent)")
+    TntButton.btn-none(@click="toggleTodoDone(todo.id, parent)")
       Icon(v-if="todo.status === 'done'" name="fa:check-square")
       Icon(v-else-if="todo.status === 'obsolete'" name="fa:minus-square")
       Icon(v-else name="fa:square")
@@ -30,7 +30,7 @@ div.text-lg
       span.mr-1(v-if="todo.created" class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
       span.mr-1(v-if="todo.due" class="text-yellow-800 dark:text-yellow-300") {{ todo.due }}
       span.mr-1(v-if="todo.price" class="text-green-800 dark:text-green-300") {{ todo.price }}
-      span.prose.prose-lg(v-html="todo.decorated")
+      TodoDescription(:description="todo.description" :todo="todo" :parent="parent")
       span.ml-1(v-if="todo.multiplier" class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
     TntButton.btn-none(@click="deleteTodo(todo.id, parent)" class="text-danger-light hover:text-danger-light-hover dark:text-danger-dark dark:hover:text-danger-dark-hover")
       Icon(name="fa:trash")
@@ -86,5 +86,32 @@ div.text-lg
     bg-amber-50
     dark:text-amber-500
     dark:bg-amber-950;
+}
+
+.count-span {
+  @apply
+    rounded
+    text-yellow-700
+    bg-yellow-50
+    dark:text-yellow-500
+    dark:bg-yellow-950;
+}
+
+.time-span {
+  @apply
+    rounded
+    text-lime-700
+    bg-lime-50
+    dark:text-lime-500
+    dark:bg-lime-950;
+}
+
+.every-span {
+  @apply
+    rounded
+    text-purple-700
+    bg-purple-50
+    dark:text-purple-500
+    dark:bg-purple-950;
 }
 </style>
