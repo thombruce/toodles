@@ -210,7 +210,7 @@ export class Todo implements TodoInterface {
     clearInterval(this.timerInterval)
     this.timerStartedAt = null
 
-    this.description = `${this.description}`.replace(/time:[^\s:]+/, `time:${this.timer}`)
+    this.description = `${this.description}`.replace(/time:[^ :]+/, `time:${this.timer}`)
   }
 
   setTags() {
@@ -218,7 +218,7 @@ export class Todo implements TodoInterface {
     this.projects = [...this.description.matchAll(/(?:^|\s)\+(\S+)/g)].map(i => i[1])
     this.contexts = [...this.description.matchAll(/(?:^|\s)@(\S+)/g)].map(i => i[1])
     this.hashtags = [...this.description.matchAll(/(?:^|\s)#(\S+)/g)].map(i => i[1])
-    this.tags = [...this.description.matchAll(/(?:^|\s)(\w+(?<!https?|mailto):[^\s:]+)/g)].map(t => {
+    this.tags = [...this.description.matchAll(/(?:^|\s)(\w+(?<!https?|mailto):[^ :]+)/g)].map(t => {
       let [key, value] = t[1].split(':')
       return { key, value }
     })

@@ -32,14 +32,14 @@ const items = computed(() => {
     description = split[0]
   }
 
-  return [priority, ...description.split(/(^|\s)((?:\+|@|#|[^\s:]+?:)\S+)/g).filter(n => n)]
+  return [priority, ...description.split(/(^|\s)((?:\+|@|#|[^ :]+?:)\S+)/g).filter(n => n)]
 })
 
 const priorityMatcher = (item: string) => /^\([A-Z]\)$/.test(item)
 const projectMatcher = (item: string) => /^\+\S+$/.test(item)
 const contextMatcher = (item: string) => /^@\S+$/.test(item)
 const hashMatcher = (item: string) => /^#\S+$/.test(item)
-const tagMatcher = (item: string) => /^[^\s:]+?:[^\s:]+$/.test(item)
+const tagMatcher = (item: string) => /^[^ :]+?:[^ :]+$/.test(item)
 </script>
 
 <template lang="pug">

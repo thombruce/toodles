@@ -77,7 +77,7 @@ class Todo implements TodoInterface {
     this.projects = [...this.description.matchAll(/(?:^|\s)\+(\S+)/g)].map(i => i[1])
     this.contexts = [...this.description.matchAll(/(?:^|\s)@(\S+)/g)].map(i => i[1])
     this.hashtags = [...this.description.matchAll(/(?:^|\s)#(\S+)/g)].map(i => i[1])
-    this.tags = [...this.description.matchAll(/(?:^|\s)([^\s:]+?:[^\s:]+)/g)].map(t => {
+    this.tags = [...this.description.matchAll(/(?:^|\s)([^ :]+?:[^ :]+)/g)].map(t => {
       let [key, value] = t[1].split(':')
       return { key, value }
     })
