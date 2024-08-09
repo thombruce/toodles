@@ -4,28 +4,10 @@ import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
 dayjs.extend(dayjsDuration)
 
-interface TodoInterface {
-  id?: string
-  description: string
-  state?: string
-  priority?: string
-  completed?: string
-  created?: string
-  due?: string
-  price?: string
-  multiplier?: string
-  projects?: string[]
-  contexts?: string[]
-  hashtags?: string[]
-  tags?: object[]
-  // tokens?: string[]
-  children?: Todo[]
-}
-
-export class Todo implements TodoInterface {
-  id?: string
+export class Todo {
+  id: string
   description!: string
-  state?: string
+  state: string
   priority?: string
   completed?: string
   created?: string
