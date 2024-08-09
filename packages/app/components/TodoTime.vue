@@ -30,17 +30,16 @@ const toString = computed(() => {
   return duration.value.format('H[h]m[m]')
 })
 
-let tick
-
+const tick = ref(null)
 const lastTick = ref(null)
 const activeDuration = ref(dayjs.duration(0))
 
 const startTimer = () => {
   startedAt.value = dayjs(new Date())
   activeDuration.value = duration.value
-  lastTick.value = startedAt.value
+  lastTick.value ||= startedAt.value
 
-  tick = setInterval(() => {
+  tick.value = setInterval(() => {
     const current = dayjs(new Date())
     const durSinceLastTick = dayjs.duration(current.diff(lastTick.value))
     activeDuration.value = activeDuration.value.add(durSinceLastTick)
@@ -50,7 +49,7 @@ const startTimer = () => {
 }
 
 const stopTimer = () => {
-  clearInterval(tick)
+  clearInterval(tick.value)
   startedAt.value = null
   activeDuration.value = dayjs.duration(0)
   updateTodoDescription(
