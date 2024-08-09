@@ -121,7 +121,7 @@ export class Todo implements TodoInterface {
   }
 
   // Instance methods: Actions
-  toggle() {
+  toggleDone() {
     var currentDate = new Date().toISOString().substring(0, 10)
     if (this.status === 'done') {
       this.state = '*'

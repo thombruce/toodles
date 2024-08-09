@@ -12,13 +12,13 @@ const props = defineProps({
 // Store
 const store = useTodosStore()
 // Store: Actions
-const { toggleTodo, toggleTodoFocus, deleteTodo } = store
+const { toggleTodoDone, toggleTodoFocus, deleteTodo } = store
 </script>
 
 <template lang="pug">
 div.text-lg
   .flex.space-x-2(:class="todo.status === 'focus' ? 'font-bold' : todo.status === 'done' ? 'toodles-done' : todo.status === 'obsolete' ? 'toodles-obsolete' : ''")
-    TntButton.btn-none(@click="toggleTodo(todo.id, parent)")
+    TntButton.btn-none(@click="toggleTodoDone(todo.id, parent)")
       Icon(v-if="todo.status === 'done'" name="fa:check-square")
       Icon(v-else-if="todo.status === 'obsolete'" name="fa:minus-square")
       Icon(v-else name="fa:square")
