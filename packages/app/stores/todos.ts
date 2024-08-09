@@ -70,5 +70,18 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
-  return { list, all, progress, fetchTodos, addTodo, updateTodoDescription, toggleTodo, toggleTodoFocus, deleteTodo }
+  return {
+    // State
+    list,
+    // Getters
+    all,
+    progress,
+    // Actions
+    fetchTodos,
+    addTodo,
+    updateTodoDescription,
+    toggleTodo,
+    toggleTodoFocus,
+    deleteTodo
+  }
 })
