@@ -57,6 +57,14 @@ export const useTodosStore = defineStore('todos', () => {
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
+  function toggleTodoTimer(id: string, parent?: string) {
+    const todo = find.value(id, parent)
+    if (todo) {
+      todo.toggleTimer()
+      if(!todo.isActive) useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
+    }
+  }
+
   function deleteTodo(id: string, parent?: string) {
     let parentTodo
     if (parent) parentTodo = list.value.find(t => t.id === parent)
@@ -82,6 +90,7 @@ export const useTodosStore = defineStore('todos', () => {
     updateTodoDescription,
     toggleTodoDone,
     toggleTodoFocus,
+    toggleTodoTimer,
     deleteTodo
   }
 })

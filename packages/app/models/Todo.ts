@@ -1,5 +1,9 @@
 import { uniqueId as _uniqueId } from 'lodash'
 
+import dayjs, { Dayjs } from 'dayjs'
+import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
+dayjs.extend(dayjsDuration)
+
 interface TodoInterface {
   id?: string
   description: string
@@ -35,6 +39,14 @@ export class Todo implements TodoInterface {
   // tokens?: string[] // We are not yet implementing search
   children?: Todo[]
 
+  // Timer
+  timer?: string
+  // Timer utilities
+  timerDuration?: Duration
+  timerStartedAt?: Dayjs | null
+  timerLastTick?: Dayjs
+  timerInterval?: any
+
   // Constructor
   constructor(todo: string | Todo) {
     if (typeof todo === 'string') {
@@ -52,6 +64,7 @@ export class Todo implements TodoInterface {
       this.multiplier = todo.multiplier || undefined
       this.children = this.children || undefined
     }
+    this.timer = this.description.match(/time:([^ :]+)/)?.[1]
     this.setTags()
   }
 
@@ -120,6 +133,27 @@ export class Todo implements TodoInterface {
     }
   }
 
+  get duration() {
+    if (this.timerDuration) return this.timerDuration
+    if (this.timer) {
+      let milliseconds = 0
+      const hours = this.timer.match(/(\d+)h/)
+      const minutes = this.timer.match(/(\d+)m/)
+      if (hours) milliseconds += parseInt(hours[1]) * 3_600_000
+      if (minutes) milliseconds += parseInt(minutes[1]) * 60_000
+      return dayjs.duration(milliseconds)
+    }
+    return
+  }
+
+  set duration(duration: Duration | undefined) {
+    this.timerDuration = duration
+  }
+
+  get isActive():boolean {
+    return Boolean(this.timerStartedAt)
+  }
+
   // Instance methods: Actions
   toggleDone() {
     var currentDate = new Date().toISOString().substring(0, 10)
@@ -127,6 +161,7 @@ export class Todo implements TodoInterface {
       this.state = '*'
       this.completed = undefined
     } else {
+      if (this.isActive) this.stopTimer()
       this.state = 'x'
       if (this.created) this.completed = currentDate
     }
@@ -139,6 +174,34 @@ export class Todo implements TodoInterface {
       this.state = '!'
       this.completed = undefined
     }
+  }
+
+  toggleTimer() {
+    if (this.isActive) {
+      this.stopTimer()
+    } else {
+      this.startTimer()
+    }
+  }
+
+  startTimer() {
+    this.timerStartedAt = dayjs(new Date())
+    this.timerLastTick = this.timerStartedAt
+
+    this.timerInterval = setInterval(() => {
+      const current = dayjs(new Date())
+      const durSinceLastTick = dayjs.duration(current.diff(this.timerLastTick))
+      this.duration = this.duration?.add(durSinceLastTick)
+      this.timer = this.duration?.format('H[h]m[m]')
+      this.timerLastTick = current
+    }, 1000)
+  }
+
+  stopTimer() {
+    clearInterval(this.timerInterval)
+    this.timerStartedAt = null
+
+    this.description = `${this.description}`.replace(/time:[^\s:]+/, `time:${this.timer}`)
   }
 
   setTags() {
