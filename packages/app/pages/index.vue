@@ -52,5 +52,5 @@ div
 
   ul.space-y-2
     li(v-for="item in todos")
-      TodoItem(:todo="item")
+      TodoItem(:todo="item" :key="`todo-${item.id}`")
 </template>
