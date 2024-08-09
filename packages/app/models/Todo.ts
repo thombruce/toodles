@@ -9,9 +9,6 @@ export class Todo {
   description!: string
   state: string
   priority?: string
-  completed?: string
-  created?: string
-  due?: string
   price?: string
   multiplier?: string
   projects?: string[]
@@ -19,6 +16,10 @@ export class Todo {
   hashtags?: string[]
   tags?: object[]
   children?: Todo[]
+  // Dates
+  dateCompleted?: Dayjs
+  dateCreated?: Dayjs
+  dateDue?: Dayjs
   // Search
   // tokens?: string[] // We are not yet implementing search
   // Count `count:0`
@@ -43,7 +44,11 @@ export class Todo {
       this.state = todo.state || '*'
       this.priority = todo.priority || undefined
       this.completed = todo.completed || undefined
-      this.created = todo.created || new Date().toISOString().substring(0, 10)
+      if (todo.created) {
+        this.created = todo.created
+      } else {
+        this.dateCreated = dayjs()
+      }
       this.due = todo.due || undefined
       this.price = todo.price || undefined
       this.multiplier = todo.multiplier || undefined
@@ -103,6 +108,15 @@ export class Todo {
     this.children = children.map((c) => new Todo(c))
   }
 
+  get completed() { return this.dateCompleted?.format('YYYY-MM-DD') }
+  set completed(completed) { if (completed) this.dateCompleted = dayjs(completed) }
+
+  get created() { return this.dateCreated?.format('YYYY-MM-DD') }
+  set created(created) { if (created) this.dateCreated = dayjs(created) }
+
+  get due() { return this.dateDue?.format('YYYY-MM-DD') || undefined }
+  set due(due: string | undefined) { this.dateDue = due ? dayjs(due) : undefined }
+
   get status() {
     switch(this.state) {
       case '!':
@@ -142,14 +156,13 @@ export class Todo {
 
   // Instance methods: Actions
   toggleDone() {
-    var currentDate = new Date().toISOString().substring(0, 10)
     if (this.status === 'done') {
       this.state = '*'
-      this.completed = undefined
+      this.dateCompleted = undefined
     } else {
       if (this.isActive) this.stopTimer()
       this.state = 'x'
-      if (this.created) this.completed = currentDate
+      if (this.created) this.dateCompleted = dayjs()
     }
   }
 
