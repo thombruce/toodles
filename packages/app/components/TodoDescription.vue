@@ -37,8 +37,8 @@ const decorated = computed(() => {
       .replace(/(?<=^|\s)(\@\S+)/, '<span class="context-span">$1</span>')
       .replace(/(?<=^|\s)(\+\S+)/, '<span class="project-span">$1</span>')
       .replace(/(?<=^|\s)(\#\S+)/, '<span class="hashtag-span">$1</span>')
-      .replace(/(?<=^|\s)(every:[^ :]+)/, '<span class="every-span">$1</span>')
-      .replace(/(?<=^|\s)(\w+(?<!https?|mailto|count|time):[^ :]+)/, '<span class="tag-span">$1</span>')
+      .replace(/(?<=^|\s)(every:[^ :]+)/, '<span class="every-span text-nowrap">$1</span>')
+      .replace(/(?<=^|\s)(\w+(?<!https?|mailto|count|time):[^ :]+)/, '<span class="tag-span text-nowrap">$1</span>')
   ).split(/(?<=^|\s)((?:count|time):[^ :]+)/g).filter(n => n)
 
 })
@@ -47,7 +47,7 @@ const decorated = computed(() => {
 <template lang="pug">
 span
   template(v-for="item in decorated")
-    TodoCount.count-span(v-if="/^count:[^ :]+$/.test(item)" :value="item.match(/count:([^ :]+)/)[1]" :todo="todo" :parent="parent")
-    TodoTime.time-span(v-else-if="/^time:[^ :]+$/.test(item)" :value="item.match(/time:([^ :]+)/)[1]" :todo="todo" :parent="parent")
+    TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :value="item.match(/count:([^ :]+)/)[1]" :todo="todo" :parent="parent")
+    TodoTime.time-span.text-nowrap(v-else-if="/^time:[^ :]+$/.test(item)" :value="item.match(/time:([^ :]+)/)[1]" :todo="todo" :parent="parent")
     span(v-else v-html="item")
 </template>
