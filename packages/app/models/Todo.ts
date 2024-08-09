@@ -18,19 +18,19 @@ export class Todo {
   contexts?: string[]
   hashtags?: string[]
   tags?: object[]
-  // tokens?: string[] // We are not yet implementing search
   children?: Todo[]
-
-  // Count
+  // Search
+  // tokens?: string[] // We are not yet implementing search
+  // Count `count:0`
   count?: number
-
-  // Timer
+  // Timer `time:0h0m`
   timer?: string
-  // Timer utilities
   timerDuration?: Duration
   timerStartedAt?: Dayjs | null
   timerLastTick?: Dayjs
   timerInterval?: any
+  // Recurrence `every:*`
+  // TODO
 
   // Constructor
   constructor(todo: string | Todo) {
