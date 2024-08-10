@@ -2,6 +2,9 @@ import { uniqueId as _uniqueId } from 'lodash'
 
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
+
+import { datetime, RRule, RRuleSet, rrulestr } from 'rrule'
+
 dayjs.extend(dayjsDuration)
 
 export class Todo {
@@ -31,7 +34,7 @@ export class Todo {
   timerLastTick?: Dayjs
   timerInterval?: any
   // Recurrence `every:*`
-  // TODO
+  repeats?: string
 
   // Constructor
   constructor(todo: string | Todo) {
@@ -56,6 +59,7 @@ export class Todo {
     }
     this.count = Number(this.description.match(/count:(\d+)/)?.[1])
     this.timer = this.description.match(/time:([^ :]+)/)?.[1]
+    this.repeats = this.description.match(/every:([^ :]+)/)?.[1]
     this.setTags()
   }
 
@@ -157,13 +161,21 @@ export class Todo {
   // Instance methods: Actions
   toggleDone() {
     if (this.status === 'done') {
-      this.state = '*'
-      this.dateCompleted = undefined
+      this.open()
     } else {
-      if (this.isActive) this.stopTimer()
-      this.state = 'x'
-      if (this.created) this.dateCompleted = dayjs()
+      this.close()
     }
+  }
+
+  open() {
+    if (this.status === 'done') this.state = '*'
+    this.dateCompleted = undefined
+  }
+
+  close() {
+    if (this.isActive) this.stopTimer()
+    this.state = 'x'
+    if (this.created) this.dateCompleted = dayjs()
   }
 
   toggleFocus() {
@@ -206,6 +218,31 @@ export class Todo {
     this.timerStartedAt = null
 
     this.description = `${this.description}`.replace(/time:[^ :]+/, `time:${this.timer}`)
+  }
+
+  next() {
+    if (!this.repeats) return
+    const due = this.dateDue || this.dateCreated || dayjs()
+    // TODO: There appears to be a bug I can't overcome. I have to add 1
+    //       to the date here otherwise the new dateDue is the same date.
+    //       I worry that this is a timezone issue? I worry that this will
+    //       break for certain TZs and for daily todos.
+    //       Investigate and try to resolve the issue.
+    const after = due.isBefore(dayjs(), 'day') ? new Date() : new Date(due.year(), due.month(), due.date() + 1)
+    const next = new Todo({ ...this, ...{
+      id: undefined,
+      state: '*',
+      created: undefined,
+      due: undefined,
+      // TODO: Count appears not to work on the clone... but time does. That's weird.
+      //       Investigate. I don't think it's an error with this line; implementing
+      //       this is just where we first noticed it. All other counts continue to work.
+      //       Sounds like a bad ID issue? Since timer still works, compare implementations
+      //       and look for faults.
+      description: `${this.description}`.replace(/count:[^: ]+/, `count:0`).replace(/time:[^ :]+/, `time:0h0m`),
+    } })
+    next.dateDue = dayjs(RRule.fromString(`DTSTART:${due.format('YYYYMMDD')}\nRRULE:${this.repeats}`).after(after))
+    return next
   }
 
   setTags() {

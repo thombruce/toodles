@@ -49,7 +49,13 @@ export const useTodosStore = defineStore('todos', () => {
   function toggleTodoDone(id: string, parent?: string) {
     const todo = find.value(id, parent)
     if (!todo) return
-    todo.toggleDone()
+    if (todo.status === 'done') {
+      todo.open()
+    } else {
+      todo.close()
+      const next = todo.next()
+      if (next) list.value.push(next)
+    }
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
 
