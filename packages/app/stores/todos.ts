@@ -5,8 +5,7 @@ import { reject as _reject, orderBy as _orderBy } from 'lodash'
 
 import { Todo } from '../models/Todo'
 
-// @ts-ignore
-import { useTntApi } from '#imports'
+import { useTntApi } from '@thombruce/tnt/composables/tntApi'
 
 export const useTodosStore = defineStore('todos', () => {
   // State
