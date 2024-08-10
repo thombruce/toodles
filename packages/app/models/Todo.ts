@@ -206,11 +206,6 @@ export class Todo {
     if (day) rules.byweekday = day
     if (interval) rules.interval = interval
 
-    // TODO: TEST RULE VALIDITY! Since this is based on user
-    //       input, there are probably a ton of ways they can get this wrong.
-    //       And getting it wrong... causes the app to freeze up in some instances.
-    //       So ensure that the rules are valid - make doubly sure - before assigning
-    //       them to schedule.
     this.schedule = new RRule(rules)
   }
 
