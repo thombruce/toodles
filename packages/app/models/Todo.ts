@@ -188,7 +188,7 @@ export class Todo {
   }
 
   incrementCount() {
-    if (this.count) this.count++
+    this.count = (this.count || 0) + 1
     this.description = `${this.description}`.replace(/count:[^: ]+/, `count:${this.count}`)
   }
 
