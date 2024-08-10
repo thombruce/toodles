@@ -163,10 +163,10 @@ export class Todo {
 
     let freq, day, interval
 
-    if (/^1?days?$/i.test(every)) freq = RRule.DAILY
-    else if (/^1?weeks?$/i.test(every)) freq = RRule.WEEKLY
-    else if (/^1?months?$/i.test(every)) freq = RRule.MONTHLY
-    else if (/^1?years?$/i.test(every)) freq = RRule.YEARLY
+    if (/^\d*days?$/i.test(every)) freq = RRule.DAILY
+    else if (/^\d*weeks?$/i.test(every)) freq = RRule.WEEKLY
+    else if (/^\d*months?$/i.test(every)) freq = RRule.MONTHLY
+    else if (/^\d*years?$/i.test(every)) freq = RRule.YEARLY
     else if (/^monday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.MO
     else if (/^tuesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TU
     else if (/^wednesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.WE
@@ -178,6 +178,9 @@ export class Todo {
     else if (/^fortnight$/i.test(every)) freq = RRule.WEEKLY, interval = 2
 
     if (!freq) return
+
+    let match
+    if (!interval && (match = /^\d*/i.exec(every)?.[0])) interval = Number(match)
 
     const start = this.dateDue || this.dateCreated || dayjs()
 
