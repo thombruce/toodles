@@ -3,7 +3,7 @@ import { uniqueId as _uniqueId } from 'lodash'
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
 
-import { datetime, RRule } from 'rrule'
+import { datetime, RRule, RRuleStrOptions } from 'rrule'
 
 dayjs.extend(dayjsDuration)
 
@@ -276,7 +276,6 @@ export class Todo {
 
     const today = dayjs()
     const due = this.dateDue || this.dateCreated || today
-    // TODO: + 1 added to values because .after() does not respect same day like it should. Investigate.
     const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : datetime(due.year(), due.month() + 1, due.date())
 
     const next = new Todo({ ...this, ...{
@@ -301,5 +300,4 @@ export class Todo {
       return { key, value }
     })
   }
-
 }
