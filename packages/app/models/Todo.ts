@@ -34,7 +34,7 @@ export class Todo {
   timerLastTick?: Dayjs
   timerInterval?: any
   // Recurrence `every:*`
-  repeats?: string
+  schedule?: RRule
 
   // Constructor
   constructor(todo: string | Todo) {
@@ -47,11 +47,7 @@ export class Todo {
       this.state = todo.state || '*'
       this.priority = todo.priority || undefined
       this.completed = todo.completed || undefined
-      if (todo.created) {
-        this.created = todo.created
-      } else {
-        this.dateCreated = dayjs()
-      }
+      this.created = todo.created || dayjs().format('YYYY-MM-DD')
       this.due = todo.due || undefined
       this.price = todo.price || undefined
       this.multiplier = todo.multiplier || undefined
@@ -59,7 +55,7 @@ export class Todo {
     }
     this.count = Number(this.description.match(/count:(\d+)/)?.[1])
     this.timer = this.description.match(/time:([^ :]+)/)?.[1]
-    this.repeats = this.description.match(/every:([^ :]+)/)?.[1]
+    this.every = this.description.match(/every:([^ :]+)/)?.[1]
     this.setTags()
   }
 
@@ -158,6 +154,39 @@ export class Todo {
     return Boolean(this.timerStartedAt)
   }
 
+  get every():RRule|undefined {
+    return this.schedule
+  }
+
+  set every(every: string | undefined) {
+    if (!every) return
+
+    let freq, day
+
+    if (/^1?days?$/i.test(every)) freq = RRule.DAILY
+    else if (/^1?weeks?$/i.test(every)) freq = RRule.WEEKLY
+    else if (/^1?months?$/i.test(every)) freq = RRule.MONTHLY
+    else if (/^1?years?$/i.test(every)) freq = RRule.YEARLY
+    else if (/^monday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.MO
+    else if (/^tuesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TU
+    else if (/^wednesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.WE
+    else if (/^thursday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TH
+    else if (/^friday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.FR
+    else if (/^saturday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SA
+    else if (/^sunday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SU
+    else if (/^weekday$/i.test(every)) freq = RRule.DAILY, day = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR]
+
+    if (!freq) return
+
+    const start = this.dateDue || this.dateCreated || dayjs()
+
+    this.schedule = new RRule({
+      freq: freq,
+      byweekday: day,
+      dtstart: datetime(start.year(), start.month() + 1, start.date())
+    })
+  }
+
   // Instance methods: Actions
   toggleDone() {
     if (this.status === 'done') {
@@ -201,11 +230,11 @@ export class Todo {
   }
 
   startTimer() {
-    this.timerStartedAt = dayjs(new Date())
+    this.timerStartedAt = dayjs()
     this.timerLastTick = this.timerStartedAt
 
     this.timerInterval = setInterval(() => {
-      const current = dayjs(new Date())
+      const current = dayjs()
       const durSinceLastTick = dayjs.duration(current.diff(this.timerLastTick))
       this.duration = this.duration?.add(durSinceLastTick)
       this.timer = this.duration?.format('H[h]m[m]')
@@ -221,22 +250,21 @@ export class Todo {
   }
 
   next() {
-    if (!this.repeats) return
+    if (!this.schedule) return
+
     const today = dayjs()
     const due = this.dateDue || this.dateCreated || today
     // TODO: + 1 added to values because .after() does not respect same day like it should. Investigate.
-    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month(), today.date() + 1) : datetime(due.year(), due.month(), due.date() + 1)
+    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : datetime(due.year(), due.month() + 1, due.date())
 
     const next = new Todo({ ...this, ...{
       id: undefined,
-      state: '*',
+      state: ['X', 'x'].includes(this.state) ? undefined : this.state,
+      completed: undefined,
       created: undefined,
-      due: undefined,
-      // TODO: count is broken on cloned Todo, but time isn't. Weird!
-      description: `${this.description}`.replace(/count:[^: ]+/, `count:0`).replace(/time:[^ :]+/, `time:0h0m`),
+      due: dayjs(this.schedule.after(after)).format('YYYY-MM-DD'),
+      description: this.description.replace(/count:[^: ]+/, 'count:0').replace(/time:[^ :]+/, 'time:0h0m'),
     } })
-
-    next.dateDue = dayjs(RRule.fromString(`DTSTART:${due.format('YYYYMMDD')}\nRRULE:${this.repeats}`).after(after))
 
     return next
   }

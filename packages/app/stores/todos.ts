@@ -52,9 +52,9 @@ export const useTodosStore = defineStore('todos', () => {
     if (todo.status === 'done') {
       todo.open()
     } else {
-      todo.close()
       const next = todo.next()
       if (next) list.value.push(next)
+      todo.close()
     }
     useTntApi().updateFile('todo.txt', Todo.toFile(list.value))
   }
