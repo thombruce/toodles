@@ -3,7 +3,7 @@ import { uniqueId as _uniqueId } from 'lodash'
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
 
-import { datetime, RRule, RRuleSet, rrulestr } from 'rrule'
+import { datetime, RRule } from 'rrule'
 
 dayjs.extend(dayjsDuration)
 
