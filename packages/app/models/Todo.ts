@@ -177,19 +177,41 @@ export class Todo {
     else if (/^weekday$/i.test(every)) freq = RRule.DAILY, day = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR]
     else if (/^fortnight$/i.test(every)) freq = RRule.WEEKLY, interval = 2
 
+    let days
+    if (!freq && /^(?:mon|tues|wednes|thurs|fri|satur|sun)day(?:,(?:mon|tues|wednes|thurs|fri|satur|sun)day)+$/i.test(every)) {
+      freq = RRule.DAILY
+      days = every.split(',')
+    }
+    if (days) {
+      day = days.map((d) => {
+        if (/^monday$/i.test(d)) return RRule.MO
+        else if (/^tuesday$/i.test(d)) return RRule.TU
+        else if (/^wednesday$/i.test(d)) return RRule.WE
+        else if (/^thursday$/i.test(d)) return RRule.TH
+        else if (/^friday$/i.test(d)) return RRule.FR
+        else if (/^saturday$/i.test(d)) return RRule.SA
+        else if (/^sunday$/i.test(d)) return RRule.SU
+        return
+      })
+    }
+
     if (!freq) return
 
     let match
-    if (!interval && (match = /^\d*/i.exec(every)?.[0])) interval = Number(match)
+    if (!interval && (match = /^\d+/i.exec(every)?.[0])) interval = Number(match)
 
     const start = this.dateDue || this.dateCreated || dayjs()
 
-    this.schedule = new RRule({
-      freq: freq,
-      byweekday: day,
-      interval: interval,
-      dtstart: datetime(start.year(), start.month() + 1, start.date())
-    })
+    let rules:any = { freq, dtstart: datetime(start.year(), start.month() + 1, start.date()) }
+    if (day) rules.byweekday = day
+    if (interval) rules.interval = interval
+
+    // TODO: TEST RULE VALIDITY! Since this is based on user
+    //       input, there are probably a ton of ways they can get this wrong.
+    //       And getting it wrong... causes the app to freeze up in some instances.
+    //       So ensure that the rules are valid - make doubly sure - before assigning
+    //       them to schedule.
+    this.schedule = new RRule(rules)
   }
 
   // Instance methods: Actions
