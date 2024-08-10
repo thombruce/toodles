@@ -6,7 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "electron:build": "ELECTRON=true nuxt build",
+    "electron:build": "ELECTRON=true nuxt build --prerender && electron-builder",
     "electron:dev": "ELECTRON=true nuxt dev"
   },
   "dependencies": {
