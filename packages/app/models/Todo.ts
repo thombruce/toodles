@@ -161,7 +161,7 @@ export class Todo {
   set every(every: string | undefined) {
     if (!every) return
 
-    let freq, day
+    let freq, day, interval
 
     if (/^1?days?$/i.test(every)) freq = RRule.DAILY
     else if (/^1?weeks?$/i.test(every)) freq = RRule.WEEKLY
@@ -175,6 +175,7 @@ export class Todo {
     else if (/^saturday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SA
     else if (/^sunday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SU
     else if (/^weekday$/i.test(every)) freq = RRule.DAILY, day = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR]
+    else if (/^fortnight$/i.test(every)) freq = RRule.WEEKLY, interval = 2
 
     if (!freq) return
 
@@ -183,6 +184,7 @@ export class Todo {
     this.schedule = new RRule({
       freq: freq,
       byweekday: day,
+      interval: interval,
       dtstart: datetime(start.year(), start.month() + 1, start.date())
     })
   }
