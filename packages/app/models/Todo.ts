@@ -222,26 +222,22 @@ export class Todo {
 
   next() {
     if (!this.repeats) return
-    const due = this.dateDue || this.dateCreated || dayjs()
-    // TODO: There appears to be a bug I can't overcome. I have to add 1
-    //       to the date here otherwise the new dateDue is the same date.
-    //       I worry that this is a timezone issue? I worry that this will
-    //       break for certain TZs and for daily todos.
-    //       Investigate and try to resolve the issue.
-    const after = due.isBefore(dayjs(), 'day') ? new Date() : new Date(due.year(), due.month(), due.date() + 1)
+    const today = dayjs()
+    const due = this.dateDue || this.dateCreated || today
+    // TODO: + 1 added to values because .after() does not respect same day like it should. Investigate.
+    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month(), today.date() + 1) : datetime(due.year(), due.month(), due.date() + 1)
+
     const next = new Todo({ ...this, ...{
       id: undefined,
       state: '*',
       created: undefined,
       due: undefined,
-      // TODO: Count appears not to work on the clone... but time does. That's weird.
-      //       Investigate. I don't think it's an error with this line; implementing
-      //       this is just where we first noticed it. All other counts continue to work.
-      //       Sounds like a bad ID issue? Since timer still works, compare implementations
-      //       and look for faults.
+      // TODO: count is broken on cloned Todo, but time isn't. Weird!
       description: `${this.description}`.replace(/count:[^: ]+/, `count:0`).replace(/time:[^ :]+/, `time:0h0m`),
     } })
+
     next.dateDue = dayjs(RRule.fromString(`DTSTART:${due.format('YYYYMMDD')}\nRRULE:${this.repeats}`).after(after))
+
     return next
   }
 
