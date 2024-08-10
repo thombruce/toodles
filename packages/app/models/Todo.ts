@@ -2,6 +2,9 @@ import { uniqueId as _uniqueId } from 'lodash'
 
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
+
+import { datetime, RRule, RRuleStrOptions } from 'rrule'
+
 dayjs.extend(dayjsDuration)
 
 export class Todo {
@@ -31,7 +34,7 @@ export class Todo {
   timerLastTick?: Dayjs
   timerInterval?: any
   // Recurrence `every:*`
-  // TODO
+  schedule?: RRule
 
   // Constructor
   constructor(todo: string | Todo) {
@@ -44,11 +47,7 @@ export class Todo {
       this.state = todo.state || '*'
       this.priority = todo.priority || undefined
       this.completed = todo.completed || undefined
-      if (todo.created) {
-        this.created = todo.created
-      } else {
-        this.dateCreated = dayjs()
-      }
+      this.created = todo.created || dayjs().format('YYYY-MM-DD')
       this.due = todo.due || undefined
       this.price = todo.price || undefined
       this.multiplier = todo.multiplier || undefined
@@ -56,6 +55,7 @@ export class Todo {
     }
     this.count = Number(this.description.match(/count:(\d+)/)?.[1])
     this.timer = this.description.match(/time:([^ :]+)/)?.[1]
+    this.every = this.description.match(/every:([^ :]+)/)?.[1]
     this.setTags()
   }
 
@@ -154,16 +154,79 @@ export class Todo {
     return Boolean(this.timerStartedAt)
   }
 
+  get every():RRule|undefined {
+    return this.schedule
+  }
+
+  set every(every: string | undefined) {
+    if (!every) return
+
+    let freq, day, interval
+
+    if (/^\d*days?$/i.test(every)) freq = RRule.DAILY
+    else if (/^\d*weeks?$/i.test(every)) freq = RRule.WEEKLY
+    else if (/^\d*months?$/i.test(every)) freq = RRule.MONTHLY
+    else if (/^\d*years?$/i.test(every)) freq = RRule.YEARLY
+    else if (/^monday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.MO
+    else if (/^tuesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TU
+    else if (/^wednesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.WE
+    else if (/^thursday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TH
+    else if (/^friday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.FR
+    else if (/^saturday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SA
+    else if (/^sunday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SU
+    else if (/^weekday$/i.test(every)) freq = RRule.DAILY, day = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR]
+    else if (/^fortnight$/i.test(every)) freq = RRule.WEEKLY, interval = 2
+
+    let days
+    if (!freq && /^(?:mon|tues|wednes|thurs|fri|satur|sun)day(?:,(?:mon|tues|wednes|thurs|fri|satur|sun)day)+$/i.test(every)) {
+      freq = RRule.DAILY
+      days = every.split(',')
+    }
+    if (days) {
+      day = days.map((d) => {
+        if (/^monday$/i.test(d)) return RRule.MO
+        else if (/^tuesday$/i.test(d)) return RRule.TU
+        else if (/^wednesday$/i.test(d)) return RRule.WE
+        else if (/^thursday$/i.test(d)) return RRule.TH
+        else if (/^friday$/i.test(d)) return RRule.FR
+        else if (/^saturday$/i.test(d)) return RRule.SA
+        else if (/^sunday$/i.test(d)) return RRule.SU
+        return
+      })
+    }
+
+    if (!freq) return
+
+    let match
+    if (!interval && (match = /^\d+/i.exec(every)?.[0])) interval = Number(match)
+
+    const start = this.dateDue || this.dateCreated || dayjs()
+
+    let rules:any = { freq, dtstart: datetime(start.year(), start.month() + 1, start.date()) }
+    if (day) rules.byweekday = day
+    if (interval) rules.interval = interval
+
+    this.schedule = new RRule(rules)
+  }
+
   // Instance methods: Actions
   toggleDone() {
     if (this.status === 'done') {
-      this.state = '*'
-      this.dateCompleted = undefined
+      this.open()
     } else {
-      if (this.isActive) this.stopTimer()
-      this.state = 'x'
-      if (this.created) this.dateCompleted = dayjs()
+      this.close()
     }
+  }
+
+  open() {
+    if (this.status === 'done') this.state = '*'
+    this.dateCompleted = undefined
+  }
+
+  close() {
+    if (this.isActive) this.stopTimer()
+    this.state = 'x'
+    if (this.created) this.dateCompleted = dayjs()
   }
 
   toggleFocus() {
@@ -176,7 +239,7 @@ export class Todo {
   }
 
   incrementCount() {
-    if (this.count) this.count++
+    this.count = (this.count || 0) + 1
     this.description = `${this.description}`.replace(/count:[^: ]+/, `count:${this.count}`)
   }
 
@@ -189,11 +252,11 @@ export class Todo {
   }
 
   startTimer() {
-    this.timerStartedAt = dayjs(new Date())
+    this.timerStartedAt = dayjs()
     this.timerLastTick = this.timerStartedAt
 
     this.timerInterval = setInterval(() => {
-      const current = dayjs(new Date())
+      const current = dayjs()
       const durSinceLastTick = dayjs.duration(current.diff(this.timerLastTick))
       this.duration = this.duration?.add(durSinceLastTick)
       this.timer = this.duration?.format('H[h]m[m]')
@@ -208,6 +271,25 @@ export class Todo {
     this.description = `${this.description}`.replace(/time:[^ :]+/, `time:${this.timer}`)
   }
 
+  next() {
+    if (!this.schedule) return
+
+    const today = dayjs()
+    const due = this.dateDue || this.dateCreated || today
+    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : datetime(due.year(), due.month() + 1, due.date())
+
+    const next = new Todo({ ...this, ...{
+      id: undefined,
+      state: ['X', 'x'].includes(this.state) ? undefined : this.state,
+      completed: undefined,
+      created: undefined,
+      due: dayjs(this.schedule.after(after)).format('YYYY-MM-DD'),
+      description: this.description.replace(/count:[^: ]+/, 'count:0').replace(/time:[^ :]+/, 'time:0h0m'),
+    } })
+
+    return next
+  }
+
   setTags() {
     // [...str.matchAll(regex)] returns an array in all cases, empty if no matches
     this.projects = [...this.description.matchAll(/(?:^|\s)\+(\S+)/g)].map(i => i[1])
@@ -218,5 +300,4 @@ export class Todo {
       return { key, value }
     })
   }
-
 }
