@@ -30,7 +30,7 @@ function clear() {
 </script>
 
 <template lang="pug">
-div
+NuxtLayout(name="default")
   //- TntForm not working here - investigate
   form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
     //- TntSelect doesn't reset when model does...
