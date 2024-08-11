@@ -22,6 +22,11 @@
       "target": [
         "portable"
       ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
     }
   },
   "dependencies": {
