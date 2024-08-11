@@ -11,6 +11,13 @@
     "electron:build": "ELECTRON=true nuxt build --prerender && electron-builder",
     "electron:dev": "ELECTRON=true nuxt dev"
   },
+  "build": {
+    "appId": "com.thombruce.toodles",
+    "productName": "Toodles",
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
+  },
   "dependencies": {
     "dayjs": "^1.11.12",
     "markdown-it": "^14.1.0",
