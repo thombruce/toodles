@@ -20,7 +20,9 @@ jobs:
     - name: install dependencies
       run: yarn install
     - name: build
-      run: yarn run electron:build
+      run: |
+        sudo snap install snapcraft --classic
+        yarn run electron:build
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
