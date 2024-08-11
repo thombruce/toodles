@@ -18,6 +18,8 @@ jobs:
       run: yarn install
     - name: build
       run: yarn run electron:build
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_on_mac:
     runs-on: macos-latest
@@ -33,6 +35,8 @@ jobs:
       run: yarn install
     - name: build
       run: yarn run electron:build
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build_on_win:
     runs-on: windows-latest
@@ -48,3 +52,5 @@ jobs:
       run: yarn install --network-timeout 1000000
     - name: build
       run: yarn run electron:build
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
