@@ -1,6 +1,8 @@
 {
   "name": "app",
   "version": "0.0.12",
+  "author": "Thom Bruce (https://thombruce.com)",
+  "description": "A todo app based on the todo.txt format",
   "private": true,
   "main": "dist-electron/main.js",
   "scripts": {
