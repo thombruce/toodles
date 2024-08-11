@@ -12,7 +12,7 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: yarn install
+      run: cd packages/app && yarn install
     - name: build
       run: cd packages/app && yarn run electron:build
 
@@ -24,7 +24,7 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: yarn install
+      run: cd packages/app && yarn install
     - name: build
       run: cd packages/app && yarn run electron:build
 
@@ -36,6 +36,6 @@ jobs:
       with:
         node-version: 20
     - name: install dependencies
-      run: yarn install
+      run: cd packages/app && yarn install
     - name: build
       run: cd packages/app && yarn run electron:build
