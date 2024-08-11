@@ -3441,10 +3441,10 @@
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.29.5":
-  version "0.29.5"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.29.5.tgz#726bb09a231d286f51296b1a2a55c96a195e65e3"
-  integrity sha512-etjO6Y5+UKK6tGXpcQpJJXNnABaEnO20UCqC3OKpY5y4OD4+orJ7wL9tNiTJWWAWCWlbZz64PtCbHJZ59R++Ew==
+"@thombruce/tnt-electron@^0.29.6":
+  version "0.29.6"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.29.6.tgz#b2a476cb81934bfe680db37a9ae67621ca0803bf"
+  integrity sha512-X7tEkSZfDJq1uEA8m6p0OSg3qvZK2oKf5zHuzWZaHPZNz6ZNb4GOz5DsL+IEt/foFrpDwNjHENkjgG2NsS4INQ==
   dependencies:
     "@thombruce/tnt" "^0.29.5"
     electron "^31.3.1"
@@ -6907,7 +6907,7 @@ electron-to-chromium@^1.4.820:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.3.tgz#032bbb8661c0449656fd896e805c8f7150229a0f"
   integrity sha512-QNdYSS5i8D9axWp/6XIezRObRHqaav/ur9z1VzCDUCH1XIFOr9WQk5xmgunhsTpjjgDy3oLxO/WMOVZlpUQrlA==
 
-electron@^31.3.1:
+electron@31.3.1, electron@^31.3.1:
   version "31.3.1"
   resolved "https://registry.yarnpkg.com/electron/-/electron-31.3.1.tgz#de5f21f10db1ba0568e0cdd7ae76ec40a4b800c3"
   integrity sha512-9fiuWlRhBfygtcT+auRd/WdBK/f8LZZcrpx0RjpXhH2DPTP/PfnkC4JB1PW55qCbGbh4wAgkYbf4ExIag8oGCA==
