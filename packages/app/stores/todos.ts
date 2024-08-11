@@ -1,7 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-import { reject as _reject, orderBy as _orderBy } from 'lodash'
+import { default as _reject } from 'lodash/reject'
+import { default as _orderBy } from 'lodash/orderBy'
 
 import { Todo } from '../models/Todo'
 

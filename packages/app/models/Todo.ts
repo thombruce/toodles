@@ -1,4 +1,4 @@
-import { uniqueId as _uniqueId } from 'lodash'
+import { default as _uniqueId } from 'lodash/uniqueId'
 
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'

@@ -1,6 +1,6 @@
 import lunr from 'lunr'
 
-import { uniq as _uniq } from 'lodash'
+import { default as _uniq } from 'lodash/uniq'
 
 const index = lunr(() => {}) as any
 

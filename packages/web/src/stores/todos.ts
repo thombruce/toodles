@@ -1,7 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-import { reject as _reject, findIndex as _findIndex, orderBy as _orderBy } from 'lodash'
+import { default as _reject } from 'lodash/reject'
+import { default as _findIndex } from 'lodash/findIndex'
+import { default as _orderBy } from 'lodash/orderBy'
 
 import { Todo } from '../models/Todo'
 import { db, advancedSearch } from '@/plugins/dexie'
