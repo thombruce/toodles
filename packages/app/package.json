@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.1.1-alpha.5",
+  "version": "0.1.1-alpha.6",
   "author": "Thom Bruce (https://thombruce.com)",
   "description": "A todo app based on the todo.txt format",
   "repository": "thombruce/toodles",
