@@ -6,9 +6,9 @@
     "packages/*"
   ],
   "scripts": {
-    "docs": "cd packages/docs && nuxt dev",
-    "app": "cd packages/app && nuxt dev",
-    "app:electron": "cd packages/app && ELECTRON=true nuxt dev"
+    "docs": "cd packages/docs  && yarn run dev",
+    "app": "cd packages/app && yarn run dev",
+    "app:electron": "cd packages/app && yarn run electron:dev"
   },
   "devDependencies": {
     "lerna": "^6.1.0"

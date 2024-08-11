@@ -8,8 +8,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "electron:build": "ELECTRON=true nuxt build --prerender && electron-builder",
-    "electron:dev": "ELECTRON=true nuxt dev"
+    "electron:build": "env ELECTRON=true nuxt build --prerender && electron-builder",
+    "electron:dev": "env ELECTRON=true nuxt dev"
   },
   "build": {
     "appId": "com.thombruce.toodles",
