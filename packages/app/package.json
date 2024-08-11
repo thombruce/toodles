@@ -1,6 +1,6 @@
 {
   "name": "app",
-  "version": "0.1.1-alpha.3",
+  "version": "0.1.1-alpha.4",
   "author": "Thom Bruce (https://thombruce.com)",
   "description": "A todo app based on the todo.txt format",
   "repository": "thombruce/toodles",
@@ -19,7 +19,9 @@
       "category": "public.app-category.utilities"
     },
     "win": {
-      "target": ["portable"]
+      "target": [
+        "portable"
+      ]
     }
   },
   "dependencies": {
