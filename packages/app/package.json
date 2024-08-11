@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "electron:build": "env ELECTRON=true nuxt build --prerender && electron-builder",
+    "electron:build": "env ELECTRON=true nuxt build --prerender && electron-builder --publish onTag",
     "electron:dev": "env ELECTRON=true nuxt dev"
   },
   "build": {
