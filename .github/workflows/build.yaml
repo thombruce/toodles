@@ -6,36 +6,45 @@ on: [push, pull_request]
 jobs:
   build_on_linux:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./packages/app
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@master
       with:
         node-version: 20
     - name: install dependencies
-      run: cd packages/app && yarn install
+      run: yarn install
     - name: build
-      run: cd packages/app && yarn run electron:build
+      run: yarn run electron:build
 
   build_on_mac:
     runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: ./packages/app
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@master
       with:
         node-version: 20
     - name: install dependencies
-      run: cd packages/app && yarn install
+      run: yarn install
     - name: build
-      run: cd packages/app && yarn run electron:build
+      run: yarn run electron:build
 
   build_on_win:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./packages/app
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@master
       with:
         node-version: 20
     - name: install dependencies
-      run: cd packages/app && yarn install --network-timeout 1000000
+      run: yarn install --network-timeout 1000000
     - name: build
-      run: cd packages/app && yarn run electron:build
+      run: yarn run electron:build
