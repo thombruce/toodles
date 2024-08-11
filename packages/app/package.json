@@ -17,6 +17,9 @@
     "productName": "Toodles",
     "mac": {
       "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": ["portable"]
     }
   },
   "dependencies": {
