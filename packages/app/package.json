@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@thombruce/tnt-electron": "^0.29.5",
+    "electron": "31.3.1",
     "nuxt": "^3.12.4"
   }
 }
