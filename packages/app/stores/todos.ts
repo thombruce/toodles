@@ -6,6 +6,8 @@ import { default as _orderBy } from 'lodash/orderBy'
 
 import { Todo } from '../models/Todo'
 
+import { useTntApi } from '@thombruce/tnt/composables/tntApi'
+
 // TODO: Import results in complaint on GitHub Actions builds
 //       Omitting the import to see if it succeeds without.
 //       useTntApi is supposed to be auto-imported by Nuxt anyway.
