@@ -161,6 +161,29 @@ export class Todo {
   set every(every: string | undefined) {
     if (!every) return
 
+    // TODO: It may not look like it, but there is a lot of unnecessary
+    //       repetition in this logic. For example, days are tested
+    //       individually and then also as a comma-separated group.
+    //       Some other values could be aliased prior to testing; e.g.
+    //       if (/fortnight/) every = "2weeks".
+    //       I think it's also conceivable to split the interval and
+    //       frequency prior to testing and assign the frequency to a
+    //       known constant, rather than testing each case-insensitive
+    //       string. We still need to maintain that case insensitivity,
+    //       but how we handle this could be a lot cleaner.
+    // TODO: Migrate to own module; potentially migrate to TNT.
+    //       Justification:
+    //       Scheduling logic will be useful for other applications:
+    //       Calendar, scheduling app, scheduled items (my next stream/whatever).
+    //       Handy to have maybe a TntSchedule.fromString("2weeks") that could
+    //       return the RRule in a lot of cases.
+    //       Like, I'm thinking TNT Core for this because it has utility for:
+    //       - Blogs (next scheduled post)
+    //       - Shops (next scheduled sale - "Half-price Fridays")
+    //       - Portfolios/CVs (my available days for work/meetings/interviews/whatever)
+    //       - Business/brochure sites (opening days/times)
+    //       - Calendars, Schedules, Repeatable items
+
     let freq, day, interval
 
     if (/^\d*days?$/i.test(every)) freq = RRule.DAILY
