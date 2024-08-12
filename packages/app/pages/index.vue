@@ -31,36 +31,37 @@ function clear() {
 
 <template lang="pug">
 NuxtLayout(name="default")
-  //- TntForm not working here - investigate
-  form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
-    //- TntSelect doesn't reset when model does...
-    //- Will try to figure this out when we move this into own component.
-    select.flex-1.min-w-16(
-      v-model="newTodo.priority"
-    )
-      option
-      option A
-      option B
-      option C
-    //- Again, these don't clear when I'm using my Tnt components...
-    //- This one also had a big, ugly error when value deleted manually so...
-    //- Typical input type it is.
-    input.flex-1.min-w-40(
-      v-model="newTodo.due"
-      type="date"
-    )
-    //- TntInput does not clear when text model is cleared ???
-    input.flex-0(
-      v-model="newTodo.description"
-      type="text"
-      @keydown.esc="clear();$event.target.blur()"
-    )
-    //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
-    button(type="submit") Add
+  .not-prose
+    //- TntForm not working here - investigate
+    form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
+      //- TntSelect doesn't reset when model does...
+      //- Will try to figure this out when we move this into own component.
+      select.flex-1.min-w-16(
+        v-model="newTodo.priority"
+      )
+        option
+        option A
+        option B
+        option C
+      //- Again, these don't clear when I'm using my Tnt components...
+      //- This one also had a big, ugly error when value deleted manually so...
+      //- Typical input type it is.
+      input.flex-1.min-w-40(
+        v-model="newTodo.due"
+        type="date"
+      )
+      //- TntInput does not clear when text model is cleared ???
+      input.flex-0(
+        v-model="newTodo.description"
+        type="text"
+        @keydown.esc="clear();$event.target.blur()"
+      )
+      //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
+      button(type="submit") Add
 
-  ProgressBar.mb-3(:value="progress")
+    ProgressBar.mb-3(:value="progress")
 
-  ul.space-y-2
-    li(v-for="item in todos")
-      TodoItem(:todo="item" :key="`todo-${item.id}`")
+    ul.space-y-2
+      li(v-for="item in todos")
+        TodoItem(:todo="item" :key="`todo-${item.id}`")
 </template>
