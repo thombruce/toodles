@@ -32,22 +32,23 @@ function clear() {
 <template lang="pug">
 NuxtLayout(name="default")
   .not-prose
-    //- TntForm not working here - investigate
-    form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
+    TntForm.flex.w-full.space-x-4.mb-3(@submit="addTodoAndClear()")
       TntSelect.flex-0.min-w-16(
         v-model="newTodo.priority"
         :options="['', 'A', 'B', 'C']"
       )
+
       TntInput.flex-0(
         v-model="newTodo.due"
         type="date"
       )
+
       TntInput.flex-1(
         v-model="newTodo.description"
         @keydown.esc="clear();$event.target.blur()"
       )
-      //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
-      button(type="submit") Add
+
+      TntSubmit Add
 
     ProgressBar.mb-3(:value="progress")
 
