@@ -34,26 +34,16 @@ NuxtLayout(name="default")
   .not-prose
     //- TntForm not working here - investigate
     form.flex.w-full.space-x-4.mb-3(@submit.prevent="addTodoAndClear()")
-      //- TntSelect doesn't reset when model does...
-      //- Will try to figure this out when we move this into own component.
-      select.flex-1.min-w-16(
+      TntSelect.flex-0.min-w-16(
         v-model="newTodo.priority"
+        :options="['', 'A', 'B', 'C']"
       )
-        option
-        option A
-        option B
-        option C
-      //- Again, these don't clear when I'm using my Tnt components...
-      //- This one also had a big, ugly error when value deleted manually so...
-      //- Typical input type it is.
-      input.flex-1.min-w-40(
+      TntInput.flex-0(
         v-model="newTodo.due"
         type="date"
       )
-      //- TntInput does not clear when text model is cleared ???
-      input.flex-0(
+      TntInput.flex-1(
         v-model="newTodo.description"
-        type="text"
         @keydown.esc="clear();$event.target.blur()"
       )
       //- TntSubmit depends on TntForm because of isDirty check (which should probably be optional?)
