@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@thombruce/tnt-content',
   ],
   routeRules: {
+    '/windows': { redirect: 'https://github.com/thombruce/toodles/releases/latest' },
     '/vscode': { redirect: 'https://marketplace.visualstudio.com/items?itemName=thombruce.toodles' },
     '/github': { redirect: 'https://github.com/thombruce/toodles' },
   },
