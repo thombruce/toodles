@@ -38,11 +38,10 @@ function clear() {
 </script>
 
 <template lang="pug">
-TntForm.mb-3(@submit="addTodoAndClear()")
+TntForm.mb-3(@submit="addTodoAndClear()" @keydown.esc="clear();$event.target.blur()")
   .flex.w-full.space-x-4
     TntInput.flex-1(
       v-model="newTodo.description"
-      @keydown.esc="clear();$event.target.blur()"
     )
 
     TntButton.btn-none.text-primary(@click="showAdvanced = !showAdvanced") Advanced
