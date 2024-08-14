@@ -17,5 +17,5 @@ span
   | count:{{ todo.count }}
   |
   TntButton.btn-none.align-text-top(@click="incrementTodoCount(todo.id, parent)")
-    Icon(name="fa:plus")
+    Icon(name="fa6-solid:plus")
 </template>

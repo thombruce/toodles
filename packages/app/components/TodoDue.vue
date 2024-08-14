@@ -20,7 +20,7 @@ const klass = computed(() => {
 </script>
 
 <template lang="pug">
-span.mr-1(:class="klass") {{ todo.due }}
+span(:class="klass") {{ todo.due }}
 </template>
 
 <style lang="postcss" scoped>

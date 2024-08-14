@@ -16,7 +16,7 @@ const klass = computed(() => {
 </script>
 
 <template lang="pug">
-span.mr-1.font-black(:class="klass") ({{ priority }})
+span.font-black(:class="klass") ({{ priority }})
 </template>
 
 <style lang="postcss" scoped>
