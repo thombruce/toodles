@@ -48,8 +48,10 @@ export class Schedule implements ScheduleInterface {
     let match, interval, days
     if (/^weekdays?$/i.test(str)) return Schedule.weekdays()
     else if (/^weekends?$/i.test(str)) return Schedule.weekends()
+    else if (/^fortnight$/i.test(str)) return Schedule.fortnightly()
     else if (([match, interval] = /^(\d+)?days?$/i.exec(str) || []).length) return Schedule.daily(interval)
     else if (([match, interval] = /^(\d+)?weeks?$/i.exec(str) || []).length) return Schedule.weekly(interval)
+    else if (([match, interval] = /^fortnight$/i.exec(str) || []).length) return Schedule.fortnightly()
     else if (([match, interval] = /^(\d+)?months?$/i.exec(str) || []).length) return Schedule.monthly(interval)
     else if (([match, interval] = /^(\d+)?years?$/i.exec(str) || []).length) return Schedule.yearly(interval)
     else if (days = /^(?:(?:mon?(?!th)|tue?s?|we(?!ek)d?(?:nes)?|thu?r?s?|fri?|sat?(?:ur)?|sun?)(?:day)?,?)+$/i.exec(str)?.[0].split(',').filter(d => d)) return Schedule.days(days.map(d => dayToWeekday(d)))
