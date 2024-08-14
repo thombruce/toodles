@@ -75,4 +75,12 @@ export class Schedule implements ScheduleInterface {
   
     return new RRule(rules)  
   }
+
+  next() {
+    const today = dayjs()
+    const start = this.startDate || today
+    const after = start.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : this.start
+
+    return this.toRRule().after(after)
+  }
 }

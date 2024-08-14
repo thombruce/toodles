@@ -35,7 +35,7 @@ export class Todo {
   timerLastTick?: Dayjs
   timerInterval?: any
   // Recurrence `every:*`
-  schedule?: RRule
+  schedule?: Schedule
 
   // Constructor
   constructor(todo: string | Todo) {
@@ -156,7 +156,7 @@ export class Todo {
   }
 
   get every():RRule|undefined {
-    return this.schedule
+    return this.schedule?.toRRule()
   }
 
   set every(every: string | undefined) {
@@ -164,7 +164,7 @@ export class Todo {
 
     let schedule = Schedule.fromString(every)
     schedule.start = this.dateDue?.toDate() || this.dateCreated?.toDate() || dayjs().toDate()
-    this.schedule = schedule.toRRule()
+    this.schedule = schedule
   }
 
   // Instance methods: Actions
@@ -232,22 +232,14 @@ export class Todo {
   next() {
     if (!this.schedule) return
 
-    // TODO: Add next() function to Schedule?
-
-    const today = dayjs()
-    const due = this.dateDue || this.dateCreated || today
-    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : datetime(due.year(), due.month() + 1, due.date())
-
-    const next = new Todo({ ...this, ...{
+    return new Todo({ ...this, ...{
       id: undefined,
       state: ['X', 'x'].includes(this.state) ? undefined : this.state,
       completed: undefined,
       created: undefined,
-      due: dayjs(this.schedule.after(after)).format('YYYY-MM-DD'),
+      due: dayjs(this.schedule.next()).format('YYYY-MM-DD'),
       description: this.description.replace(/count:[^: ]+/, 'count:0').replace(/time:[^ :]+/, 'time:0h0m'),
     } })
-
-    return next
   }
 
   setTags() {
