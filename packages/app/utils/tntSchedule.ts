@@ -3,13 +3,13 @@ import dayjs, { Dayjs } from 'dayjs'
 import { datetime, Frequency, RRule, Weekday } from 'rrule'
 
 function dayToWeekday(day) {
-  if (/^monday$/i.test(day)) return RRule.MO
-  else if (/^tuesday$/i.test(day)) return RRule.TU
-  else if (/^wednesday$/i.test(day)) return RRule.WE
-  else if (/^thursday$/i.test(day)) return RRule.TH
-  else if (/^friday$/i.test(day)) return RRule.FR
-  else if (/^saturday$/i.test(day)) return RRule.SA
-  else if (/^sunday$/i.test(day)) return RRule.SU
+  if (/^mo/i.test(day)) return RRule.MO
+  else if (/^tu/i.test(day)) return RRule.TU
+  else if (/^we/i.test(day)) return RRule.WE
+  else if (/^th/i.test(day)) return RRule.TH
+  else if (/^fr/i.test(day)) return RRule.FR
+  else if (/^sa/i.test(day)) return RRule.SA
+  else if (/^su/i.test(day)) return RRule.SU
 }
 
 interface ScheduleInterface {
@@ -46,13 +46,13 @@ export class Schedule implements ScheduleInterface {
 
   static fromString(str: string):Schedule {
     let match, interval, days
-    if (([match, interval] = /^(\d+)?days?$/i.exec(str) || []).length) return Schedule.daily(interval)
+    if (/^weekdays?$/i.test(str)) return Schedule.weekdays()
+    else if (/^weekends?$/i.test(str)) return Schedule.weekends()
+    else if (([match, interval] = /^(\d+)?days?$/i.exec(str) || []).length) return Schedule.daily(interval)
     else if (([match, interval] = /^(\d+)?weeks?$/i.exec(str) || []).length) return Schedule.weekly(interval)
     else if (([match, interval] = /^(\d+)?months?$/i.exec(str) || []).length) return Schedule.monthly(interval)
     else if (([match, interval] = /^(\d+)?years?$/i.exec(str) || []).length) return Schedule.yearly(interval)
-    else if (days = str.match(/((?:mon|tues|wednes|thurs|fri|satur|sun)day)/gi)) return Schedule.days(days.map(d => dayToWeekday(d)))
-    else if (/^weekday$/i.test(str)) return Schedule.weekdays()
-    else if (/^weekend$/i.test(str)) return Schedule.weekends()
+    else if (days = /^(?:(?:mon?(?!th)|tue?s?|we(?!ek)d?(?:nes)?|thu?r?s?|fri?|sat?(?:ur)?|sun?)(?:day)?,?)+$/i.exec(str)?.[0].split(',').filter(d => d)) return Schedule.days(days.map(d => dayToWeekday(d)))
     else return Schedule.daily()
   }
 
