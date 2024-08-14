@@ -3,7 +3,7 @@ import { default as _uniqueId } from 'lodash/uniqueId'
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
 
-import { datetime, RRule, RRuleStrOptions } from 'rrule'
+import { Schedule } from '../utils/tntSchedule'
 
 dayjs.extend(dayjsDuration)
 
@@ -34,7 +34,7 @@ export class Todo {
   timerLastTick?: Dayjs
   timerInterval?: any
   // Recurrence `every:*`
-  schedule?: RRule
+  schedule?: Schedule
 
   // Constructor
   constructor(todo: string | Todo) {
@@ -154,82 +154,16 @@ export class Todo {
     return Boolean(this.timerStartedAt)
   }
 
-  get every():RRule|undefined {
+  get every():Schedule|undefined {
     return this.schedule
   }
 
   set every(every: string | undefined) {
     if (!every) return
 
-    // TODO: It may not look like it, but there is a lot of unnecessary
-    //       repetition in this logic. For example, days are tested
-    //       individually and then also as a comma-separated group.
-    //       Some other values could be aliased prior to testing; e.g.
-    //       if (/fortnight/) every = "2weeks".
-    //       I think it's also conceivable to split the interval and
-    //       frequency prior to testing and assign the frequency to a
-    //       known constant, rather than testing each case-insensitive
-    //       string. We still need to maintain that case insensitivity,
-    //       but how we handle this could be a lot cleaner.
-    // TODO: Migrate to own module; potentially migrate to TNT.
-    //       Justification:
-    //       Scheduling logic will be useful for other applications:
-    //       Calendar, scheduling app, scheduled items (my next stream/whatever).
-    //       Handy to have maybe a TntSchedule.fromString("2weeks") that could
-    //       return the RRule in a lot of cases.
-    //       Like, I'm thinking TNT Core for this because it has utility for:
-    //       - Blogs (next scheduled post)
-    //       - Shops (next scheduled sale - "Half-price Fridays")
-    //       - Portfolios/CVs (my available days for work/meetings/interviews/whatever)
-    //       - Business/brochure sites (opening days/times)
-    //       - Calendars, Schedules, Repeatable items
-
-    let freq, day, interval
-
-    if (/^\d*days?$/i.test(every)) freq = RRule.DAILY
-    else if (/^\d*weeks?$/i.test(every)) freq = RRule.WEEKLY
-    else if (/^\d*months?$/i.test(every)) freq = RRule.MONTHLY
-    else if (/^\d*years?$/i.test(every)) freq = RRule.YEARLY
-    else if (/^monday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.MO
-    else if (/^tuesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TU
-    else if (/^wednesday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.WE
-    else if (/^thursday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.TH
-    else if (/^friday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.FR
-    else if (/^saturday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SA
-    else if (/^sunday$/i.test(every)) freq = RRule.WEEKLY, day = RRule.SU
-    else if (/^weekday$/i.test(every)) freq = RRule.DAILY, day = [RRule.MO, RRule.TU, RRule.WE, RRule.TH, RRule.FR]
-    else if (/^fortnight$/i.test(every)) freq = RRule.WEEKLY, interval = 2
-
-    let days
-    if (!freq && /^(?:mon|tues|wednes|thurs|fri|satur|sun)day(?:,(?:mon|tues|wednes|thurs|fri|satur|sun)day)+$/i.test(every)) {
-      freq = RRule.DAILY
-      days = every.split(',')
-    }
-    if (days) {
-      day = days.map((d) => {
-        if (/^monday$/i.test(d)) return RRule.MO
-        else if (/^tuesday$/i.test(d)) return RRule.TU
-        else if (/^wednesday$/i.test(d)) return RRule.WE
-        else if (/^thursday$/i.test(d)) return RRule.TH
-        else if (/^friday$/i.test(d)) return RRule.FR
-        else if (/^saturday$/i.test(d)) return RRule.SA
-        else if (/^sunday$/i.test(d)) return RRule.SU
-        return
-      })
-    }
-
-    if (!freq) return
-
-    let match
-    if (!interval && (match = /^\d+/i.exec(every)?.[0])) interval = Number(match)
-
-    const start = this.dateDue || this.dateCreated || dayjs()
-
-    let rules:any = { freq, dtstart: datetime(start.year(), start.month() + 1, start.date()) }
-    if (day) rules.byweekday = day
-    if (interval) rules.interval = interval
-
-    this.schedule = new RRule(rules)
+    let schedule = Schedule.fromString(every)
+    schedule.start = this.dateDue?.toDate() || this.dateCreated?.toDate() || dayjs().toDate()
+    this.schedule = schedule
   }
 
   // Instance methods: Actions
@@ -297,20 +231,14 @@ export class Todo {
   next() {
     if (!this.schedule) return
 
-    const today = dayjs()
-    const due = this.dateDue || this.dateCreated || today
-    const after = due.isBefore(today, 'day') ? datetime(today.year(), today.month() + 1, today.date()) : datetime(due.year(), due.month() + 1, due.date())
-
-    const next = new Todo({ ...this, ...{
+    return new Todo({ ...this, ...{
       id: undefined,
       state: ['X', 'x'].includes(this.state) ? undefined : this.state,
       completed: undefined,
       created: undefined,
-      due: dayjs(this.schedule.after(after)).format('YYYY-MM-DD'),
+      due: dayjs(this.schedule.next()).format('YYYY-MM-DD'),
       description: this.description.replace(/count:[^: ]+/, 'count:0').replace(/time:[^ :]+/, 'time:0h0m'),
     } })
-
-    return next
   }
 
   setTags() {
