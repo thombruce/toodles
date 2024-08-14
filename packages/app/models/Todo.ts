@@ -3,7 +3,6 @@ import { default as _uniqueId } from 'lodash/uniqueId'
 import dayjs, { Dayjs } from 'dayjs'
 import { default as dayjsDuration, Duration } from 'dayjs/plugin/duration'
 
-import { datetime, RRule } from 'rrule'
 import { Schedule } from '../utils/tntSchedule'
 
 dayjs.extend(dayjsDuration)
@@ -155,8 +154,8 @@ export class Todo {
     return Boolean(this.timerStartedAt)
   }
 
-  get every():RRule|undefined {
-    return this.schedule?.toRRule()
+  get every():Schedule|undefined {
+    return this.schedule
   }
 
   set every(every: string | undefined) {
