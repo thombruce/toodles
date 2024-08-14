@@ -3438,13 +3438,13 @@
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
 
-"@thombruce/tnt-content@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.28.0.tgz#7c468b56aec2377d1203e115ad9637b9c0ed4c46"
-  integrity sha512-exBlAVekrWqrRRELmkc5uG7sHAYO7pNxoHgBnkAR88s3cJpruVE0AscwsViDrWl6MdaYXpV0lQ2YOf8GRrmGfg==
+"@thombruce/tnt-content@^0.30.2":
+  version "0.30.2"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.30.2.tgz#4e980643749cadfee749449106a67e8d29b58b3c"
+  integrity sha512-Syk6pZKi7fGd+kaK9gikhWFuDN2gZoKfUlDGkCk7e+MrvLswmTPYQXlvMhJJvEdQcDRG3Kker/ewF9iYKT+pmA==
   dependencies:
     "@nuxt/content" "npm:@nuxt/content-edge@latest"
-    "@thombruce/tnt" "^0.28.0"
+    "@thombruce/tnt" "^0.30.2"
     rss "^1.2.2"
     sitemap "^7.1.1"
 
@@ -3459,26 +3459,6 @@
     nuxt-electron "^0.7.0"
     vite-plugin-electron "^0.28.7"
     vite-plugin-electron-renderer "^0.14.5"
-
-"@thombruce/tnt@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.28.0.tgz#25882ca15566b0a1bc5b8dda735e3b07547901ca"
-  integrity sha512-8rNmVBJQBpw4uVrhA4mvzwkLsMK4vepq/EAmD6bo1RpTLWbaNUFj440H38izCYFv3/jcofF9j1kf4keLqCcfKQ==
-  dependencies:
-    "@iconify-json/fa" "^1.1.8"
-    "@nuxt/image" "^1.6.0"
-    "@nuxtjs/color-mode" "^3.4.2"
-    "@nuxtjs/tailwindcss" "^6.12.0"
-    "@tailwindcss/forms" "^0.5.7"
-    "@tailwindcss/typography" "^0.5.12"
-    "@vee-validate/nuxt" "^4.13.2"
-    "@vee-validate/yup" "^4.13.2"
-    "@vueuse/core" "^10.9.0"
-    "@vueuse/nuxt" "^10.9.0"
-    nuxt-icon "^0.6.10"
-    nuxt-lodash "^2.5.3"
-    pug "^3.0.2"
-    yup "^1.4.0"
 
 "@thombruce/tnt@^0.30.2":
   version "0.30.2"
