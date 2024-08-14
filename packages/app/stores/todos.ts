@@ -8,12 +8,6 @@ import { Todo } from '../models/Todo'
 
 import { useTntApi } from '@thombruce/tnt/composables/tntApi'
 
-// TODO: Import results in complaint on GitHub Actions builds
-//       Omitting the import to see if it succeeds without.
-//       useTntApi is supposed to be auto-imported by Nuxt anyway.
-//       The dev app at least works without this import.
-// import { useTntApi } from '@thombruce/tnt/composables/tntApi'
-
 export const useTodosStore = defineStore('todos', () => {
   // State
   const list = ref([] as Todo[])
