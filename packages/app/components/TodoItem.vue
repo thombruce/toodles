@@ -25,10 +25,10 @@ div.text-lg
     TntButton.btn-none(@click="toggleTodoFocus(todo.id, parent)")
       Icon(name="fa:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")
     span.toodles-description.grow
-      span.mr-1(v-if="todo.priority" class="font-black text-violet-800 dark:text-violet-300") ({{ todo.priority }})
+      TodoPriority(v-if="todo.priority" :priority="todo.priority")
       span.mr-1(v-if="todo.completed" class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
       span.mr-1(v-if="todo.created" class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
-      span.mr-1(v-if="todo.due" class="text-yellow-800 dark:text-yellow-300") {{ todo.due }}
+      TodoDue(v-if="todo.due" :todo="todo")
       span.mr-1(v-if="todo.price" class="text-green-800 dark:text-green-300") {{ todo.price }}
       TodoDescription(:description="todo.description" :todo="todo" :parent="parent")
       span.ml-1(v-if="todo.multiplier" class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
