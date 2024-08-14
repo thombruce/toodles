@@ -1916,6 +1916,13 @@
   resolved "https://registry.yarnpkg.com/@hutson/parse-repository-url/-/parse-repository-url-3.0.2.tgz#98c23c950a3d9b6c8f0daed06da6c3af06981340"
   integrity sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==
 
+"@iconify-json/fa6-solid@^1.1.24":
+  version "1.1.24"
+  resolved "https://registry.yarnpkg.com/@iconify-json/fa6-solid/-/fa6-solid-1.1.24.tgz#4adc4a2b16bf7edfb143db3d7ecc4e2dffd3a039"
+  integrity sha512-ovO4kIW3CjoY36/QUTORg+7ZVlVpJqGSck+FUsqrvVJAr9MPeh3QN2UBnc9zyny41znxs7Kdc0Oz6aun4UUsyw==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify-json/fa@^1.1.8":
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/@iconify-json/fa/-/fa-1.1.8.tgz#23c17b822646768496bd4020073775a194783892"
@@ -3441,12 +3448,12 @@
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.29.11":
-  version "0.29.11"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.29.11.tgz#e98d4f99c5bacbf8c800d7a3c597e4259f97033b"
-  integrity sha512-v8DakAO+wq+UX3WrYQGLEGcB3XVf1BqrUAJfwmf5aHg2hYUW0QEjA3yBwNYm8jQHLEtpWJQTlBWX8phkckA/CA==
+"@thombruce/tnt-electron@^0.30.1":
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.30.1.tgz#e1f609127d9b82a738b0de3c31577c02ef84eb97"
+  integrity sha512-ygiCT49L3/2s7mmVvcmukRuQtT5kfzJaxm/p9qLQMSMsU9b9uuReoRQxvHQ6esf6f9ChwO8uU3Burmw+LSBlsA==
   dependencies:
-    "@thombruce/tnt" "^0.29.11"
+    "@thombruce/tnt" "^0.30.1"
     electron "^31.3.1"
     electron-builder "^24.13.3"
     nuxt-electron "^0.7.0"
@@ -3473,12 +3480,13 @@
     pug "^3.0.2"
     yup "^1.4.0"
 
-"@thombruce/tnt@^0.29.11":
-  version "0.29.11"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.29.11.tgz#6b954bbdf4f9c76da73927a4e8640e2782597283"
-  integrity sha512-TReWZUyXog8sD368NiMQH4d6LOi65vDDag8aQKf0+imvpvXuJReQkJpG1UPSw0GJEbFBZ8giHBzqp/0qlRDu7g==
+"@thombruce/tnt@^0.30.1":
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.30.1.tgz#eda18308f126c08743fce599fc5c6f5e8c2082af"
+  integrity sha512-qdRiO97P9EhGGLZ6YgoSmGqIa8qMh5Vw7Dd6u6l195R0ZTCVkzdUydGBPz719adxZdTqS/XBHMlIoHdwtOvw/A==
   dependencies:
     "@iconify-json/fa" "^1.1.8"
+    "@iconify-json/fa6-solid" "^1.1.24"
     "@nuxt/image" "^1.6.0"
     "@nuxtjs/color-mode" "^3.4.2"
     "@nuxtjs/tailwindcss" "^6.12.0"
