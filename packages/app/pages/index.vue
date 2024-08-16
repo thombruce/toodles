@@ -1,26 +1,13 @@
-<script setup>
-import { useTodosStore } from '@/stores/todos'
-import { storeToRefs } from 'pinia'
-
-// Store
-const store = useTodosStore()
-// Store: State/Getters
-const { all: todos, progress } = storeToRefs(store)
-// Store: Actions
-const { fetchTodos } = store
-
-// Init
-fetchTodos()
-</script>
-
 <template lang="pug">
 NuxtLayout(name="default")
   .not-prose
-    TodoForm
-
-    ProgressBar.mb-3(:value="progress")
-
-    ul.space-y-2
-      li(v-for="item in todos")
-        TodoItem(:todo="item" :key="`todo-${item.id}`")
+    TntElectronDirectory(
+      path="./"
+      :recursive="true"
+      :filter="/^(?:(?:todo|done)\.txt|.+?\.(?:todo|shop|list))$/i"
+      v-slot="{ files }"
+    )
+      ul.space-y-2
+        li(v-for="file in files")
+          NuxtLink.font-bold.text-xl(:to="file" :key="file") {{ file }}
 </template>

@@ -3,4 +3,9 @@
 dist
 dist-electron
 tnt.config.json
-todo.txt
+
+**/todo.txt
+**/done.txt
+**/*.todo
+**/*.shop
+**/*.list
