@@ -31,6 +31,7 @@ export const useTodosStore = defineStore('todos', () => {
 
   // Actions
   async function fetchTodos(doc: string) {
+    list.value = [] // Clear list to uncache previous page
     document.value = doc
     const file = await useTntApi().loadFile(document.value)
     if (file) list.value = Todo.fromFile(file)
