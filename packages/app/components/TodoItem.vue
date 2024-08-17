@@ -22,23 +22,40 @@ div.text-lg
       Icon(v-if="todo.status === 'done'" name="fa6-solid:square-check")
       Icon(v-else-if="todo.status === 'obsolete'" name="fa6-solid:square-minus")
       Icon(v-else name="fa6-solid:square")
+
     TntButton.btn-none(@click="toggleTodoFocus(todo.id, parent)")
       Icon(name="fa6-solid:exclamation" :class="todo.status === 'focus' ? '' : 'opacity-30'")
+
     span.toodles-description.grow
-      TodoPriority(v-if="todo.priority" :priority="todo.priority")
-      | {{ " " }}
-      span(v-if="todo.completed" class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
-      | {{ " " }}
-      span(v-if="todo.created" class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
-      | {{ " " }}
-      TodoDue(v-if="todo.due" :todo="todo")
-      span(v-if="todo.price" class="text-green-800 dark:text-green-300") {{ todo.price }}
-      | {{ " " }}
+      template(v-if="todo.priority")
+        TodoPriority(:priority="todo.priority")
+        | {{ " " }}
+
+      template(v-if="todo.completed")
+        span(class="text-lime-800 dark:text-lime-300") {{ todo.completed }}
+        | {{ " " }}
+
+      template(v-if="todo.created")
+        span(class="text-cyan-800 dark:text-cyan-300") {{ todo.created }}
+        | {{ " " }}
+
+      template(v-if="todo.due")
+        TodoDue(:todo="todo")
+        | {{ " " }}
+
+      template(v-if="todo.price")
+        span(class="text-green-800 dark:text-green-300") {{ todo.price }}
+        | {{ " " }}
+
       TodoDescription(:description="todo.description" :todo="todo" :parent="parent")
-      | {{ " " }}
-      span(v-if="todo.multiplier" class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
+
+      template(v-if="todo.multiplier")
+        | {{ " " }}
+        span(class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
+
     TntButton.btn-none(@click="deleteTodo(todo.id, parent)" class="text-danger-light hover:text-danger-light-hover dark:text-danger-dark dark:hover:text-danger-dark-hover")
       Icon(name="fa6-solid:trash-can")
+
   ul.pl-12(v-if="todo.children")
     li(v-for="child in todo.children")
       TodoItem(:todo="child" :parent="todo.id")
