@@ -32,9 +32,9 @@ jobs:
     - run: yarn install --immutable
     # - run: yarn lerna run build
     - run: yarn lerna run test:coverage
-    - name: Coverage
-      # Also generate the report if tests are failing
-      if: always()
-      uses:  davelosert/vitest-coverage-report-action@v1
-      with:
-        working-directory: ./packages/web
+    # - name: Coverage
+    #   # Also generate the report if tests are failing
+    #   if: always()
+    #   uses:  davelosert/vitest-coverage-report-action@v1
+    #   with:
+    #     working-directory: ./packages/web
