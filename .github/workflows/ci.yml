@@ -33,7 +33,8 @@ jobs:
     # - run: yarn lerna run build
     - run: yarn lerna run test:coverage
     - name: Coverage
-      if: always() # Also generate the report if tests are failing
+      # Also generate the report if tests are failing
+      if: always()
       uses:  davelosert/vitest-coverage-report-action@v1
       with:
         working-directory: ./packages/web
