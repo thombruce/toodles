@@ -1,10 +1,8 @@
 <template lang="pug">
 NuxtLayout(name="default")
-  .not-prose
-    TntElectronDirectory(
-      path=""
-      :extensions="/(?:\.(?:txt|todo|shop|list))$/i"
-      :filter="/^(?:(?:todo|done)\.txt|.+?\.(?:todo|shop|list))$/i"
-      v-slot="{ files }"
-    )
+  h1 Welcome to Toodles
+  p Use the sidebar to navigate to or create your first document.
+  //- Note: The use may already have a document they would like
+  //- open, and we should treat todo.txt as the default if not.
+  //- The above text is inappropriate for our needs.
 </template>
