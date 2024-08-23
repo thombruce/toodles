@@ -20,9 +20,9 @@ fetchTodos(path.replace(/^\/|\/$/, ''))
 <template lang="pug">
 NuxtLayout(name="default")
   .not-prose
-    TodoForm
-
-    ProgressBar.mb-3(:value="progress")
+    .sticky.top-0.z-40.backdrop-blur-md
+      TodoForm
+      ProgressBar.mb-3(:value="progress")
 
     ul.space-y-2
       li(v-for="item in todos")
