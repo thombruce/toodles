@@ -3448,10 +3448,10 @@
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.33.2":
-  version "0.33.2"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.33.2.tgz#696e976b168f919f41d2d5f5f790ac9aa7f5df3b"
-  integrity sha512-b9PmF/hSAIqQPYBuJ0zJtWa23CZhwkhsoAvh2W7/CkjWFdo50eLro6EOe0ygnr4SHr7XTuvDX6HjgjxxutY7xQ==
+"@thombruce/tnt-electron@^0.33.3-alpha.0":
+  version "0.33.3-alpha.0"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.33.3-alpha.0.tgz#0cba31cebb67be1bdd5874a45b8ea52398a96529"
+  integrity sha512-s4VEoT2dddUIIq3fRa040CzBPlyYrGtCCjvvZucuaQu4cOIlSSUA29EXqXAvGj83dowVSq9dZJdoT1qrCYf0yw==
   dependencies:
     "@thombruce/tnt" "^0.33.2"
     directory-tree "^3.5.2"
