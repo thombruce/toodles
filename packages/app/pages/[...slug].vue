@@ -4,6 +4,8 @@ import { storeToRefs } from 'pinia'
 
 const { path, params } = useRoute()
 
+useTntApi().updateConfig({ lastOpened: path })
+
 // Store
 const store = useTodosStore()
 // Store: State/Getters

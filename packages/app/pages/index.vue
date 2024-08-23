@@ -1,14 +1,15 @@
 <script setup>
-// TODO: Hide sidebar by default when default page issue is resolved (see below)
-const sidebar = useSidebar()
-sidebar.value = true
+import { useRouter } from 'vue-router'
+
+const { lastOpened } = await useTntApi().loadConfig()
+
+// Replace index route with lastOpened path or,
+// if no lastOpened exists in config,
+// replace index route with '/todo.txt' default.
+const router = useRouter()
+if (lastOpened) router.replace(lastOpened)
+else router.replace('/todo.txt')
 </script>
 
-<template lang="pug">
-NuxtLayout(name="default")
-  h1 Welcome to Toodles
-  p Use the sidebar to navigate to or create your first document.
-  //- Note: The use may already have a document they would like
-  //- open, and we should treat todo.txt as the default if not.
-  //- The above text is inappropriate for our needs.
+<template>
 </template>
