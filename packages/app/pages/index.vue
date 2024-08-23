@@ -1,3 +1,9 @@
+<script setup>
+// TODO: Hide sidebar by default when default page issue is resolved (see below)
+const sidebar = useSidebar()
+sidebar.value = true
+</script>
+
 <template lang="pug">
 NuxtLayout(name="default")
   h1 Welcome to Toodles
