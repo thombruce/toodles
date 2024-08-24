@@ -3448,12 +3448,12 @@
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.33.5":
-  version "0.33.5"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.33.5.tgz#537af624379953ad827a058ec170e42d4fee3b50"
-  integrity sha512-ulgC4a3XFnmFwErZeiAMoUpagDyeUoV/Izm1RcuqQ2gNAQg1rCev1S5kS9QB1nsxQMjPUCC3JkOiHviIiu+2yw==
+"@thombruce/tnt-electron@^0.33.6":
+  version "0.33.6"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.33.6.tgz#d6cfc5956521ec4a986541e7a3e656136cd59022"
+  integrity sha512-fO2igRSM7uRh7LaOd3dIbUjW5kfSCa00afMLtfxbwi1zqv++LFvHUyU9rReG1vZZupske2HMOKJfW8P6iGRJrg==
   dependencies:
-    "@thombruce/tnt" "^0.33.4"
+    "@thombruce/tnt" "^0.33.6"
     directory-tree "^3.5.2"
     electron "^31.3.1"
     electron-builder "^24.13.3"
@@ -3485,10 +3485,10 @@
     pug "^3.0.2"
     yup "^1.4.0"
 
-"@thombruce/tnt@^0.33.4":
-  version "0.33.4"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.33.4.tgz#82ee867a8425624dd577eb08d508e3cdb53e59f3"
-  integrity sha512-6AirLsq9YobtL3dIIOn9lqXI1Gw4tXcEg0ZnV3bhr48GLtf6Hwjw23AJ0M7i9UhIHHg0CfbW5Cxgl9S5iwfAyg==
+"@thombruce/tnt@^0.33.6":
+  version "0.33.6"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.33.6.tgz#bddd47563afdcb4155c3f63ff10c2e0e83611d46"
+  integrity sha512-6x7TXolRBNvX5JTsTVVFYpQcks7mMAaiIF1+JM1gMZh4nOXvGmjJtxGdf8GFfGMraFAXPR+Dq+KfzRYt+7CMqA==
   dependencies:
     "@iconify-json/fa" "^1.1.8"
     "@iconify-json/fa6-solid" "^1.1.24"

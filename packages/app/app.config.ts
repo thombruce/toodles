@@ -4,6 +4,7 @@ export default defineAppConfig({
   gradient: true,
   directory: {
     extensions: /(?:\.(?:txt|todo|shop|list))$/i,
+    exclude: /^\.\w+/i,
     filter: /^(?:(?:todo|done)\.txt|.+?\.(?:todo|shop|list))$/i
   }
 })
