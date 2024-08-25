@@ -18,13 +18,12 @@ fetchTodos(path.replace(/^\/|\/$/, ''))
 </script>
 
 <template lang="pug">
-NuxtLayout(name="default")
-  .not-prose
-    .sticky.top-0.z-40.backdrop-blur-md
-      TodoForm
-      ProgressBar.mb-3(:value="progress")
+NuxtLayout(name="application")
+  .sticky.top-0.z-40.backdrop-blur-md
+    TodoForm
+    ProgressBar.mb-3(:value="progress")
 
-    ul.space-y-2
-      li(v-for="item in todos")
-        TodoItem(:todo="item" :key="`todo-${item.id}`")
+  ul.space-y-2
+    li(v-for="item in todos")
+      TodoItem(:todo="item" :key="`todo-${item.id}`")
 </template>
