@@ -3438,22 +3438,22 @@
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
 
-"@thombruce/tnt-content@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.34.0.tgz#619de07c33460ee3da0297b3c2564658512e399d"
-  integrity sha512-79YzJx5OkmwsEMbpwphaiOulvE5ccQFnGF/yTaWrBEaK3laGtDTc10uXS6qa9r8ch0R677VoeZQkT8i4Yez4KA==
+"@thombruce/tnt-content@^0.34.2":
+  version "0.34.2"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.34.2.tgz#3088756e06b50ead197ddf5f2643f18335fbaaa5"
+  integrity sha512-c8TUCw4xNew87YiL/56cOcsGk4ILJElXF8gmxKvI3V3nWSZuzMduZgOcw2g/YQeFaD/lUi11cPEaKaakKr5lEg==
   dependencies:
     "@nuxt/content" "npm:@nuxt/content-edge@latest"
-    "@thombruce/tnt" "^0.34.0"
+    "@thombruce/tnt" "^0.34.2"
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.34.1":
-  version "0.34.1"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.34.1.tgz#c6690946529eb1216e5ad5d96ae80f260c0c803e"
-  integrity sha512-q0e1ri6l63rt8e3DH/GBiDCvYSDvg5OWir/Ml8botEcMgBXZOCJ5suaK1bs+2ptUhYGeF+pWqStOJmBLhbDWMQ==
+"@thombruce/tnt-electron@^0.34.2":
+  version "0.34.2"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.34.2.tgz#f6cd97b1607580257eba6e0171aa9f7b2b6c7857"
+  integrity sha512-ac10Gx5xgBNej9lhXuUXs/bc8Ms+LvfZAXSKIL3qVs/rpV1Znnk9FYuN5m9QDkNsWyBmdq2oXUveCfAdI4L9lA==
   dependencies:
-    "@thombruce/tnt" "^0.34.0"
+    "@thombruce/tnt" "^0.34.2"
     directory-tree "^3.5.2"
     electron "^31.3.1"
     electron-builder "^24.13.3"
@@ -3461,10 +3461,10 @@
     vite-plugin-electron "^0.28.7"
     vite-plugin-electron-renderer "^0.14.5"
 
-"@thombruce/tnt@^0.34.0":
-  version "0.34.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.34.0.tgz#8b884f3b6894b7ce6c8fe24f7d46334c6e71dcc2"
-  integrity sha512-1m+W3HRyN22EASM+2uwRuQncMp56NghMpFetM1s/UQ7rYkc1TVh1JzqWvlLqzLDgY/ASSyUQlKW8Wx+mB4atHg==
+"@thombruce/tnt@^0.34.2":
+  version "0.34.2"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.34.2.tgz#9903ef0a53b45cf581d2cc67445dba6ecdbf840b"
+  integrity sha512-0CMJBBtXXyqWqm5hMRIrohP3PpvuBqdcfhGML1uu3o279M1rpRjmXNOkgE1jYZGCEokasSrqr4/VhMPWbdC+kQ==
   dependencies:
     "@iconify-json/fa" "^1.1.8"
     "@iconify-json/fa6-solid" "^1.1.24"
