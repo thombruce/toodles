@@ -14,7 +14,7 @@ export const useTodosStore = defineStore('todos', () => {
   const list = ref([] as Todo[])
 
   // Getters
-  const all = computed(() => _orderBy(list.value, ['state', 'priority', 'completed', 'created', 'due']))
+  const all = computed(() => _orderBy(list.value, ['state', 'priority', 'completed', 'created', 'due', 'price', 'description']))
 
   const find = computed(() => (id: string, parent?: string) => {
     let parentTodo
