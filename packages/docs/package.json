@@ -10,7 +10,7 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
-    "@thombruce/tnt-content": "^0.34.4",
+    "@thombruce/tnt-content": "^0.34.5",
     "nuxt": "^3.11.2"
   }
 }
