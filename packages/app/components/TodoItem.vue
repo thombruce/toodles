@@ -63,7 +63,14 @@ div.text-lg
         span(class="text-green-800 dark:text-green-300") {{ todo.price }}
         | {{ " " }}
 
-      TodoDescription(:description="todo.description" :todo="todo" :parent="parent" :editable="editable" ref="desc")
+      TodoDescription(
+        :description="todo.description"
+        :todo="todo"
+        :parent="parent"
+        :editable="editable"
+        @blur="toggleEditable()"
+        ref="desc"
+      )
 
       template(v-if="todo.multiplier")
         | {{ " " }}

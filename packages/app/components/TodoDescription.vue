@@ -49,10 +49,17 @@ const innerDesc = ref(null)
 defineExpose({
   innerDesc,
 })
+
+defineEmits(['blur'])
 </script>
 
 <template lang="pug">
-span.px-2.py-1(:contenteditable="editable" spellcheck="false" ref="innerDesc")
+span.px-2.py-1(
+  :contenteditable="editable"
+  spellcheck="false"
+  ref="innerDesc"
+  @blur="$emit('blur', $event)"
+)
   template(v-for="item in decorated")
     TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
     TodoTime.time-span.text-nowrap(v-else-if="/^time:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
