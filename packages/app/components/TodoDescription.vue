@@ -21,7 +21,8 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 const props = defineProps([
   'description',
   'todo',
-  'parent'
+  'parent',
+  'editable'
 ])
 
 const decorated = computed(() => {
@@ -42,10 +43,16 @@ const decorated = computed(() => {
   ).split(/(?<=^|\s)((?:count|time):[^ :]+)/g).filter(n => n)
 
 })
+
+const innerDesc = ref(null)
+
+defineExpose({
+  innerDesc,
+})
 </script>
 
 <template lang="pug">
-span(contenteditable spellcheck="false")
+span(:contenteditable="editable" spellcheck="false" ref="innerDesc")
   template(v-for="item in decorated")
     TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
     TodoTime.time-span.text-nowrap(v-else-if="/^time:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
