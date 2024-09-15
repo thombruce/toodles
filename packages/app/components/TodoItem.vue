@@ -68,6 +68,7 @@ div.text-lg
         :todo="todo"
         :parent="parent"
         :editable="editable"
+        @click="toggleEditable()"
         @blur="toggleEditable()"
         ref="desc"
       )
