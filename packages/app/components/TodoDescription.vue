@@ -50,7 +50,17 @@ defineExpose({
   innerDesc,
 })
 
-defineEmits(['blur'])
+const emits = defineEmits(['blur'])
+
+// Store
+const store = useTodosStore()
+// Store: Actions
+const { updateTodoDescription } = store
+
+function updateDescriptionAndBlur(event) {
+  updateTodoDescription(props.todo.id, event.target.innerText, props.parent?.id)
+  emits('blur')
+}
 </script>
 
 <template lang="pug">
@@ -58,7 +68,8 @@ span.px-2.py-1(
   :contenteditable="editable"
   spellcheck="false"
   ref="innerDesc"
-  @blur="$emit('blur', $event)"
+  @blur="updateDescriptionAndBlur($event)"
+  @keydown.enter="updateDescriptionAndBlur($event)"
 )
   template(v-for="item in decorated")
     TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :todo="todo" :parent="parent")

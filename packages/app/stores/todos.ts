@@ -45,7 +45,7 @@ export const useTodosStore = defineStore('todos', () => {
   function updateTodoDescription(id: string, description: string, parent?: string) {
     const todo = find.value(id, parent)
     if (!todo) return
-    todo.description = description
+    todo.description = description.trim()
     useTntApi().updateFile(document.value, Todo.toFile(list.value))
   }
 
