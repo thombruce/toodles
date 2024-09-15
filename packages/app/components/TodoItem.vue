@@ -77,9 +77,9 @@ div.text-lg
         | {{ " " }}
         span(class="text-pink-800 dark:text-pink-300") x{{ todo.multiplier }}
 
-    TntButton.btn-none(@click="toggleEditable()" class="text-content-light hover:text-content-light-hover dark:text-content-dark dark:hover:text-content-dark-hover")
-      Icon(v-if="editable" name="fa6-solid:xmark")
-      Icon(v-else name="fa6-solid:pencil")
+    //- TntButton.btn-none(@click="toggleEditable()" class="text-content-light hover:text-content-light-hover dark:text-content-dark dark:hover:text-content-dark-hover")
+    //-   Icon(v-if="editable" name="fa6-solid:xmark")
+    //-   Icon(v-else name="fa6-solid:pencil")
 
     TntButton.btn-none(@click="deleteTodo(todo.id, parent)" class="text-danger-light hover:text-danger-light-hover dark:text-danger-dark dark:hover:text-danger-dark-hover")
       Icon(name="fa6-solid:trash-can")
