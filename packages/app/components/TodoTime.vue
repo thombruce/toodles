@@ -15,8 +15,7 @@ const { toggleTodoTimer } = store
 <template lang="pug">
 span(:class="todo.isActive ? 'is-active' : ''")
   | time:{{ todo.timer }}
-  |
-  TntButton.btn-none.align-text-top(@click="toggleTodoTimer(todo.id, parent)")
+  TntButton.btn-none.align-text-top.ml-1(@click.stop="toggleTodoTimer(todo.id, parent)")
     Icon(v-if="!todo.isActive" name="fa6-solid:play")
     Icon(v-else name="fa6-solid:pause")
 </template>

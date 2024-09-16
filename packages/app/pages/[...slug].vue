@@ -23,7 +23,7 @@ NuxtLayout(name="application")
     TodoForm
     ProgressBar(:value="progress")
 
-  ul.px-4.space-y-2
+  ul.mt-3.px-4.space-y-2
     li(v-for="item in todos")
       TodoItem(:todo="item" :key="`todo-${item.id}`")
 </template>

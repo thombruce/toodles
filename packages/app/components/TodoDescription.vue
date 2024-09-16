@@ -21,7 +21,8 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 const props = defineProps([
   'description',
   'todo',
-  'parent'
+  'parent',
+  'editable'
 ])
 
 const decorated = computed(() => {
@@ -42,10 +43,34 @@ const decorated = computed(() => {
   ).split(/(?<=^|\s)((?:count|time):[^ :]+)/g).filter(n => n)
 
 })
+
+const innerDesc = ref(null)
+
+defineExpose({
+  innerDesc,
+})
+
+const emits = defineEmits(['blur'])
+
+// Store
+const store = useTodosStore()
+// Store: Actions
+const { updateTodoDescription } = store
+
+function updateDescriptionAndBlur(event) {
+  updateTodoDescription(props.todo.id, event.target.innerText, props.parent?.id)
+  emits('blur')
+}
 </script>
 
 <template lang="pug">
-span
+span.px-2.py-1(
+  :contenteditable="editable"
+  spellcheck="false"
+  ref="innerDesc"
+  @blur="updateDescriptionAndBlur($event)"
+  @keydown.enter="updateDescriptionAndBlur($event)"
+)
   template(v-for="item in decorated")
     TodoCount.count-span.text-nowrap(v-if="/^count:[^ :]+$/.test(item)" :todo="todo" :parent="parent")
     TodoTime.time-span.text-nowrap(v-else-if="/^time:[^ :]+$/.test(item)" :todo="todo" :parent="parent")

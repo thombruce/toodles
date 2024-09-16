@@ -15,7 +15,6 @@ const { incrementTodoCount } = store
 <template lang="pug">
 span
   | count:{{ todo.count }}
-  |
-  TntButton.btn-none.align-text-top(@click="incrementTodoCount(todo.id, parent)")
+  TntButton.btn-none.align-text-top.ml-1(@click.stop="incrementTodoCount(todo.id, parent)")
     Icon(name="fa6-solid:plus")
 </template>
