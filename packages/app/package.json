@@ -35,8 +35,8 @@
     "rrule": "^2.8.1"
   },
   "devDependencies": {
-    "@thombruce/tnt": "^0.34.5",
-    "@thombruce/tnt-electron": "^0.34.5",
+    "@thombruce/tnt": "^0.35.0-alpha.0",
+    "@thombruce/tnt-electron": "^0.35.0-alpha.0",
     "electron": "31.3.1",
     "nuxt": "^3.12.4"
   }
