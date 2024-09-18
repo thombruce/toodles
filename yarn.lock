@@ -3438,22 +3438,22 @@
     lodash.merge "^4.6.2"
     postcss-selector-parser "6.0.10"
 
-"@thombruce/tnt-content@^0.35.0-alpha.0":
-  version "0.35.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.35.0-alpha.0.tgz#b35ed760adf4d98d18fda4b76e561789a1f593b6"
-  integrity sha512-e2AcEbpdaEnCbebR14nArU7R2UQIcmYje8Yx6U8T9qgF1H1aG30rNmHyV9yArGzplUyma4xTXx17RNLY7GEa5g==
+"@thombruce/tnt-content@^0.35.0-alpha.1":
+  version "0.35.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-content/-/tnt-content-0.35.0-alpha.1.tgz#93108d99f8740b338a1e482d68d1c4c359127b44"
+  integrity sha512-cTfjnQuN8yvc9y2F74S1DS/r3z0u/RvW4Q6dtreWlrbZV5jNqhFiEVhOW/VEl4czBsq3giBNkakbJ3VUqQws0w==
   dependencies:
     "@nuxt/content" "npm:@nuxt/content-edge@latest"
-    "@thombruce/tnt" "^0.35.0-alpha.0"
+    "@thombruce/tnt" "^0.35.0-alpha.1"
     rss "^1.2.2"
     sitemap "^7.1.1"
 
-"@thombruce/tnt-electron@^0.35.0-alpha.0":
-  version "0.35.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.35.0-alpha.0.tgz#3865580525eb50c9a4c8deafa748eccdd67ac6db"
-  integrity sha512-YZFoqPa/UrFXARAEAGLMRWaqfuAGf8oN3E4S///3q7ByHPvekmOGIEtVYdH8h6V8UoLwaL7PsPfZs4huoa+McQ==
+"@thombruce/tnt-electron@^0.35.0-alpha.1":
+  version "0.35.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt-electron/-/tnt-electron-0.35.0-alpha.1.tgz#1ae43243c798bdb9b073d36d0476e68776aa8017"
+  integrity sha512-jNw5GCe+0FgeWD0eIhkX96QNmRr0EjfZqRGOnolWPULhuW8nAjtQxcoq60+ddZFt/oEyIgUB1JlYd93TUeMLpg==
   dependencies:
-    "@thombruce/tnt" "^0.35.0-alpha.0"
+    "@thombruce/tnt" "^0.35.0-alpha.1"
     directory-tree "^3.5.2"
     electron "^31.3.1"
     electron-builder "^24.13.3"
@@ -3461,10 +3461,10 @@
     vite-plugin-electron "^0.28.7"
     vite-plugin-electron-renderer "^0.14.5"
 
-"@thombruce/tnt@^0.35.0-alpha.0":
-  version "0.35.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.35.0-alpha.0.tgz#57d3ce5a8dab75b0b51ab0dbcdcf061166996e04"
-  integrity sha512-3HE5B6SF2CAI7oxerrZogm42wNmHjaAHY6iyg2U1qMC0FDeSzaTuOXDJWtZVwA4ytvXoevRmw1DAjzSnZLVLng==
+"@thombruce/tnt@^0.35.0-alpha.1":
+  version "0.35.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@thombruce/tnt/-/tnt-0.35.0-alpha.1.tgz#c42fbb7ba8588167aeffd516017c10c17aac9ed7"
+  integrity sha512-UAVgVieby8bATPWJCaQV5E4UIjzMtt5Mn2jVQx4Uz5IlKK+szZAvMaHaoNXlmmFrRA1/k/fkY2mDzghMxrAOnw==
   dependencies:
     "@iconify-json/fa" "^1.1.8"
     "@iconify-json/fa6-solid" "^1.1.24"
