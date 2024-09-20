@@ -11,3 +11,5 @@ dummy/
 **/*.todo
 **/*.shop
 **/*.list
+
+!/todo.txt

@@ -1,0 +1,8 @@
+(C) 2024-09-20 Allow user to enter advanced todo attributes as part of string time:0h0m
+(B) 2024-09-20 Save sorted state in todo document time:0h0m
+(C) 2024-09-20 Keep a CHANGELOG time:0h0m
+(A) 2024-09-20 Allow user to edit non-description todo attributes time:0h0m
+(A) 2024-09-20 Bugfix: Open links in browser when clicked time:0h0m
+(B) 2024-09-20 Allow user to add child todos time:0h0m
+(B) 2024-09-20 Enable search via todo input field time:0h0m
+(A) 2024-09-20 Bugfix: Preserve markdown links (and other markup) when a todo is edited time:0h0m
