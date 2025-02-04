@@ -13,11 +13,96 @@
     "Other"
   ],
   "icon": "images/icon.png",
-  "activationEvents": [
-    "onLanguage"
-  ],
-  "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "toodles",
+        "aliases": [
+          "Toodles"
+        ],
+        "extensions": [
+          ".toodles",
+          ".todo",
+          ".list",
+          ".shop",
+          ".txt"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "toodles",
+        "scopeName": "text.toodles",
+        "path": "./syntaxes/toodles.tmLanguage.json"
+      }
+    ],
+    "configurationDefaults": {
+      "editor.tokenColorCustomizations": {
+        "textMateRules": [
+          {
+            "scope": "markup.other.toodles.important",
+            "settings": {
+              "fontStyle": "bold"
+            }
+          },
+          {
+            "scope": "comment.line.toodles.done",
+            "settings": {
+              "fontStyle": "strikethrough"
+            }
+          },
+          {
+            "scope": "keyword.control.toodles.priority.high",
+            "settings": {
+              "foreground": "#ff5555"
+            }
+          },
+          {
+            "scope": "keyword.control.toodles.priority.med",
+            "settings": {
+              "foreground": "#feaa42"
+            }
+          },
+          {
+            "scope": "keyword.control.toodles.priority.low",
+            "settings": {
+              "foreground": "#ffca42"
+            }
+          },
+          {
+            "scope": "string.interpolated.toodles.date.completed",
+            "settings": {
+              "foreground": "#884444"
+            }
+          },
+          {
+            "scope": "string.interpolated.toodles.date.created",
+            "settings": {
+              "foreground": "#00cccc"
+            }
+          },
+          {
+            "scope": "string.interpolated.toodles.date.due",
+            "settings": {
+              "foreground": "#feaa42"
+            }
+          },
+          {
+            "scope": "markup.inserted.toodles.price",
+            "settings": {
+              "foreground": "#419e41"
+            }
+          },
+          {
+            "scope": "keyword.other.unit.toodles.multiplier",
+            "settings": {
+              "foreground": "#b468b4"
+            }
+          }
+        ]
+      }
+    },
     "commands": []
   },
   "scripts": {
