@@ -105,14 +105,6 @@
     },
     "commands": []
   },
-  "scripts": {
-    "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "yarn run compile && yarn run lint",
-    "lint": "eslint src --ext ts",
-    "test": "vscode-test"
-  },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
