@@ -27,7 +27,7 @@ repository:
 
   important:
     name: markup.other.toodles.important
-    begin: "(?<=(?:^|\\G) *)! ?"
+    begin: "(?<=(?:^|\\G)\\s*)!\\s"
     end: "$"
     patterns:
     - include: "#inline"
@@ -35,7 +35,7 @@ repository:
 
   synopsis:
     name: markup.inserted.toodles
-    begin: "(?<=(?:^|\\G) *)~ ?"
+    begin: "(?<=(?:^|\\G)\\s*)~\\s"
     end: "$"
     patterns:
     - include: "#inline"
@@ -43,12 +43,12 @@ repository:
 
   comment:
     name: comment.line.toodles
-    begin: "(?<=(?:^|\\G) *)/ ?"
+    begin: "(?<=(?:^|\\G)\\s*)/\\s"
     end: "$"
 
   done:
     name: comment.line.toodles.done
-    begin: "(?<=(?:^|\\G) *)x ?"
+    begin: "(?<=(?:^|\\G)\\s*)x\\s"
     end: "$"
     patterns:
     - include: "#inline"
@@ -68,7 +68,7 @@ repository:
 
   priority:
     name: keyword.control.toodles.priority
-    match: "(?<=^ *(?:[!Xx~-] )?)(?:(\\(A\\))|(\\(B\\))|(\\(C\\))|\\([D-Z]\\))\\B"
+    match: "(?<=^\\s*(?:[!Xx~-]\\s)?)(?:(\\(A\\))|(\\(B\\))|(\\(C\\))|\\([D-Z]\\))\\B"
     captures:
       '1':
         name: keyword.control.toodles.priority.high
@@ -84,7 +84,7 @@ repository:
 
   completed:
     name: string.interpolated.toodles.date
-    match: "(?<=^ *(?:[Xx] )(?:\\([A-Z]\\) )?)(\\d{4}-\\d{2}-\\d{2}) (\\d{4}-\\d{2}-\\d{2})(?: (\\d{4}-\\d{2}-\\d{2}))?\\b"
+    match: "(?<=^\\s*(?:[Xx]\\s)(?:\\([A-Z]\\) )?)(\\d{4}-\\d{2}-\\d{2}) (\\d{4}-\\d{2}-\\d{2})(?: (\\d{4}-\\d{2}-\\d{2}))?\\b"
     captures:
       '1':
         name: string.interpolated.toodles.date.completed
@@ -95,7 +95,7 @@ repository:
 
   open:
     name: string.interpolated.toodles.date
-    match: "(?<=^ *(?:[!~-] )?(?:\\([A-Z]\\) )?)(\\d{4}-\\d{2}-\\d{2})(?: (\\d{4}-\\d{2}-\\d{2}))?\\b"
+    match: "(?<=^\\s*(?:[!~-]\\s)?(?:\\([A-Z]\\) )?)(\\d{4}-\\d{2}-\\d{2})(?: (\\d{4}-\\d{2}-\\d{2}))?\\b"
     captures:
       '1':
         name: string.interpolated.toodles.date.created
@@ -104,7 +104,7 @@ repository:
 
   price:
     name: markup.inserted.toodles.price
-    match: "(?<=^ *(?:[!Xx~-] )?(?:\\([A-Z]\\) )?(?:\\d{4}-\\d{2}-\\d{2} ){0,3})((?:[$£€]\\d*[.,]?\\d{1,2}-)?[$£€]\\d*[.,]?\\d{1,2})(?=
+    match: "(?<=^\\s*(?:[!Xx~-]\\s)?(?:\\([A-Z]\\) )?(?:\\d{4}-\\d{2}-\\d{2} ){0,3})((?:[$£€]\\d*[.,]?\\d{1,2}-)?[$£€]\\d*[.,]?\\d{1,2})(?=
       )"
 
   context:
